@@ -5,6 +5,7 @@ class SupremeCourtLetter(models.Model):
     _name = 'supreme.court.letter'
     _description = 'Supreme Court Letter'
 
+    number = fields.Char(string='Number')
     recipient_name = fields.Char(string='Recipient Name')
     title_position = fields.Char(string='Title/Position')
     organization_unit = fields.Char(string='Organization/Unit')

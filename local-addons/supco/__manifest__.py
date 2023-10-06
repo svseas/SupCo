@@ -1,5 +1,5 @@
 {
-    'name': 'SupCo',
+    'name': 'supco',
     'version': '1.0',
     'category': 'Custom',
     'summary': 'Supreme Court Introduction Letter',
@@ -10,6 +10,11 @@
         'reports/supco_letter.xml',
         'reports/supco_letter_action.xml',
     ],
+    'assets': {
+        'web.report_assets_common': [
+          '/custom_font/static/src/scss/custom_font.scss'
+        ],
+    },
     'installable': True,
     'application': True,
 }

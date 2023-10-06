@@ -13,6 +13,7 @@
                 <form>
                     <sheet>
                         <group>
+                            <field name="number"/>
                             <field name="recipient_name"/>
                             <field name="title_position"/>
                             <field name="organization_unit"/>

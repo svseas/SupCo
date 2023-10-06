@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_supreme_court_letter_main">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="supco.supreme_court_letter"/>
+            </t>
+        </t>
+    </template>
+    <template id="supreme_court_letter">
+        <t t-call="web.external_layout">
+            <div class="page" style="font-family: 'Times New Roman'">
+                <!-- Right Box -->
+                <div style="margin: 72px;">
+                    <div style="float: left; width: 50%;">
+                        <div style="font-weight: bold; text-align: left;">
+                            TÒA ÁN NHÂN DÂN TỐI CAO
+                        </div>
+                        <div style="width: 100%; text-align: center;">
+                            <div style="font-weight: bold; text-decoration: underline;">
+                                BÁO CÔNG LÝ
+                            </div>
+                        </div>
+                        <div style="text-align: left; margin-top: 10px;">
+                            Số:<span t-field="doc.number"/>/ GGT-BCL
+                        </div>
+                    </div>
+                    <!-- Left Box -->
+                    <div style="float: right; width: 50%; ">
+                        <div style="font-weight: bold; text-align: right;">
+                            CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+                        </div>
+                        <div style="font-weight: bold; text-align: center; text-decoration: underline;">
+                            Độc lập – Tự do – Hạnh phúc
+                        </div>
+                    </div>
+                    <!-- Clear float -->
+                    <div style="clear: both;"></div>
+                    <div style="text-align: center; font-weight: bold; margin-top: 50px;">
+                        GIẤY GIỚI THIỆU
+                    </div>
+                    <div style="margin-top: 50px; line-height: 1.15;">
+                        <div>
+                            Đồng chí:
+                            <span t-field="doc.recipient_name"/>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            Chức vụ:
+                            <span t-field="doc.title_position"/>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            Thuộc đơn vị:
+                            <span t-field="doc.organization_unit"/>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            Được cử đến:
+                            <span t-field="doc.address"/>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            Về việc:
+                            <span t-field="doc.regarding"/>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            Đề nghị Quý cơ quan giúp đỡ để đồng chí hoàn thành nhiệm vụ:
+                            <span t-field="doc.request"/>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            Giấy Giới thiệu có giá trị đến ngày:
+                            <span t-field="doc.validity_date"/>
+                        </div>
+                    </div>
+                    <div style="float: right; width: 50%;">
+                        <div style="text-align: center; margin-top: 50px; font-style: italic;">
+                            Hà Nội,
+                            <span t-field="doc.create_date" t-options='{"widget": "date"}'/>
+                        </div>
+                        <div style="text-align: center; font-weight: bold; margin-top:20px">
+                            TỔNG BIÊN TẬP
+                        </div>
+                        <div style="text-align: center; margin-top:100px">
+                            Trần Đức Vinh
+                        </div>
+                        <div style="text-align: center; font-style: italic; margin-top:20px">
+                            Điện thoại: 024.3824.7204 – 024. 3936.5550
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

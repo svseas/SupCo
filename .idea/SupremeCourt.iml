@@ -4,10 +4,10 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <content url="file://$MODULE_DIR$/../odoo16">
-      <sourceFolder url="file://$MODULE_DIR$/../odoo16/odoo" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/../odoo">
+      <sourceFolder url="file://$MODULE_DIR$/../odoo/odoo" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (SupremeCourt)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (SupCo)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
