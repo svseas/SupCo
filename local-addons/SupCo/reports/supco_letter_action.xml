@@ -1,0 +1,10 @@
+<odoo>
+    <record id="action_report_supreme_court_letter" model="ir.actions.report">
+        <field name="name">Supreme Court Letter</field>
+        <field name="model">supreme.court.letter</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">supco.report_supreme_court_letter</field>
+        <field name="report_file">supco.report_supreme_court_letter</field>
+        <field name="binding_model_id" ref="model_supreme_court_letter"/>
+    </record>
+</odoo>

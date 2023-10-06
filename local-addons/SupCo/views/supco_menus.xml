@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Main menu item -->
+    <menuitem id="menu_supco_main" name="SupCo" sequence="10"/>
+
+    <!-- Submenu item under the main menu -->
+    <menuitem id="menu_supco_introduction_letter" name="Introduction Letter" parent="menu_supco_main" action="action_supreme_court_letters" sequence="10"/>
+</odoo>

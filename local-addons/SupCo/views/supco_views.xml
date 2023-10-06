@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="action_supreme_court_letters" model="ir.actions.act_window">
+            <field name="name">Introduction Letter</field>
+            <field name="res_model">supreme.court.letter</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="view_form_supreme_court_letter" model="ir.ui.view">
+            <field name="name">supreme.court.letter.form</field>
+            <field name="model">supreme.court.letter</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="recipient_name"/>
+                            <field name="title_position"/>
+                            <field name="organization_unit"/>
+                            <field name="address"/>
+                            <field name="regarding"/>
+                            <field name="request"/>
+                            <field name="validity_date"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

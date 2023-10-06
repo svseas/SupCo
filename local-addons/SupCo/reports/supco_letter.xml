@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="supreme_court_letter">
+        <t t-name="supco.report_supreme_court_letter">
+            <t t-call="web.external_layout">
+                <t t-set="docs" t-value="docs"/>
+                <div class="page">
+                    <div style="text-align: center; font-weight: bold;">
+                        TÒA ÁN NHÂN DÂN TỐI CAO
+                    </div>
+                    <div style="text-align: center;">
+                        BÁO CÔNG LÝ
+                    </div>
+                    <div style="text-align: center; font-weight: bold;">
+                        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+                    </div>
+                    <div style="text-align: center;">
+                        Độc lập – Tự do – Hạnh phúc
+                    </div>
+                    <div style="text-align: right;">
+                        Số:<span t-field="doc.name"/>/ GGT-BCL
+                    </div>
+                    <div style="text-align: center; font-weight: bold; margin-top: 20px;">
+                        GIẤY GIỚI THIỆU
+                    </div>
+                    <div style="margin-top: 20px;">
+                        Đồng chí:
+                        <span t-field="doc.recipient_name"/>
+                    </div>
+                    <div>
+                        Chức vụ:
+                        <span t-field="doc.title_position"/>
+                    </div>
+                    <div>
+                        Thuộc đơn vị:
+                        <span t-field="doc.organization_unit"/>
+                    </div>
+                    <div>
+                        Được cử đến:
+                        <span t-field="doc.address"/>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        Về việc:
+                        <span t-field="doc.regarding"/>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        Đề nghị Quý cơ quan giúp đỡ để đồng chí hoàn thành nhiệm vụ:
+                        <span t-field="doc.request"/>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        Giấy Giới thiệu có giá trị đến ngày:
+                        <span t-field="doc.validity_date"/>
+                    </div>
+                    <div style="text-align: right; margin-top: 50px;">
+                        Hà Nội,
+                        <span t-field="doc.create_date" t-options='{"widget": "date"}'/>
+                    </div>
+                    <div style="text-align: right; font-weight: bold;">
+                        TỔNG BIÊN TẬP
+                    </div>
+                    <div style="text-align: right;">
+                        Trần Đức Vinh
+                    </div>
+                    <div style="text-align: right;">
+                        Điện thoại: 024.3824.7204 – 024. 3936.5550
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
