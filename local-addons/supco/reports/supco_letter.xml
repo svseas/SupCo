@@ -10,9 +10,8 @@
     </template>
     <template id="supreme_court_letter">
         <t t-call="web.internal_layout">
-            <!-- <link href="https://fonts.googleapis.com/css2?family=Tinos" rel="stylesheet"/> -->
-            <link href="supco/static/src/fonts/scss/fonts.scss" rel="stylesheet"/>
-            <div class="page" style="margin: 96px; font-family: 'Tinos';">
+            <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet"/>
+            <div class="page" style="margin: 96px; font-family: 'Times New Roman';">
                 <!-- Right Box -->
                 <div style="float: left; width: 50%; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 0">
                     <div style="font-weight: bold; text-align: left; width: 100%;">
@@ -36,7 +35,7 @@
                 <div style="text-align: center; font-weight: bold; margin-top: 50px;">
                     GIẤY GIỚI THIỆU
                 </div>
-                <div style="margin-top: 50px; line-height: 1.15; font-family: 'Tinos';">
+                <div style="margin-top: 50px; line-height: 1.15; font-family: 'Times New Roman';">
                     <div>
                         Đồng chí:
                         <span t-field="doc.recipient_name"/>
@@ -58,8 +57,8 @@
                         <span t-field="doc.regarding"/>
                     </div>
                     <div style="margin-top: 20px;">
-                        Đề nghị Quý cơ quan giúp đỡ để đồng chí hoàn thành nhiệm vụ:
-                        <span t-field="doc.request"/>
+                        Đề nghị Quý cơ quan giúp đỡ để đồng chí <span t-field="doc.request"/> hoàn thành nhiệm vụ
+
                     </div>
                     <div style="margin-top: 20px;">
                         Giấy Giới thiệu có giá trị đến ngày:
