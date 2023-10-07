@@ -9,9 +9,10 @@
         </t>
     </template>
     <template id="supreme_court_letter">
-         <t t-call="web.internal_layout">
-            <div class="page" style="margin: 96px;">
-
+        <t t-call="web.internal_layout">
+            <!-- <link href="https://fonts.googleapis.com/css2?family=Tinos" rel="stylesheet"/> -->
+            <link href="supco/static/src/fonts/scss/fonts.scss" rel="stylesheet"/>
+            <div class="page" style="margin: 96px; font-family: 'Tinos';">
                 <!-- Right Box -->
                 <div style="float: left; width: 50%; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 0">
                     <div style="font-weight: bold; text-align: left; width: 100%;">
@@ -35,7 +36,7 @@
                 <div style="text-align: center; font-weight: bold; margin-top: 50px;">
                     GIẤY GIỚI THIỆU
                 </div>
-                <div style="margin-top: 50px; line-height: 1.15;">
+                <div style="margin-top: 50px; line-height: 1.15; font-family: 'Tinos';">
                     <div>
                         Đồng chí:
                         <span t-field="doc.recipient_name"/>
@@ -83,7 +84,7 @@
                 <!-- Clear float -->
                 <div style="clear: both;"></div>
             </div>
-         </t>
+        </t>
     </template>
 
 </odoo>

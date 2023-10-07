@@ -10,14 +10,17 @@
         'reports/supco_letter.xml',
         'reports/supco_letter_action.xml',
     ],
-    # 'assets': {
-    #     'web.report_assets_common': [
-    #       '/supco/static/src/css/report_style.css'
-    #     ],
-    # },
-    'qweb': [
-        'static/src/css/*.css',  # If you've added CSS files
-    ],
+    "assets": {
+        "web.assets_backend": [
+            "supco/static/src/fonts/scss/fonts.scss",
+        ],
+        "web.assets_frontend": [
+            "supco/static/src/fonts/scss/fonts.scss",
+        ],
+        "web.report_assets_common": [
+            "supco/static/src/fonts/scss/fonts.scss",
+        ],
+    },
     'installable': True,
     'application': True,
 }
