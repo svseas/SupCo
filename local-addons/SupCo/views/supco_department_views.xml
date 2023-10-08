@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="action_supreme_court_department" model="ir.actions.act_window">
+            <field name="name">Department</field>
+            <field name="res_model">supreme.court.department</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="view_form_supreme_court_department" model="ir.ui.view">
+            <field name="name">supreme.court.department.form</field>
+            <field name="model">supreme.court.department</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name">Department</field>
+                            <field name="code">Code of Department</field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

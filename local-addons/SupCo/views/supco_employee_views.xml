@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="action_supreme_court_employee" model="ir.actions.act_window">
+            <field name="name">Employee</field>
+            <field name="res_model">supreme.court.employee</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="view_form_supreme_court_employee" model="ir.ui.view">
+            <field name="name">supreme.court.employee.form</field>
+            <field name="model">supreme.court.employee</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name">Full Name</field>
+                            <field name="dob">Date of Birth</field>
+                            <field name="national_id">National ID</field>
+                            <field name="title_position">Title Position</field>
+                            <field name="department">Department</field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
