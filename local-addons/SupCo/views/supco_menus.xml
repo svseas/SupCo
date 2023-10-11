@@ -5,6 +5,6 @@
 
     <!-- Submenu item under the main menu -->
     <menuitem id="menu_supco_introduction_letter" name="Introduction Letter" parent="menu_supco_main" action="action_supreme_court_letters" sequence="10"/>
-    <menuitem id="menu_supco_employee" name="Employee" parent="menu_supco_main" action="action_supreme_court_employee" sequence="20"/>
+    
     <menuitem id="menu_supco_department" name="Department" parent="menu_supco_main" action="action_supreme_court_department" sequence="30"/>
 </odoo>

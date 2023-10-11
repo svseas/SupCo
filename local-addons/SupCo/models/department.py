@@ -6,4 +6,4 @@ class Department(models.Model):
 
     name = fields.Char(string='Department', required=True)
     code = fields.Char(string='Code of Department', required=True)
-    employee = fields.Many2many('supreme.court.employee',string='Employee')
+    employee = fields.Many2many('res.users',string='Employee')

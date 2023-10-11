@@ -1,27 +1,41 @@
 <odoo>
     <data>
-        <record id="action_supreme_court_employee" model="ir.actions.act_window">
+        <!-- <record id="action_supreme_court_employee" model="ir.actions.act_window">
             <field name="name">Employee</field>
-            <field name="res_model">supreme.court.employee</field>
+            <field name="res_model">res.users</field>
             <field name="view_mode">tree,form</field>
         </record>
 
         <record id="view_form_supreme_court_employee" model="ir.ui.view">
-            <field name="name">supreme.court.employee.form</field>
-            <field name="model">supreme.court.employee</field>
+            <field name="name">Supreme Court Employee Form</field>
+            <field name="model">res.users</field>
             <field name="arch" type="xml">
                 <form>
                     <sheet>
                         <group>
-                            <field name="name">Full Name</field>
-                            <field name="dob">Date of Birth</field>
-                            <field name="national_id">National ID</field>
-                            <field name="title_position">Title Position</field>
-                            <field name="department">Department</field>
+                            <field name="name" string="Full Name"/>
+                            <field name="dob" string="Date of Birth"/>
+                            <field name="national_id" string="National ID"/>
+                            <field name="function" string="Title Position"/>
+                            <field name="department" string="Department"/>
                         </group>
                     </sheet>
                 </form>
             </field>
         </record>
+        <record id="view_tree_supreme_court_employee" model="ir.ui.view">
+            <field name="name">Supreme Court Employee Tree</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="dob"/>
+                    <field name="national_id"/>
+                    <field name="function"/>
+                    <field name="department"/>
+                </tree>
+            </field>
+        </record>
+        <menuitem id="menu_supco_employee" name="Employee" parent="menu_supco_main" action="action_supreme_court_employee" sequence="20"/> -->
     </data>
 </odoo>

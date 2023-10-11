@@ -8,7 +8,7 @@ class SupremeCourtLetter(models.Model):
     _description = 'Supreme Court Letter'
 
     # recipient_name = fields.Char(string='Recipient Name')
-    recipient_name = fields.Many2many('supreme.court.employee', string='Recipient Name')
+    recipient_name = fields.Many2many('res.users', string='Recipient Name')
     title_position = fields.Char(string='Title/Position')
     organization_unit = fields.Char(string='Organization/Unit')
     address = fields.Char(string='Address')
