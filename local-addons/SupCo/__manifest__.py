@@ -11,7 +11,6 @@
         'views/supco_menus.xml',
         'reports/supco_letter.xml',
         'reports/supco_letter_action.xml',
-        'views/views.xml'
     ],
     'installable': True,
     'application': True,
