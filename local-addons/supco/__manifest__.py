@@ -5,7 +5,9 @@
     'summary': 'Supreme Court Introduction Letter',
     'depends': ['base'],
     'data': [
-        'views/supco_views.xml',
+        'views/supco_letter_views.xml',
+        'views/supco_department_views.xml',
+        'views/supco_employee_views.xml',
         'views/supco_menus.xml',
         'reports/supco_letter.xml',
         'reports/supco_letter_action.xml',
