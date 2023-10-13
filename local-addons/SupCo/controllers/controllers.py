@@ -1,21 +1,45 @@
-# -*- coding: utf-8 -*-
-# from odoo import http
+from odoo import http
+from odoo.http import request
+from werkzeug.wrappers import Response
+from datetime import date
+import json
+import io
+import qrcode
+
+class CustomUserController(http.Controller):
+
+    @http.route('/users/<string:national_id>', type='http', auth="public")
+    def show_user_info(self, national_id, **kw):
+
+        user = request.env['res.users'].search([('national_id', '=', national_id)], limit=1)
 
 
-# class SampleModule(http.Controller):
-#     @http.route('/sample_module/sample_module', auth='public')
-#     def index(self, **kw):
-#         return "Hello, world"
+        if user:
+            name = user.name
+            dob = user.dob.strftime('%Y-%m-%d')  
 
-#     @http.route('/sample_module/sample_module/objects', auth='public')
-#     def list(self, **kw):
-#         return http.request.render('sample_module.listing', {
-#             'root': '/sample_module/sample_module',
-#             'objects': http.request.env['sample_module.sample_module'].search([]),
-#         })
+            qr = qrcode.QRCode()
+            qr.add_data(f"http://localhost:8060/users/{national_id}")
+            f = io.StringIO()
+            qr.print_ascii(out=f)
+            f.seek(0)
+            qr_code = f.read()
+            qr_code = qr_code.replace("\n", "                                                                                                                                                                       ")
+            response_data = {
+                'name': name,
+                'dob': dob,
+                'qr_code': qr_code
+            }
+            json_data = json.dumps(response_data,ensure_ascii=False, indent=4)
 
-#     @http.route('/sample_module/sample_module/objects/<model("sample_module.sample_module"):obj>', auth='public')
-#     def object(self, obj, **kw):
-#         return http.request.render('sample_module.object', {
-#             'object': obj
-#         })
+            response = Response(json_data, content_type='application/json')
+
+            return response
+        else:
+            error_data = {
+                'error': 'User Not Found'
+            }
+            error_json = json.dumps(error_data)
+            error_response = Response(error_json, content_type='application/json')
+
+            return error_response
