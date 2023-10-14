@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <template id="supreme_court_letter">
         <t t-name="supco.report_supreme_court_letter">
             <t t-call="web.external_layout">
@@ -36,6 +37,55 @@
                         <span t-field="doc.organization_unit"/>
                     </div>
                     <div>
+
+    <template id="report_supreme_court_letter_main">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="supco.supreme_court_letter"/>
+            </t>
+        </t>
+    </template>
+    <template id="supreme_court_letter">
+        <t t-call="web.internal_layout">
+            <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet"/>
+            <div class="page" style="margin: 96px; font-family: 'Times New Roman';">
+                <!-- Right Box -->
+                <div style="float: left; width: 50%; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 0">
+                    <div style="font-weight: bold; text-align: left; width: 100%;">
+                        TÒA ÁN NHÂN DÂN TỐI CAO
+                    </div>
+                    <div style="font-weight: bold; text-decoration: underline; text-align: center; width: 100%; margin: 0; padding: 0; margin-left: -40px">
+                        BÁO CÔNG LÝ
+                    </div>
+                </div>
+                <!-- Left Box -->
+                <div style="float: right; width: 50%; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 0;">
+                    <div style="font-weight: bold; text-align: right; width: 100%;">
+                        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+                    </div>
+                    <div style="font-weight: bold; text-decoration: underline; text-align: center; width: 100%; margin: 0; padding: 0;">
+                        Độc lập – Tự do – Hạnh phúc
+                    </div>
+                </div>
+                <!-- Clear float -->
+                <div style="clear: both;"></div>
+                <div style="text-align: center; font-weight: bold; margin-top: 50px;">
+                    GIẤY GIỚI THIỆU
+                </div>
+                <div style="margin-top: 50px; line-height: 1.15; font-family: 'Times New Roman';">
+                    <div>
+                        Đồng chí:
+                        <span t-field="doc.recipient_name"/>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        Chức vụ:
+                        <span t-field="doc.title_position"/>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        Thuộc đơn vị:
+                        <span t-field="doc.organization_unit"/>
+                    </div>
+                    <div style="margin-top: 20px;">
                         Được cử đến:
                         <span t-field="doc.address"/>
                     </div>
@@ -44,13 +94,19 @@
                         <span t-field="doc.regarding"/>
                     </div>
                     <div style="margin-top: 20px;">
+
                         Đề nghị Quý cơ quan giúp đỡ để đồng chí hoàn thành nhiệm vụ:
                         <span t-field="doc.request"/>
+
+                        Đề nghị Quý cơ quan giúp đỡ để đồng chí <span t-field="doc.request"/> hoàn thành nhiệm vụ
+
+
                     </div>
                     <div style="margin-top: 20px;">
                         Giấy Giới thiệu có giá trị đến ngày:
                         <span t-field="doc.validity_date"/>
                     </div>
+
                     <div style="text-align: right; margin-top: 50px;">
                         Hà Nội,
                         <span t-field="doc.create_date" t-options='{"widget": "date"}'/>
@@ -69,3 +125,28 @@
         </t>
     </template>
 </odoo>
+
+                </div>
+                <div style="float: right; width: 50%;">
+                    <div style="text-align: center; margin-top: 50px; font-style: italic;">
+                        Hà Nội,
+                        <span t-field="doc.create_date" t-options='{"widget": "date"}'/>
+                    </div>
+                    <div style="text-align: center; font-weight: bold; margin-top:20px">
+                        TỔNG BIÊN TẬP
+                    </div>
+                    <div style="text-align: center; margin-top:100px">
+                        Trần Đức Vinh
+                    </div>
+                    <div style="text-align: center; font-style: italic; margin-top:20px">
+                        Điện thoại: 024.3824.7204 – 024. 3936.5550
+                    </div>
+                </div>
+                <!-- Clear float -->
+                <div style="clear: both;"></div>
+            </div>
+        </t>
+    </template>
+
+</odoo>
+
