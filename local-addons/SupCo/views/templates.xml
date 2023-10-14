@@ -1,24 +1,11 @@
 <odoo>
-    <data>
-<!--
-        <template id="listing">
-          <ul>
-            <li t-foreach="objects" t-as="object">
-              <a t-attf-href="#{ root }/objects/#{ object.id }">
-                <t t-esc="object.display_name"/>
-              </a>
-            </li>
-          </ul>
-        </template>
-        <template id="object">
-          <h1><t t-esc="object.display_name"/></h1>
-          <dl>
-            <t t-foreach="object._fields" t-as="field">
-              <dt><t t-esc="field"/></dt>
-              <dd><t t-esc="object[field]"/></dd>
-            </t>
-          </dl>
-        </template>
--->
-    </data>
+    <template id="template_name">
+        <t t-name="website_user_info">
+            <div>
+                <p><b>Name:</b> <t t-esc="name" /></p>
+                <p><b>Date Of Birth:</b> <t t-esc="dob" /></p>
+                <p><b>QR Code:</b> <pre><t t-esc="qr_code" /></pre></p>
+            </div>
+        </t>
+    </template>
 </odoo>
