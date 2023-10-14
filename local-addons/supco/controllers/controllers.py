@@ -62,7 +62,7 @@ class UserController(http.Controller):
             qr.print_ascii(out=f)
             f.seek(0)
             qr_code = f.read()
-            return request.render('SupCo.template_name', {'name': name, 'dob': dob, 'qr_code': qr_code})
+            return request.render('supco.template_name', {'name': name, 'dob': dob, 'qr_code': qr_code})
         else:
             return "User not found or You have no right to access."
 

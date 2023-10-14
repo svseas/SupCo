@@ -20,3 +20,9 @@ class Employee(models.Model):
                 user.custom_url = f'http://localhost:8060/users/{user.national_id}'
             else:
                 user.custom_url = False
+    
+    _sql_constraints = [
+        ("national_id_uq",
+        "UNIQUE (national_id)",
+        "National ID must be unique.")
+        ]
