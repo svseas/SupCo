@@ -1,4 +1,5 @@
 {
+
     'name': 'supco',
     'version': '1.0',
     'category': 'Custom',
@@ -9,6 +10,10 @@
         'views/supco_department_views.xml',
         'views/supco_employee_views.xml',
         'views/supco_menus.xml',
+        'views/templates.xml',
+        'reports/supco_letter.xml',
+        'reports/supco_letter_action.xml',
+    ],
         'reports/supco_letter.xml',
         'reports/supco_letter_action.xml',
     ],

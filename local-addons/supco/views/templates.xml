@@ -1,4 +1,16 @@
 <odoo>
+
+    <template id="template_name">
+        <t t-name="website_user_info">
+            <div>
+                <p><b>Name:</b> <t t-esc="name" /></p>
+                <p><b>Date Of Birth:</b> <t t-esc="dob" /></p>
+                <p><b>QR Code:</b> <pre><t t-esc="qr_code" /></pre></p>
+            </div>
+        </t>
+    </template>
+</odoo>
+
     <data>
 <!--
         <template id="listing">

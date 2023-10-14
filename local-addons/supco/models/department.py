@@ -7,3 +7,14 @@ class Department(models.Model):
     name = fields.Char(string='Department', required=True)
     code = fields.Char(string='Code of Department', required=True)
     employee = fields.Many2many('res.users',string='Employee')
+
+    _sql_constraints = [
+        ("code_of_department_uq",
+        "UNIQUE (code)",
+        "Code of Department must be unique."),
+        ("name_of_department_uq",
+        "UNIQUE (name)",
+        "Name of Department must be unique.")
+        ]
+    employee = fields.Many2many('res.users',string='Employee')
+
