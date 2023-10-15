@@ -1,10 +1,12 @@
 import base64
 import string
+import requests
 from odoo import http
-from odoo.http import request, route, content_disposition
+from odoo.http import request, route, content_disposition, Response
 import io
 import qrcode
-import random
+from odoo.addons.web.controllers.main import ReportController
+
 
 
 class UserController(http.Controller):
@@ -45,39 +47,21 @@ class UserController(http.Controller):
             return "User not found or You have no right to access."
 
 
-class LetterController(http.Controller):
+class PublicReportController(http.Controller):
 
-    @http.route('/letters/qr/<int:letter_id>', type='http', auth="public", website=True)
-    def letter_qr(self, letter_id):
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+    @http.route(['/letters/public/<string:public_id>'], type='http', auth="public")
+    def public_report_by_public_id(self, public_id, **kw):
+        # Find the letter by public_id
+        letter = request.env['supreme.court.letter'].sudo().search([('public_id', '=', public_id)], limit=1)
 
-        # Fetch the letter's QR code from the database
-        letter = http.request.env['supreme.court.letter'].sudo().browse(letter_id)
+        # If not found, return a 404
         if not letter:
-            return "Letter not found!"
+            return Response("Not Found", status=404)
 
-        qr_code_data = base64.b64decode(letter.qr_code) if letter.qr_code else None
-        if not qr_code_data:
-            return "QR Code not available!"
+        report_name = 'supco.report_supreme_court_letter_main'
+        report = request.env['ir.actions.report']._get_report_from_name(report_name)
 
-        # Generate a unique identifier (token) for the public access
-        token = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
+        # Use the built-in ReportController's method to fetch the report
+        return ReportController().report_routes(report_name, docids=str(letter.sudo().id), converter='pdf')
 
-        # Save the QR code as a public file with a unique filename
-        public_filename = f"public_letter_{letter_id}_{token}.png"
-        with open(public_filename, "wb") as qr_file:
-            qr_file.write(qr_code_data)
 
-        # Generate QR code from the token
-        img = qrcode.make(token)
-        buffer = io.BytesIO()
-        img.save(buffer, "PNG")
-        buffer.seek(0)
-
-        # Update response headers to force a download prompt
-        headers = [
-            ('Content-Type', 'image/png'),
-            ('Content-Disposition', content_disposition(public_filename))
-        ]
-
-        return http.request.make_response(buffer.getvalue(), headers=headers)
