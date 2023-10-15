@@ -46,7 +46,7 @@ class UserController(http.Controller):
 
 class LetterController(http.Controller):
 
-    @http.route('/letters/qr/<int:letter_id>', type='http', auth="user", website=True)
+    @http.route('/letters/qr/<int:letter_id>', type='http', auth="public", website=True)
     def letter_qr(self, letter_id):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         report_url = f'{base_url}/report/pdf/supco.report_supreme_court_letter_main/{letter_id}'
