@@ -11,9 +11,10 @@ class Employee(models.Model):
 
     @api.depends('national_id')
     def _compute_custom_url(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         for user in self:
             if user.national_id:
-                user.custom_url = f'http://localhost:8060/users/{user.national_id}'
+                user.custom_url = f'{base_url}/users/{user.national_id}'
             else:
                 user.custom_url = False
 
