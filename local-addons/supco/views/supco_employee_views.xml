@@ -38,9 +38,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="replace">
                     <tree string="Users">
-
+                        <field name="name"/>
+                        <field name="department"/>
                         <field name="custom_url"/>
-
                         <field name="dob"/>
                     </tree>
                 </xpath>
