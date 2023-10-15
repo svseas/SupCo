@@ -4,6 +4,7 @@ from odoo.http import request, route, content_disposition
 import io
 import qrcode
 import requests
+from datetime import datetime
 
 
 class UserController(http.Controller):
@@ -51,6 +52,13 @@ class LetterController(http.Controller):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         report_url = f'{base_url}/report/pdf/supco.report_supreme_court_letter_main/{letter_id}'
 
+        # Extract the token from the query parameters
+        token = request.httprequest.args.get('token')
+
+        # Validate the token
+        if not self.is_valid_token(token):
+            return "Access denied: Invalid or expired token"
+
         response = requests.get(report_url, headers={
             'Cookie': 'session_id=%s' % http.request.session.sid,
         })
@@ -75,6 +83,15 @@ class LetterController(http.Controller):
         ]
 
         return http.request.make_response(buffer.getvalue(), headers=headers)
+
+    def is_valid_token(self, token):
+        # Validate the token against the access.token model
+        access_token = http.request.env['access.token'].sudo().search([('token', '=', token)], limit=1)
+
+        if access_token and access_token.expiration_date >= datetime.now():
+            return True  # Token is valid and not expired
+        else:
+            return False  # Token is invalid or expired
 
     @http.route('/letters/qr_code/<int:letter_id>', type='http', auth="public", website=True)
     def get_qr_code(self, letter_id):
