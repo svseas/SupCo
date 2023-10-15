@@ -74,7 +74,7 @@ class LetterController(http.Controller):
         # Now you can generate and store the QR code without authentication
         return "QR Code generated and stored successfully!"
 
-    @http.route('/letters/qr_code/<int:letter_id>', type='http', auth="public", website=True)
+    @http.route('/letters/qr_code/<int:letter_id>', type='http', auth="public", website=True, csrf=False)
     def get_qr_code(self, letter_id):
         # Fetch the letter
         letter = http.request.env['supreme.court.letter'].sudo().browse(letter_id)
@@ -86,3 +86,4 @@ class LetterController(http.Controller):
             return "QR Code not available!"
 
         return http.request.make_response(qr_code_data, headers=[('Content-Type', 'image/png')])
+
