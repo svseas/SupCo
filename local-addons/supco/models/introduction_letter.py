@@ -1,3 +1,6 @@
+import random
+import string
+
 from odoo import api, fields, models
 from odoo import exceptions
 from datetime import datetime
@@ -41,10 +44,16 @@ class SupremeCourtLetter(models.Model):
 
     @api.depends('number')
     def _compute_qr_code(self):
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         for letter in self:
-            report_url = f'{base_url}/report/pdf/supco.report_supreme_court_letter_main/{letter.id}'
-            img = qrcode.make(report_url)
+            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            # Generate a unique identifier (token) for the public access
+            token = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
+
+            # Generate a URL containing the token
+            qr_code_link = f'{base_url}/letters/qr_code/{letter.id}/{token}'
+
+            # Generate a QR code from the token
+            img = qrcode.make(qr_code_link)
             buffer = io.BytesIO()
             img.save(buffer, format="PNG")
             encoded_image = base64.b64encode(buffer.getvalue())
@@ -57,3 +66,4 @@ class SupremeCourtLetter(models.Model):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         for letter in self:
             letter.qr_code_link = f'{base_url}/letters/qr_code/{letter.id}'
+
