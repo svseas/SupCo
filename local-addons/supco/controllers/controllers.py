@@ -6,7 +6,9 @@ from odoo.http import request, route, content_disposition, Response
 import io
 import qrcode
 from odoo.addons.web.controllers.main import ReportController
+import logging
 
+_logger = logging.getLogger(__name__)
 
 
 class UserController(http.Controller):
@@ -47,21 +49,35 @@ class UserController(http.Controller):
             return "User not found or You have no right to access."
 
 
-class PublicReportController(http.Controller):
+class YourControllerNameHere(http.Controller):
 
     @http.route(['/letters/public/<string:public_id>'], type='http', auth="public")
     def public_report_by_public_id(self, public_id, **kw):
+        _logger.info("Generating report for public_id: %s", public_id)
+
         # Find the letter by public_id
         letter = request.env['supreme.court.letter'].sudo().search([('public_id', '=', public_id)], limit=1)
 
-        # If not found, return a 404
         if not letter:
+            _logger.warning("No letter found for public_id: %s", public_id)
             return Response("Not Found", status=404)
 
-        report_name = 'supco.report_supreme_court_letter_main'
-        report = request.env['ir.actions.report']._get_report_from_name(report_name)
+        Report = request.env['ir.actions.report'].sudo().with_context()
 
-        # Use the built-in ReportController's method to fetch the report
-        return ReportController().report_routes(report_name, docids=str(letter.sudo().id), converter='pdf')
+        # Render the report as PDF
+        try:
+            pdf_content, _ = Report._render_qweb_pdf('supco.report_supreme_court_letter_main', res_ids=[letter.id])
+        except Exception as e:
+            _logger.error("Failed to generate report for public_id: %s, Error: %s", public_id, str(e))
+            return Response("Internal Server Error", status=500)
 
+        # Set filename to something meaningful, e.g., "letter_<public_id>.pdf"
+        filename = "letter_{}.pdf".format(public_id)
 
+        # Return the fetched PDF as a response.
+        pdfhttpheaders = [
+            ('Content-Type', 'application/pdf'),
+            ('Content-Length', len(pdf_content)),
+            ('Content-Disposition', content_disposition(filename))
+        ]
+        return request.make_response(pdf_content, headers=pdfhttpheaders)

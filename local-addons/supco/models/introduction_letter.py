@@ -33,7 +33,6 @@ class SupremeCourtLetter(models.Model):
     @api.depends('number')
     def _compute_custom_url(self):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-        report_name = 'supco.report_supreme_court_letter_main'
         for letter in self:
             if letter.public_id:
                 letter.custom_url = f'{base_url}/letters/public/{letter.public_id}'
