@@ -9,7 +9,7 @@ class Employee(models.Model):
     # title_position = fields.Char(string="Title Position")
     dob = fields.Date(string='Date of Birth')
     national_id = fields.Char(string='National ID')
-    department = fields.Many2many('supreme.court.department',string='Department')
+    department = fields.Many2one('supreme.court.department',string='Department')
     introduction_letter = fields.Many2many("supreme.court.letter",string="Supreme Court Letter")
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
 

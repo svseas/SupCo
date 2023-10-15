@@ -1,4 +1,4 @@
-<odoo>
+<!-- <odoo>
     <template id="template_name">
         <t t-name="website_user_info">
             <div>
@@ -6,6 +6,69 @@
                 <p><b>Date Of Birth:</b> <t t-esc="dob" /></p>
                 <p><b>QR Code:</b> <pre><t t-esc="qr_code" /></pre></p>
             </div>
+        </t>
+    </template>
+</odoo> -->
+
+
+<odoo>
+    <template id="template_name">
+        <t t-name="website_user_info">
+
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Employee's Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        div {
+            background-color: #fff;
+            width: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        b {
+            font-weight: bold;
+        }
+
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Employee's Information</h1>
+        <p><b>Name:</b> <t t-esc="name" /></p>
+        <p><b>Date of Birth:</b> <t t-esc="dob" /></p>
+        <p><b>National ID:</b> <t t-esc="national_id" /></p>
+        <p><b>Position:</b> <t t-esc="function" /></p>
+        <p><b>Department:</b> <t t-esc="department" /></p>
+        <p><b>QR Code:</b></p>
+        <pre><t t-esc="qr_code" /></pre>
+    </div>
+</body>
+</html>
+
         </t>
     </template>
 </odoo>

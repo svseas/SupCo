@@ -6,7 +6,7 @@ class Department(models.Model):
 
     name = fields.Char(string='Department', required=True)
     code = fields.Char(string='Code of Department', required=True)
-    employee = fields.Many2many('res.users',string='Employee')
+    employee = fields.One2many('res.users','department',string='Employee')
 
     _sql_constraints = [
         ("code_of_department_uq",
