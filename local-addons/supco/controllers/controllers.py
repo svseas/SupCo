@@ -48,42 +48,40 @@ class LetterController(http.Controller):
 
     @http.route('/letters/qr/<int:letter_id>', type='http', auth="public", website=True)
     def letter_qr(self, letter_id):
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-        report_url = f'{base_url}/report/pdf/supco.report_supreme_court_letter_main/{letter_id}'
-
-        response = requests.get(report_url, headers={
-            'Cookie': 'session_id=%s' % http.request.session.sid,
-        })
-
-        if response.status_code != 200:
-            return "Failed to fetch report content!"
-
-        encoded_content = base64.b64encode(response.content).decode("utf-8")
-
-        # Generate QR code from the encoded content
-        img = qrcode.make(encoded_content)
-        buffer = io.BytesIO()
-        img.save(buffer, "PNG")
-        buffer.seek(0)
-
-        filename = f"letter_{letter_id}.png"
-
-        # Update response headers to force a download prompt
-        headers = [
-            ('Content-Type', 'image/png'),
-            ('Content-Disposition', content_disposition(filename))
-        ]
-
-        return http.request.make_response(buffer.getvalue(), headers=headers)
-
-    @http.route('/letters/qr_code/<int:letter_id>', type='http', auth="public", website=True)
-    def get_qr_code(self, letter_id):
-        # Fetch the letter's QR code from the database
+        # Fetch the letter
         letter = http.request.env['supreme.court.letter'].sudo().browse(letter_id)
         if not letter:
             return "Letter not found!"
 
-        qr_code_data = base64.b64decode(letter.qr_code) if letter.qr_code else None
+        # Generate QR code from the letter content
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(letter.content)  # Replace with the actual field containing your letter content
+        qr.make(fit=True)
+
+        img = qr.make_image(fill_color="black", back_color="white")
+        buffer = io.BytesIO()
+        img.save(buffer, format="PNG")
+        qr_code_data = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+        # Save the QR code data in the letter record
+        letter.write({'qr_code': qr_code_data})
+
+        # Now you can generate and store the QR code without authentication
+        return "QR Code generated and stored successfully!"
+
+    @http.route('/letters/qr_code/<int:letter_id>', type='http', auth="public", website=True)
+    def get_qr_code(self, letter_id):
+        # Fetch the letter
+        letter = http.request.env['supreme.court.letter'].sudo().browse(letter_id)
+        if not letter:
+            return "Letter not found!"
+
+        qr_code_data = letter.qr_code
         if not qr_code_data:
             return "QR Code not available!"
 
