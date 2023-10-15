@@ -8,7 +8,7 @@ import requests
 
 class UserController(http.Controller):
 
-    @http.route('/users/<string:national_id>', type='http', auth="user", website=True)
+    @http.route('/users/<string:national_id>', type='http', auth="public", website=True)
     def user_info(self, national_id):
         user = request.env['res.users'].sudo().search([('national_id', '=', national_id)], limit=1)
 
@@ -46,29 +46,7 @@ class UserController(http.Controller):
 
 class LetterController(http.Controller):
 
-    @http.route('/letters/pdf/<int:letter_id>', type='http', auth="user", website=True)
-    def generate_pdf(self, letter_id):
-        # Fetch the letter record
-        letter = http.request.env['supreme.court.letter'].browse(letter_id)
-
-        if not letter:
-            return "Letter not found!"
-
-        # Get the report object using its complete XML ID
-        report = http.request.env.ref('supco.report_supreme_court_letter_main', False)
-        if not report:
-            return "Report not found!"
-
-        # Render the report to PDF
-        pdf_content, content_type = report.render_qweb_pdf(letter.ids)
-
-        # Return the rendered PDF
-        return http.request.make_response(pdf_content, headers=[
-            ('Content-Type', content_type),
-            ('Content-Disposition', f'filename=letter_{letter_id}.pdf;'),
-        ])
-
-    @http.route('/letters/qr/<int:letter_id>', type='http', auth="user", website=True)
+    @http.route('/letters/qr/<int:letter_id>', type='http', auth="public", website=True)
     def letter_qr(self, letter_id):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         report_url = f'{base_url}/report/pdf/supco.report_supreme_court_letter_main/{letter_id}'
@@ -88,5 +66,13 @@ class LetterController(http.Controller):
         img.save(buffer, "PNG")
         buffer.seek(0)
 
-        response = http.request.make_response(buffer.getvalue(), headers=[('Content-Type', 'image/png')])
-        return response
+        filename = f"letter_{letter_id}.png"
+
+        # Update response headers to force a download prompt
+        headers = [
+            ('Content-Type', 'image/png'),
+            ('Content-Disposition', content_disposition(filename))
+        ]
+
+        return http.request.make_response(buffer.getvalue(), headers=headers)
+
