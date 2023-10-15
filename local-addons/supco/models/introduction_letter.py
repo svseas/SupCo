@@ -49,3 +49,11 @@ class SupremeCourtLetter(models.Model):
             img.save(buffer, format="PNG")
             encoded_image = base64.b64encode(buffer.getvalue())
             letter.qr_code = encoded_image
+
+    qr_code_link = fields.Char(string="QR Code Link", compute="_compute_qr_code_link")
+
+    @api.depends('number')
+    def _compute_qr_code_link(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        for letter in self:
+            letter.qr_code_link = f'{base_url}/letters/qr_code/{letter.id}'

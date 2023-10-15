@@ -46,7 +46,7 @@ class UserController(http.Controller):
 
 class LetterController(http.Controller):
 
-    @http.route('/letters/qr/<int:letter_id>', type='http', auth="public", website=True)
+    @http.route('/letters/qr/<int:letter_id>', type='http', auth="user", website=True)
     def letter_qr(self, letter_id):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         report_url = f'{base_url}/report/pdf/supco.report_supreme_court_letter_main/{letter_id}'
@@ -76,3 +76,15 @@ class LetterController(http.Controller):
 
         return http.request.make_response(buffer.getvalue(), headers=headers)
 
+    @http.route('/letters/qr_code/<int:letter_id>', type='http', auth="public", website=True)
+    def get_qr_code(self, letter_id):
+        # Fetch the letter's QR code from the database
+        letter = http.request.env['supreme.court.letter'].sudo().browse(letter_id)
+        if not letter:
+            return "Letter not found!"
+
+        qr_code_data = base64.b64decode(letter.qr_code) if letter.qr_code else None
+        if not qr_code_data:
+            return "QR Code not available!"
+
+        return http.request.make_response(qr_code_data, headers=[('Content-Type', 'image/png')])

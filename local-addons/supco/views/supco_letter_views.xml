@@ -24,6 +24,7 @@
                             <field name="validity_date"/>
                             <field name="custom_url" widget="url"/>
                             <field name="qr_code" widget='image' class="oe_avatar"/>
+                            <field name="qr_code_link" widget="url"/>
                         </group>
                     </sheet>
                 </form>
@@ -45,6 +46,7 @@
                     <field name="request"/>
                     <field name="validity_date"/>
                     <field name="custom_url" widget="url"/>
+                    <field name="qr_code_link" widget="url"/>
                 </tree>
             </field>
         </record>
