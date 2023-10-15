@@ -91,7 +91,7 @@ class ReportDuplicator(http.Controller):
         # Return the base64-encoded report as a response for downloading
         pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', u'%s' % len(pdf))]
         response = request.make_response(pdf, headers=pdfhttpheaders)
-        response.headers['Content-Disposition'] = f'attachment; filename=duplicated_report.pdf'
+        response.headers['Content-Disposition'] = f'attachment; filename=GGT.pdf'
         return response
 
     def _render_report(self, report_record):
