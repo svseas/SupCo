@@ -1,12 +1,10 @@
 import random
 import string
-
-from odoo import api, fields, models
-from odoo import exceptions
-from datetime import datetime
-import qrcode
-import io
 import base64
+import io
+import qrcode
+from datetime import datetime
+from odoo import api, fields, models, exceptions
 
 
 class SupremeCourtLetter(models.Model):
@@ -23,6 +21,7 @@ class SupremeCourtLetter(models.Model):
     validity_date = fields.Date(string='Ngày hiệu lực')
     created_by = fields.Many2one('res.users', string='Tạo bởi', default=lambda self: self.env.user)
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
+    qr_code = fields.Binary("QR Code", compute='_compute_qr_code', store=True)
 
     @api.constrains('validity_date')
     def _check_date(self):
@@ -40,8 +39,6 @@ class SupremeCourtLetter(models.Model):
             else:
                 letter.custom_url = False
 
-    qr_code = fields.Binary("QR Code", compute="_compute_qr_code", store=True)
-
     @api.depends('number')
     def _compute_qr_code(self):
         for letter in self:
@@ -58,12 +55,3 @@ class SupremeCourtLetter(models.Model):
             img.save(buffer, format="PNG")
             encoded_image = base64.b64encode(buffer.getvalue())
             letter.qr_code = encoded_image
-
-    qr_code_link = fields.Char(string="QR Code Link", compute="_compute_qr_code_link")
-
-    @api.depends('number')
-    def _compute_qr_code_link(self):
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-        for letter in self:
-            letter.qr_code_link = f'{base_url}/letters/qr_code/{letter.id}'
-
