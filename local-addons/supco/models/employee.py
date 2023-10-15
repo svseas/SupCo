@@ -1,10 +1,12 @@
 from odoo import models, fields, api
 
+
 class Employee(models.Model):
     _inherit = 'res.users'
+
     dob = fields.Date(string='Date of Birth')
     national_id = fields.Char(string='National ID')
-    introduction_letter = fields.Many2many("supreme.court.letter",string="Supreme Court Letter")
+    introduction_letter = fields.Many2many("supreme.court.letter", string="Supreme Court Letter")
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
 
     @api.depends('national_id')
@@ -14,11 +16,11 @@ class Employee(models.Model):
                 user.custom_url = f'http://localhost:8060/users/{user.national_id}'
             else:
                 user.custom_url = False
-    
+
     _sql_constraints = [
         ("national_id_uq",
-        "UNIQUE (national_id)",
-        "National ID must be unique.")
-        ]
+         "UNIQUE (national_id)",
+         "National ID must be unique.")
+    ]
     department = fields.Many2many('supreme.court.department', string='Department')
     introduction_letter = fields.Many2many("supreme.court.letter", string="Supreme Court Letter")

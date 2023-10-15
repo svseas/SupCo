@@ -6,12 +6,6 @@
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_simple_form"/>
             <field name="arch" type="xml">
-
-                <!-- <notebook position="inside">
-                    <page string="Bao Cong Ly Preferences" name="supco_preferences">
-                        <field name="national_id">National ID</field>
-                    </page>
-                </notebook> -->
                 <xpath expr="//form" position="replace">
                     <form string="Users">
                         <sheet>
@@ -19,37 +13,16 @@
                             <h2>
                                 <field name="name" placeholder="Nguyen Van A"/>
                             </h2>
-
                                 <label for="login" string="Email Address"/>
                                 <h2>
                                     <field name="login" placeholder="e.g. email@yourcompany.com"/>
                                 </h2>
-                            <!-- <field name="id" invisible="1"/>
-                            <div class="oe_title">
-                                <label for="name"/>
-                                <h1>
-                                    <field name="name" placeholder="e.g. John Doe" required="1"/>
-                                </h1>
-                                <label for="login" string="Email Address"/>
-                                <h2>
-                                    <field name="login" placeholder="e.g. email@yourcompany.com"/>
-                                </h2>
-                                <label for="company_id" groups="base.group_multi_company"/>
-                                <field name="company_id" context="{'user_preference': 0}" groups="base.group_multi_company"/>
-                            </div> -->
                             <group>
-                                <!-- <label for="groups_id" string="Access Rights" attrs="{'invisible': [('id', '&gt;', 0)]}" groups="base.group_no_one"/>
-                                <div attrs="{'invisible': [('id', '&gt;', 0)]}" groups="base.group_no_one">
-                                    <field name="groups_id" readonly="1" widget="many2many_tags" options="{'color_field': 'color'}" style="display: inline;"/>
- You will be able to define additional access rights by editing the newly created user under the Settings / Users menu.
-                                </div> -->
                                 <field name="dob" widget="date"/>
                                 <field name="national_id"/>
                                 <field name="function"/>
                                 <field name="department" widget="many2many_tag"/>
-
                                 <field name="custom_url"/>
-
                             </group>
                         </sheet>
                     </form>
@@ -57,16 +30,7 @@
 
             </field>
         </record>
-        <!-- <record id="inherit_res_users_del_req_view" model="ir.ui.view">
-            <field name="name">res.users.del.req.view</field>
-            <field name="model">res.users</field>
-            <field name="inherit_id" ref="base.view_users_simple_form"/>
-            <field name="arch" type="xml">
-                <field name="login" position="attributes">
-                    <attribute name="required">False</attribute>
-                </field>
-            </field>
-        </record> -->
+
         <record id="supco_res_users_tree_inherit" model="ir.ui.view">
             <field name="name">supreme.court.employee.tree.view</field>
             <field name="model">res.users</field>
@@ -82,6 +46,7 @@
                 </xpath>
             </field>
         </record>
+
         <record id="action_supreme_court_employee" model="ir.actions.act_window">
             <field name="name">Employee</field>
             <field name="res_model">res.users</field>
