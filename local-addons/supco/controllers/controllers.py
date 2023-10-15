@@ -13,6 +13,9 @@ class UserController(http.Controller):
         user = request.env['res.users'].sudo().search([('national_id', '=', national_id)], limit=1)
 
         if user:
+            # Get the base URL from system parameters
+            base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
+
             name = user.name
             dob = user.dob
             id = user.national_id
@@ -20,12 +23,15 @@ class UserController(http.Controller):
             introduction_letter = user.introduction_letter
             position = user.function
             avatar = user.image_1920.decode("utf-8") if user.image_1920 else None
+
+            # Use the base URL to generate QR code dynamically
             qr = qrcode.QRCode()
-            qr.add_data(f"http://localhost:8060/users/{national_id}")
+            qr.add_data(f"{base_url}/users/{national_id}")
             f = io.StringIO()
             qr.print_ascii(out=f)
             f.seek(0)
             qr_code = f.read()
+
             return request.render('supco.template_name',
                                   {'name': name,
                                    'dob': dob,
