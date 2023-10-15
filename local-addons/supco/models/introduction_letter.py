@@ -3,10 +3,8 @@ import string
 import base64
 import io
 import qrcode
-from odoo import http
-from odoo.http import request
 from datetime import datetime
-from odoo import models, fields, api, exceptions
+from odoo import api, fields, models, exceptions
 
 
 class SupremeCourtLetter(models.Model):
@@ -28,15 +26,16 @@ class SupremeCourtLetter(models.Model):
     @api.constrains('validity_date')
     def _check_date(self):
         for record in self:
-            if record.validity_date and record.validity_date <= fields.Date.today():
+            if record.validity_date and record.validity_date <= datetime.today().date():
                 raise exceptions.ValidationError('Valid Date must be after today!')
 
     @api.depends('number')
     def _compute_custom_url(self):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        report_name = 'supco.report_supreme_court_letter_main'
         for letter in self:
             if letter.id:
-                letter.custom_url = f'/letters/{letter.id}'
+                letter.custom_url = f'{base_url}/report/pdf/{report_name}/{letter.id}'
             else:
                 letter.custom_url = False
 
@@ -48,7 +47,7 @@ class SupremeCourtLetter(models.Model):
             token = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
 
             # Generate a URL containing the token
-            qr_code_link = f'/letters/{letter.id}/{token}'
+            qr_code_link = f'{base_url}/letters/qr_code/{letter.id}/{token}'
 
             # Generate a QR code from the token
             img = qrcode.make(qr_code_link)
@@ -57,5 +56,23 @@ class SupremeCourtLetter(models.Model):
             encoded_image = base64.b64encode(buffer.getvalue())
             letter.qr_code = encoded_image
 
+    def duplicate_record_with_custom_url(self, original_record_id):
+        # Find the original record by ID
+        original_record = self.browse(original_record_id)
 
+        if original_record:
+            # Duplicate the original record
+            new_record = original_record.copy()
 
+            # Modify any fields you want in the new record
+            new_record.number += 1  # For example, increment the 'number' field
+
+            # Generate a custom URL for the new record
+            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            report_name = 'supco.report_supreme_court_letter_main'
+            new_url = f'{base_url}/{report_name}/{new_record.id}'
+            new_record.custom_url = new_url
+
+            # Save the new record by creating it
+            new_record.create(
+                {'number': new_record.number, 'custom_url': new_url})  # You may need to include other fields as well
