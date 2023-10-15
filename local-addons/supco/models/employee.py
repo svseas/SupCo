@@ -4,8 +4,8 @@ from odoo import models, fields, api
 class Employee(models.Model):
     _inherit = 'res.users'
 
-    dob = fields.Date(string='Date of Birth')
-    national_id = fields.Char(string='National ID')
+    dob = fields.Date(string='Ngày Sinh')
+    national_id = fields.Char(string='Số CCCD')
     introduction_letter = fields.Many2many("supreme.court.letter", string="Supreme Court Letter")
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
 
@@ -22,5 +22,5 @@ class Employee(models.Model):
          "UNIQUE (national_id)",
          "National ID must be unique.")
     ]
-    department = fields.Many2many('supreme.court.department', string='Department')
+    department = fields.Many2many('supreme.court.department', string='Phòng ban')
     introduction_letter = fields.Many2many("supreme.court.letter", string="Supreme Court Letter")

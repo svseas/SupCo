@@ -8,21 +8,24 @@
             <field name="arch" type="xml">
                 <xpath expr="//form" position="replace">
                     <form string="Users">
+
                         <sheet>
+                            <field name="image_1920" widget="image" class="oe_avatar"
+                                   options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/>
                             <label for="name" string="Full Name"/>
                             <h2>
                                 <field name="name" placeholder="Nguyen Van A"/>
                             </h2>
-                                <label for="login" string="Email Address"/>
-                                <h2>
-                                    <field name="login" placeholder="e.g. email@yourcompany.com"/>
-                                </h2>
+                            <label for="login" string="Email Address"/>
+                            <h2>
+                                <field name="login" placeholder="e.g. email@yourcompany.com"/>
+                            </h2>
                             <group>
                                 <field name="dob" widget="date"/>
                                 <field name="national_id"/>
                                 <field name="function"/>
-                                <field name="department" widget="many2many_tag"/>
-                                <field name="custom_url"/>
+                                <field name="department" widget="many2many_tags"/>
+                                <field name="custom_url" widget="url"/>
                             </group>
                         </sheet>
                     </form>
@@ -54,6 +57,7 @@
             <field name="view_id" ref="supco_res_users_tree_inherit"/>
         </record>
         <menuitem id="menu_supco_main" name="SupCo" sequence="10"/>
-        <menuitem id="menu_supco_employee" name="Employee" parent="menu_supco_main" action="action_supreme_court_employee" sequence="20"/>
+        <menuitem id="menu_supco_employee" name="Employee" parent="menu_supco_main"
+                  action="action_supreme_court_employee" sequence="20"/>
     </data>
 </odoo>

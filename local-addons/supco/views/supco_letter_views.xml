@@ -13,6 +13,7 @@
                 <form>
                     <sheet>
                         <group>
+                            <field name="id"/>
                             <field name="number"/>
                             <field name="recipient_name"/>
                             <field name="title_position"/>
@@ -21,6 +22,8 @@
                             <field name="regarding"/>
                             <field name="request"/>
                             <field name="validity_date"/>
+                            <field name="custom_url" widget="url"/>
+                            <field name="qr_code" widget='image' class="oe_avatar"/>
                         </group>
                     </sheet>
                 </form>
@@ -41,6 +44,7 @@
                     <field name="regarding"/>
                     <field name="request"/>
                     <field name="validity_date"/>
+                    <field name="custom_url" widget="url"/>
                 </tree>
             </field>
         </record>
