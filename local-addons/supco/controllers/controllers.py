@@ -11,12 +11,17 @@ class UserController(http.Controller):
         if user:
             name = user.name
             dob = user.dob
+            id = user.national_id
+            department = user.department.name
+            introduction_letter = user.introduction_letter
+            position = user.function
+
             qr = qrcode.QRCode()
             qr.add_data(f"http://localhost:8060/users/{national_id}")
             f = io.StringIO()
             qr.print_ascii(out=f)
             f.seek(0)
             qr_code = f.read()
-            return request.render('supco.template_name', {'name': name, 'dob': dob, 'qr_code': qr_code})
+            return request.render('supco.template_name', {'name': name, 'dob': dob, 'national_id': id, 'department': department, 'function': position, 'qr_code': qr_code})
         else:
             return "User not found or You have no right to access."
