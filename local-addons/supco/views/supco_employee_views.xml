@@ -47,7 +47,9 @@
                                 <field name="national_id"/>
                                 <field name="function"/>
                                 <field name="department" widget="many2many_tag"/>
+
                                 <field name="custom_url"/>
+
                             </group>
                         </sheet>
                     </form>
@@ -72,7 +74,10 @@
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="replace">
                     <tree string="Users">
+
                         <field name="custom_url"/>
+
+                        <field name="dob"/>
                     </tree>
                 </xpath>
             </field>

@@ -16,3 +16,5 @@ class Department(models.Model):
         "UNIQUE (name)",
         "Name of Department must be unique.")
         ]
+    employee = fields.Many2many('res.users',string='Employee')
+
