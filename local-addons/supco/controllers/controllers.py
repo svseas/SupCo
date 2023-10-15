@@ -18,7 +18,7 @@ class UserController(http.Controller):
 
             name = user.name
             dob = user.dob
-            id = user.national_id
+            national_id = user.national_id
             department = user.department.name
             introduction_letter = user.introduction_letter
             position = user.function
@@ -35,7 +35,7 @@ class UserController(http.Controller):
             return request.render('supco.template_name',
                                   {'name': name,
                                    'dob': dob,
-                                   'national_id': id,
+                                   'national_id': national_id,
                                    'department': department,
                                    'function': position,
                                    'qr_code': qr_code,

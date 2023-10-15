@@ -24,4 +24,3 @@ class Employee(models.Model):
          "National ID must be unique.")
     ]
     department = fields.Many2many('supreme.court.department', string='Phòng ban')
-    introduction_letter = fields.Many2many("supreme.court.letter", string="Supreme Court Letter")
