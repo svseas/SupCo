@@ -42,11 +42,13 @@
                         }
 
                         .avatar-size {
-                        width: 100px; /* You can adjust this width to match the QR code's size */
-                        height: auto;
+                        width: 100px;
+                        height: 100px;
                         display: block;
                         margin: 10px auto;
-                        border-radius: 50%; /* This will make the avatar circular */
+                        border-radius: 50%;
+                        object-fit: cover;
+                        overflow: hidden;
                         }
                     </style>
                 </head>
@@ -54,27 +56,27 @@
                     <div>
                         <t t-if="image_1920">
                             <img t-att-src="'data:image/png;base64,' + image_1920" alt="Employee Avatar"
-                                class="oe_avatar avatar-size"/>
+                                 class="oe_avatar avatar-size"/>
                         </t>
-                        <h1>Employee's Information</h1>
+                        <h1>Thông tin nhân viên</h1>
                         <p>
-                            <b>Name:</b>
+                            <b>Họ và Tên:</b>
                             <t t-esc="name"/>
                         </p>
                         <p>
-                            <b>Date of Birth:</b>
+                            <b>Ngày sinh:</b>
                             <t t-esc="dob"/>
                         </p>
                         <p>
-                            <b>National ID:</b>
+                            <b>CCCD:</b>
                             <t t-esc="national_id"/>
                         </p>
                         <p>
-                            <b>Position:</b>
+                            <b>Vị trí:</b>
                             <t t-esc="function"/>
                         </p>
                         <p>
-                            <b>Department:</b>
+                            <b>Phòng ban:</b>
                             <t t-esc="department"/>
                         </p>
                         <p>
