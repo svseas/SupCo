@@ -84,14 +84,22 @@ class SupremeCourtLetter(models.Model):
     second_approval_by = fields.Many2one('res.users', string="Second Approved By")
 
     def action_first_approval(self):
+        self.ensure_one()  # Ensure that only one record is being processed
         self.write({
             'approval_status': 'waiting_second_approval',
             'first_approval_by': self.env.user.id
         })
 
     def action_second_approval(self):
+        self.ensure_one()
         self.write({
             'approval_status': 'approved',
             'second_approval_by': self.env.user.id
         })
 
+    def action_reject(self):
+        self.ensure_one()
+        self.write({
+            'approval_status': 'rejected',
+            'second_approval_by': False,  # Reset the second approval user, if previously approved
+        })

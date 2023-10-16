@@ -17,16 +17,22 @@
             <field name="model">supreme.court.letter</field>
             <field name="arch" type="xml">
                 <form>
-                    <button name="action_first_approval" string="First Approval"
-                            type="object" class="oe_highlight"
-                            groups="module_name.group_first_approval"
-                            attrs="{'invisible': [('approval_status', '!=', 'draft')]}"/>
+                    <header>
+                        <button name="action_first_approval" string="First Approval"
+                                type="object" class="oe_highlight"
+                                groups="module_name.group_first_approval"
+                                attrs="{'invisible': [('approval_status', 'not in', ['draft', 'rejected'])]}"/>
 
-                    <button name="action_second_approval" string="Second Approval"
-                            type="object" class="oe_highlight"
-                            groups="module_name.group_second_approval"
-                            attrs="{'invisible': [('approval_status', '!=', 'waiting_first_approval')]}"/>
+                        <button name="action_second_approval" string="Second Approval"
+                                type="object" class="oe_highlight"
+                                groups="module_name.group_second_approval"
+                                attrs="{'invisible': [('approval_status', '!=', 'waiting_second_approval')]}"/>
 
+                        <button name="action_reject" string="Reject"
+                                type="object" class="oe_red"
+                                groups="module_name.group_second_approval,module_name.group_first_approval"
+                                attrs="{'invisible': [('approval_status', 'in', ['rejected', 'draft'])]}"/>
+                    </header>
                     <sheet>
                         <group>
                             <field name="id"/>
@@ -40,6 +46,9 @@
                             <field name="validity_date"/>
                             <field name="custom_url" widget="url"/>
                             <field name="qr_code" widget='image' class="oe_avatar"/>
+                            <field name="approval_status" readonly="1"/>
+                            <field name="first_approval_by" readonly="1"/>
+                            <field name="second_approval_by" readonly="1"/>
                         </group>
                     </sheet>
                 </form>
