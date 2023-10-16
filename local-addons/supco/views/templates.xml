@@ -73,7 +73,7 @@
                         </p>
                         <p>
                             <b>Vị trí:</b>
-                            <t t-esc="function"/>
+                            <t t-esc="position"/>
                         </p>
                         <p>
                             <b>Phòng ban:</b>
