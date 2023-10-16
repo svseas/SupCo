@@ -59,7 +59,7 @@
                     <div style="margin-top: 20px;">
 
                         Đề nghị Quý cơ quan giúp đỡ để đồng chí
-                        <span t-field="doc.request"/>
+                        <span t-field="doc.recipient_name"/>
                         hoàn thành nhiệm vụ
                     </div>
                     <div style="margin-top: 20px;">
@@ -67,7 +67,14 @@
                         <span t-field="doc.validity_date"/>
                     </div>
                 </div>
-                <div style="float: right; width: 50%;">
+                <!-- QR Code Section -->
+                <div style="float: left; width: 30%; margin-right: 2%; margin-top: 50px;">
+                    <img t-if="doc.qr_code" t-attf-src="data:image/png;base64,{{doc.qr_code}}"
+                         style="max-width: 100%;"/>
+                </div>
+
+                <!-- Right Section -->
+                <div style="float: right; width: 65%;">
                     <div style="text-align: center; margin-top: 50px; font-style: italic;">
                         Hà Nội,
                         <span t-field="doc.create_date" t-options='{"widget": "date"}'/>

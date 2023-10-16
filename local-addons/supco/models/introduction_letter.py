@@ -11,14 +11,25 @@ class SupremeCourtLetter(models.Model):
     _name = 'supreme.court.letter'
     _description = 'Supreme Court Letter'
 
-    number = fields.Integer(string='Số')
-    recipient_name = fields.Char(string='Đồng chí')
-    title_position = fields.Char(string='Chức vụ')
-    organization_unit = fields.Char(string='Đơn vị')
-    address = fields.Char(string='Cử đến')
-    regarding = fields.Text(string='Về việc')
-    request = fields.Text(string='Yêu cầu (Tên các đồng chí)')
-    validity_date = fields.Date(string='Ngày hiệu lực')
+    number = fields.Integer(string='Number')
+    user_ids = fields.Many2many('res.users', string='Sender')
+    recipient_name = fields.Char(string='Recipient Names', compute='_compute_recipient_name', store=True)
+
+    @api.depends('user_ids')
+    def _compute_recipient_name(self):
+        """This method is used to compute the recipient names"""
+        for letter in self:
+            recipient_name = ''
+            for user in letter.user_ids:
+                if user.name:
+                    recipient_name += user.name + ', '
+            letter.recipient_name = recipient_name[:-2]
+
+    title_position = fields.Char(string='Title Position')
+    organization_unit = fields.Char(string='Organization Unit')
+    address = fields.Char(string='Address')
+    regarding = fields.Text(string='Regarding')
+    validity_date = fields.Date(string='Validity Date')
     created_by = fields.Many2one('res.users', string='Tạo bởi', default=lambda self: self.env.user)
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
     qr_code = fields.Binary("QR Code", compute='_compute_qr_code', store=True)

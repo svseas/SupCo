@@ -15,12 +15,12 @@
                         <group>
                             <field name="id"/>
                             <field name="number"/>
+                            <field name="user_ids" widget="many2many_tags"/>
                             <field name="recipient_name"/>
                             <field name="title_position"/>
                             <field name="organization_unit"/>
                             <field name="address"/>
                             <field name="regarding"/>
-                            <field name="request"/>
                             <field name="validity_date"/>
                             <field name="custom_url" widget="url"/>
                             <field name="qr_code" widget='image' class="oe_avatar"/>
@@ -42,7 +42,6 @@
                     <field name="organization_unit"/>
                     <field name="address"/>
                     <field name="regarding"/>
-                    <field name="request"/>
                     <field name="validity_date"/>
                     <field name="custom_url" widget="url"/>
                 </tree>

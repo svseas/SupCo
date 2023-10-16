@@ -4,8 +4,8 @@ from odoo import models, fields, api
 class Employee(models.Model):
     _inherit = 'res.users'
 
-    dob = fields.Date(string='Ngày Sinh')
-    national_id = fields.Char(string='Số CCCD')
+    dob = fields.Date(string='DOB')
+    national_id = fields.Char(string='National ID')
     introduction_letter = fields.Many2many("supreme.court.letter", string="Supreme Court Letter")
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
 
