@@ -5,15 +5,23 @@ import io
 import qrcode
 from datetime import datetime
 from odoo import api, fields, models, exceptions
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class SupremeCourtLetter(models.Model):
     _name = 'supreme.court.letter'
     _description = 'Supreme Court Letter'
 
-    number = fields.Integer(string='Number')
+    number = fields.Integer(string='Number', required=True, copy=False, readonly=True, index=True, default=lambda self: self.env['ir.sequence'].next_by_code('supreme.court.letter'))
     user_ids = fields.Many2many('res.users', string='Sender')
     recipient_name = fields.Char(string='Recipient Names', compute='_compute_recipient_name', store=True)
+    display_number = fields.Char(string='Display Number', compute='_compute_display_number')
+
+    @api.depends('number')
+    def _compute_display_number(self):
+        for record in self:
+            record.display_number = f'{record.number:05}'
 
     @api.depends('user_ids')
     def _compute_recipient_name(self):
@@ -64,4 +72,10 @@ class SupremeCourtLetter(models.Model):
                 encoded_image = base64.b64encode(buffer.getvalue())
                 letter.qr_code = encoded_image
 
+    # @api.model
+    # def create(self, vals):
+    #     _logger.info("Vals before assignment: %s", vals)
+    #     vals['number'] = self.env['ir.sequence'].next_by_code('supreme.court.letter')
+    #     _logger.info("Vals after assignment: %s", vals)
+    #     return super(SupremeCourtLetter, self).create(vals)
 

@@ -26,7 +26,7 @@ class UserController(http.Controller):
             national_id = user.national_id
             department = user.department.name
             introduction_letter = user.introduction_letter
-            position = user.function
+            position = user.position
             avatar = user.image_1920.decode("utf-8") if user.image_1920 else None
 
             # Use the base URL to generate QR code dynamically
@@ -42,7 +42,7 @@ class UserController(http.Controller):
                                    'dob': dob,
                                    'national_id': national_id,
                                    'department': department,
-                                   'function': position,
+                                   'position': position,
                                    'qr_code': qr_code,
                                    'image_1920': avatar})
         else:

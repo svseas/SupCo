@@ -22,7 +22,7 @@
                     </div>
                     <div style="text-align: center; width: 100%; margin-top: 5px; margin-left: -40px">
                         Số:
-                        <span t-field="doc.number"/>
+                        <span t-field="doc.display_number"/>
                         /GGT-BCL
                     </div>
                 </div>
@@ -94,8 +94,14 @@
                         Điện thoại: 024.3824.7204 – 024. 3936.5550
                     </div>
                 </div>
+
                 <!-- Clear float -->
                 <div style="clear: both;"></div>
+                <div style="text-align: center; margin-top: 60px;"> <!-- Center align and margin-top for spacing -->
+                    <p style="font-weight: bold; font-style: italic;"> <!-- Bold and Italic styling -->
+                        Vui lòng kiểm tra tính xác thực của văn bản này bằng cách quét mã QR
+                    </p>
+                </div>
             </div>
         </t>
     </template>

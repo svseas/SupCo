@@ -6,6 +6,12 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record id="seq_supreme_court_letter" model="ir.sequence">
+            <field name="name">Supreme Court Letter</field>
+            <field name="code">supreme.court.letter</field>
+            <field name="padding">5</field>
+        </record>
+
         <record id="view_form_supreme_court_letter" model="ir.ui.view">
             <field name="name">supreme.court.letter.form</field>
             <field name="model">supreme.court.letter</field>
@@ -14,7 +20,7 @@
                     <sheet>
                         <group>
                             <field name="id"/>
-                            <field name="number"/>
+                            <field name="display_number"/>
                             <field name="user_ids" widget="many2many_tags"/>
                             <field name="recipient_name"/>
                             <field name="title_position"/>

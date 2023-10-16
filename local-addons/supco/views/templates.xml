@@ -1,7 +1,6 @@
 <odoo>
     <template id="template_name">
         <t t-name="website_user_info">
-
             <html lang="vi">
                 <head>
                     <meta charset="UTF-8"/>
