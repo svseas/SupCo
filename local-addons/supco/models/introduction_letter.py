@@ -72,10 +72,26 @@ class SupremeCourtLetter(models.Model):
                 encoded_image = base64.b64encode(buffer.getvalue())
                 letter.qr_code = encoded_image
 
-    # @api.model
-    # def create(self, vals):
-    #     _logger.info("Vals before assignment: %s", vals)
-    #     vals['number'] = self.env['ir.sequence'].next_by_code('supreme.court.letter')
-    #     _logger.info("Vals after assignment: %s", vals)
-    #     return super(SupremeCourtLetter, self).create(vals)
+    approval_status = fields.Selection([
+        ('draft', 'Draft'),
+        ('waiting_first_approval', 'Waiting for First Approval'),
+        ('waiting_second_approval', 'Waiting for Second Approval'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected')
+    ], default='draft', string="Approval Status")
+
+    first_approval_by = fields.Many2one('res.users', string="First Approved By")
+    second_approval_by = fields.Many2one('res.users', string="Second Approved By")
+
+    def action_first_approval(self):
+        self.write({
+            'approval_status': 'waiting_second_approval',
+            'first_approval_by': self.env.user.id
+        })
+
+    def action_second_approval(self):
+        self.write({
+            'approval_status': 'approved',
+            'second_approval_by': self.env.user.id
+        })
 

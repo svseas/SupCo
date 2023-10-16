@@ -17,6 +17,16 @@
             <field name="model">supreme.court.letter</field>
             <field name="arch" type="xml">
                 <form>
+                    <button name="action_first_approval" string="First Approval"
+                            type="object" class="oe_highlight"
+                            groups="module_name.group_first_approval"
+                            attrs="{'invisible': [('approval_status', '!=', 'draft')]}"/>
+
+                    <button name="action_second_approval" string="Second Approval"
+                            type="object" class="oe_highlight"
+                            groups="module_name.group_second_approval"
+                            attrs="{'invisible': [('approval_status', '!=', 'waiting_first_approval')]}"/>
+
                     <sheet>
                         <group>
                             <field name="id"/>

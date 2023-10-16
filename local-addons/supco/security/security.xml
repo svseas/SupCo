@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_first_approval" model="res.groups">
+        <field name="name">Supreme Court Letter: First Level Approval</field>
+    </record>
+
+    <record id="group_second_approval" model="res.groups">
+        <field name="name">Supreme Court Letter: Second Level Approval</field>
+    </record>
+</odoo>
