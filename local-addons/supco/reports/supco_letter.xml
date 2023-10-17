@@ -106,8 +106,12 @@
                                 </h5>
                             </div>
                             <h5 class="mt-4" style="text-align: center; font-style: italic;">
-                                Hà Nội,
-                                <span t-field="doc.create_date" t-options='{"widget": "date", "format": "dd/MM/yyyy"}'/>
+                                Hà Nội, ngày
+                                <span t-field="doc.create_date" t-options='{"widget": "date", "format": " dd"}'/>
+                                tháng
+                                <span t-field="doc.create_date" t-options='{"widget": "date", "format": " MM"}'/>
+                                năm
+                                <span t-field="doc.create_date" t-options='{"widget": "date", "format": " yyyy"}'/>
                             </h5>
                         </div>
                     </div>

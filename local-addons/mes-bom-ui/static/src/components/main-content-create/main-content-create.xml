@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.main_content_create_template" owl="1">
+    <div class="main-content-create ms-1">
+      <div class="btn-bar d-flex flex-row justify-content-between">
+        <div class="control-btn d-flex flex-row px-2">
+          <MesButton color="'primary'" status="'normal'">
+            <div>
+              <i class="icon icon-check-circle me-2"/>
+            </div>
+            <div>Lưu</div>
+          </MesButton>
+
+          <MesButton color="'primary'" status="'normal'">
+            <div>
+              <i class="icon icon-check-circle me-2"/>
+            </div>
+            <div>Lưu &amp; Tạo mới</div>
+          </MesButton>
+
+          <MesButton color="'outline'" status="'normal'">
+            <div>
+              <i class="icon icon-x-circle me-2"/>
+            </div>
+            <div>Hủy</div>
+          </MesButton>
+        </div>
+        <div class="search-bar d-flex flex-row">
+          <MesInput status="status" placeholder="'Placeholder text'">
+          </MesInput>
+          <div class="my-auto px-2">
+            <i class="icon icon-search"/>
+          </div>
+        </div>
+      </div>
+      <h2 class="mb-3">Thông tin chung</h2>
+      <div class="general-info d-flex flex-row w-100">
+        <div class="general-info-left d-flex flex-column mes-flex-item mes-gap">
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Tên nguyên liệu</label>
+            <MesInput status="status" placeholder="'Cung cấp tên nguyên vật liệu'">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Mã nguyên liệu</label>
+            <MesInput status="status" placeholder="'Cung cấp mã nguyên vật liệu'">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Mô tả</label>
+            <MesInput status="status" placeholder="'Mô tả nguyên vật liệu'">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Hình ảnh</label>
+            <MesButton color="'outline'" status="'normal'">
+              <div>
+                <i class="icon icon-upload me-4"/>
+              </div>
+              <div>
+                <div class="text-center">Nhấp để tải lên</div>
+                <div class="text-center">PNG hoặc JPG (tối đa 3MB)</div>
+              </div>
+            </MesButton>
+          </div>
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Vật liệu điện tử</label>
+            <input type="checkbox" id="myCheckbox" name="myCheckbox"/>
+          </div>
+        </div>
+        <div class="general-info-right d-flex flex-column mes-flex-item mes-gap">
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Quy cách</label>
+            <MesInput status="status" placeholder="''">
+            </MesInput>
+          </div>
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Đơn vị</label>
+            <MesInput status="status" placeholder="''">
+            </MesInput>
+          </div>
+        </div>
+      </div>
+      <h2 class="mb-3">Thông tin vật liệu điện tử</h2>
+      <div class="material-info d-flex flex-row w-100">
+        <div class="material-info-left d-flex flex-column mes-flex-item mes-gap">
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Vị trí cắm</label>
+            <MesInput status="status" placeholder="'Mô tả vị trí cắm'">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Kiểu chân</label>
+            <MesInput status="status" placeholder="'Mô tả kiểu chân'">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Sô tham chiếu</label>
+            <MesInput status="status" placeholder="'Cung cấp số tham chiếu'">
+            </MesInput>
+          </div>
+
+        </div>
+        <div class="material-info-right d-flex flex-column mes-flex-item mes-gap">
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Nhà sản xuất</label>
+            <MesInput status="status" placeholder="'Cung cấp Nhà sản xuất'">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Mã hàng NSX</label>
+            <MesInput status="status" placeholder="'Cung cấp Mã hàng NSX'">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Nhà cung cấp</label>
+            <MesInput status="status" placeholder="'Cung cấp Nhà cung cấp'">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Mã hàng NCC</label>
+            <MesInput status="status" placeholder="'Cung cấp Mã hàng NCC'">
+            </MesInput>
+          </div>
+        </div>
+      </div>
+    </div>
+  </t>
+</templates>

@@ -1,0 +1,66 @@
+.main-contentt {
+  width: 100%;
+  border: solid black 1px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.action-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-icon {
+  color: var(--nightshift-100);
+}
+
+/* Style the table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+/* Style the table headers */
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+  border-top: 2px solid #ddd;
+  /* Add a top border */
+  border-bottom: 2px solid #ddd;
+  /* Add a bottom border */
+}
+
+/* Style the table rows */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Style the table cells */
+td {
+  padding: 10px;
+}
+
+/* Hover effect for table rows */
+tr:hover {
+  background-color: #ddd;
+}
+
+tr {
+  border-radius: 8px;
+}
+
+.data-group {
+  height: 100%;
+  overflow-y: auto;
+}

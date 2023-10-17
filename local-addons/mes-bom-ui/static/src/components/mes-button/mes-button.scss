@@ -1,0 +1,86 @@
+.mes__btn {
+  box-sizing: border-box;
+  display: flex;
+  padding: 8px 20px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  cursor: pointer;
+  width: fit-content;
+  height: fit-content;
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap;
+}
+
+// Primary button
+.mes__btn--primary {
+  background-color: var(--persian-green-600);
+  color: var(--dayshift-50);
+}
+
+.mes__btn--primary:hover {
+  background-color: var(--persian-green-700);
+}
+
+.mes__btn--primary:focus {
+  border: 3px solid var(--persian-green-300, #60CEC1);
+  transition: border 0.1s ease-in-out;
+}
+
+.mes__btn--primary.mes__btn--active {
+  background-color: var(--persian-green-900);
+}
+
+.mes__btn--primary.mes__btn--deactive {
+  background-color: var(--persian-green-300);
+}
+
+// Outline Button
+.mes__btn--outline {
+  background-color: var(--persian-green-50);
+  color: var(--persian-green-600);
+  border: 1px solid var(--persian-green-600, #0D7F71);
+}
+
+.mes__btn--outline:hover {
+  background: var(--persian-green-100, #D8F3F0);
+  border: 1px solid var(--persian-green-500, #109C8B);
+}
+
+.mes__btn--outline:focus {
+  border: 3px solid var(--persian-green-300, #60CEC1);
+  background: var(--persian-green-50, #F4FCFB);
+  transition: border 0.1s ease-in-out;
+}
+
+.mes__btn--outline.mes__btn--active {
+  border: 1px solid var(--persian-green-500, #109C8B);
+  background: var(--persian-green-300, #60CEC1);
+}
+
+.mes__btn--outline.mes__btn--deactive {
+  border: 1px solid var(--persian-green-300, #60CEC1);
+  background: var(--persian-green-50, #F4FCFB);
+}
+
+//Ghost Button
+.mes__btn--ghost {
+  color: var(--persian-green-500);
+}
+
+.mes__btn--ghost:hover {
+  color: var(--persian-green-700);
+}
+
+.mes__btn--ghost:focus {
+  text-decoration: underline;
+  color: var(--persian-green-500);
+}
+
+.mes__btn--ghost.mes__btn--active {
+  color: var(--persian-green-800);
+}
+
+.mes__btn--ghost.mes__btn--deactive {
+  color: var(--persian-green-100);
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.color_template" owl="1">
+    <div>
+      <div class="color-group">
+        <t t-foreach="colorNames" t-as="colorName" t-key="colorName_index">
+          <div class="color-row">
+            <t t-foreach="variants" t-as="color" t-key="color_index">
+              <div class="color-box" t-att-class="colorName + color">
+                <span class="my-tooltip">
+                  <t t-out="colorName + color" />
+                </span>
+              </div>
+            </t>
+          </div>
+        </t>
+      </div>
+    </div>
+  </t>
+</templates>

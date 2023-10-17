@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.CheckUi" owl="1">
+    <div class="container overflow-y-scroll">
+      <div class="text-left">
+        <p class="m-h1">Heading 1</p>
+        <p class="m-h2">Heading 2</p>
+        <p class="m-h3">Heading 3</p>
+        <p class="m-h4">Heading 4</p>
+        <p class="m-sub-h">Sub Heading</p>
+        <p class="m-body">Body</p>
+        <p class="m-small">Small</p>
+      </div>
+      <ColorTemplate/>
+      <MesButtonGallery/>
+      <MesInputCheck/>
+      <div class="mt-2">
+        <t t-foreach="['Nguyen', 'Hoang', 'Long']" t-as="name" t-key="name_index">
+          <PropsExample name="name"/>
+        </t>
+      </div>
+      <OrmExample />
+      <div class="mt-2">
+        <p class="feather">Hoang Long  <i class="icon icon-airplay"></i>
+        </p>
+      </div>
+      <TestNavbar />
+      <MainContentCreate></MainContentCreate>
+    </div>
+  </t>
+</templates>

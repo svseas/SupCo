@@ -1,0 +1,28 @@
+.mes__input {
+  display: flex;
+  padding: 8px 16px;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 8px;
+  border: 1px solid var(--dayshift-500, #D3D3D3);
+  background: var(--dayshift-50, #FCFCFC);
+}
+
+.mes__input:focus {
+  border: 3px solid var(--persian-green-300, #60CEC1);
+  color: var(--nightshift-700, #3D3D3D);
+  font-weight: 400;
+}
+
+.mes__input::placeholder {
+  color: var(--dayshift-900, #B3B3B3);
+}
+
+.mes__input.mes__input--completed {
+  color: var(--nightshift-700, #3D3D3D);
+}
+
+.mes__input.mes__input--invalid {
+  border: 1px solid var(--cerise-red-500, #E65F5F);
+  color: var(--cerise-red-500, #E65F5F);
+}

@@ -6,30 +6,29 @@
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_simple_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//form" position="replace">
-                    <form string="Users">
 
-                        <sheet>
-                            <field name="image_1920" widget="image" class="oe_avatar"
-                                   options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/>
-                            <label for="name" string="Full Name"/>
-                            <h2>
-                                <field name="name" placeholder="Nguyen Van A"/>
-                            </h2>
-                            <label for="login" string="Email Address"/>
-                            <h2>
-                                <field name="login" placeholder="e.g. email@yourcompany.com"/>
-                            </h2>
-                            <group>
-                                <field name="dob" widget="date"/>
-                                <field name="national_id"/>
-                                <field name="position"/>
-                                <field name="department" widget="many2many_tags"/>
-                                <field name="custom_url" widget="url"/>
-                            </group>
-                        </sheet>
-                    </form>
-                </xpath>
+                <form string="Users">
+
+                    <sheet>
+                        <field name="image_1920" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/>
+                        <label for="name" string="Full Name"/>
+                        <h2>
+                            <field name="name" placeholder="Nguyen Van A"/>
+                        </h2>
+                        <label for="login" string="Email Address"/>
+                        <h2>
+                            <field name="login" placeholder="e.g. email@yourcompany.com"/>
+                        </h2>
+                        <group>
+                            <field name="dob" widget="date"/>
+                            <field name="national_id"/>
+                            <field name="position"/>
+                            <field name="department" widget="many2many_tags"/>
+                            <field name="custom_url" widget="url"/>
+                        </group>
+                    </sheet>
+                </form>
+
 
             </field>
         </record>
@@ -39,15 +38,13 @@
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_tree"/>
             <field name="arch" type="xml">
-                <xpath expr="//tree" position="replace">
-                    <tree string="Users">
-                        <field name="name"/>
-                        <field name="department" widget="many2many_tags"/>
-                        <field name="position"/>
-                        <field name="custom_url"/>
-                        <field name="dob"/>
-                    </tree>
-                </xpath>
+                <tree string="Users">
+                    <field name="name"/>
+                    <field name="department" widget="many2many_tags"/>
+                    <field name="position"/>
+                    <field name="custom_url"/>
+                    <field name="dob"/>
+                </tree>
             </field>
         </record>
 
@@ -58,7 +55,6 @@
             <field name="view_id" ref="supco_res_users_tree_inherit"/>
         </record>
         <menuitem id="menu_supco_main" name="SupCo" sequence="10"/>
-        <menuitem id="menu_supco_employee" name="Employee" parent="menu_supco_main"
-                  action="action_supreme_court_employee" sequence="20"/>
+        <menuitem id="menu_supco_employee" name="Employee" parent="menu_supco_main" action="action_supreme_court_employee" sequence="20"/>
     </data>
 </odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.mes_bom_detail_page_template" owl="1">
+    <div class="detail-container d-flex flex-column w-100">
+      <div class="d-flex flex-row w-100">
+        <div class="d-flex flex-column w-100" t-on-click="() => this.setCurrentTab('quytrinh')">
+          <MesTabButton status="currentTab.name === 'quytrinh'">Quy trình</MesTabButton>
+        </div>
+        <div class="d-flex flex-column w-100" t-on-click="() => this.setCurrentTab('nguyenvatlieu')">
+          <MesTabButton status="currentTab.name === 'nguyenvatlieu'">Nguyên vật liệu</MesTabButton>
+        </div>
+        <div class="d-flex flex-column w-100" t-on-click="() => this.setCurrentTab('thietbi')">
+          <MesTabButton status="currentTab.name === 'thietbi'">Thiết bị</MesTabButton>
+        </div>
+        <div class="d-flex flex-column w-100" t-on-click="() => this.setCurrentTab('nhancong')">
+          <MesTabButton status="currentTab.name === 'nhancong'">Nhân công</MesTabButton>
+        </div>
+        <div class="d-flex flex-column w-100" t-on-click="() => this.setCurrentTab('khac')">
+          <MesTabButton status="currentTab.name === 'khac'">Khác</MesTabButton>
+        </div>
+      </div>
+      <div class="table-container w-100">
+        <div class="" t-att-class="{'d-none': currentTab.name !=='quytrinh'}">
+          Quy trinh
+        </div>
+        <div class="" t-att-class="{'d-none': currentTab.name !=='nguyenvatlieu'}">
+          Nguyen vat lieu
+        </div>
+        <div class="" t-att-class="{'d-none': currentTab.name !=='thietbi'}">
+          Thiet bi
+        </div>
+        <div class="" t-att-class="{'d-none': currentTab.name !=='nhancong'}">
+          Nhan cong
+        </div>
+        <div class="" t-att-class="{'d-none': currentTab.name !=='khac'}">
+          Khac
+        </div>
+      </div>
+    </div>
+
+
+  </t>
+</templates>
