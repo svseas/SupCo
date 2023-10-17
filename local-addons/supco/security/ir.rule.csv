@@ -1,0 +1,2 @@
+"id","model_id/id","name","active","perm_create","perm_unlink","perm_read","perm_write","domain_force"
+"rule_supreme_court_letter_combined","model_supreme_court_letter","Combined Supreme Court Letter Rule","True","True","True","True","True","['|', '|', ('created_by', '=', user.id), ('first_approval_by', '=', user.id), '&', ('approval_status', '=', 'waiting_second_approval'), ('second_approval_by', '=', user.id)]"

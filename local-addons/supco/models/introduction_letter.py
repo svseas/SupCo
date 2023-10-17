@@ -36,10 +36,21 @@ class SupremeCourtLetter(models.Model):
             letter.recipient_name = recipient_name[:-2]
 
     title_position = fields.Char(string='Title Position')
-    organization_unit = fields.Char(string='Organization Unit')
+
+    @api.model
+    def create(self, vals):
+        if 'user_ids' in vals:
+            # Get the first user's id from the provided user_ids in vals
+            user_id = vals['user_ids'][0][2][0] if vals['user_ids'][0][2] else False
+            if user_id:
+                user = self.env['res.users'].browse(user_id)
+                vals['title_position'] = user.position
+        return super(SupremeCourtLetter, self).create(vals)
+
+    organization_unit = fields.Char(string='Organization Unit', default="Báo Công Lý")
     address = fields.Char(string='Address')
     regarding = fields.Text(string='Regarding')
-    validity_date = fields.Date(string='Validity Date')
+    validity_date = fields.Date(string='Validity Date', default=datetime.today().date())
     created_by = fields.Many2one('res.users', string='Tạo bởi', default=lambda self: self.env.user)
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
     qr_code = fields.Binary("QR Code", compute='_compute_qr_code', store=True)
