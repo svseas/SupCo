@@ -1,0 +1,37 @@
+
+.color-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.color-row {
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+}
+.color-box {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: solid black 1px;
+    cursor: pointer;
+}
+.my-tooltip {
+    position: absolute;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+    top: 125%; /* Change "bottom" to "top" */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+.color-box:hover .my-tooltip {
+    visibility: visible;
+    opacity: 1;
+}

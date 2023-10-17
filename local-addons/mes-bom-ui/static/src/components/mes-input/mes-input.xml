@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.mes_input_template" owl="1">
+    <input type="text" t-attf-class="mes__input #{cal(props.status)}" t-att-placeholder="props.placeholder" t-att-value="props.value">
+      <t t-slot="default" />
+    </input>
+  </t>
+</templates>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.mes_bom_screen_mainpage_template" owl="1">
+    <div class="main-content">
+      <div class="action-group">
+        <div class="" t-on-click="() => this.newPage()">
+          <MesButton color="'primary'" status="'normal'">
+            <div>
+              <i class="icon icon-plus"/>
+            </div>
+            <div>Tạo mới</div>
+          </MesButton>
+        </div>
+        <div class="search-bar">
+          <MesInput status="status" placeholder="'Placeholder text'">
+          </MesInput>
+          <div class="my-auto px-2">
+            <i class="icon icon-search"/>
+          </div>
+        </div>
+      </div>
+      <MesGetData model="'mrp.bom'" method="'get_bom_data'"></MesGetData>
+    </div>
+  </t>
+</templates>

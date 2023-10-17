@@ -1,0 +1,73 @@
+// $myprimarycolor: #0d7f71;
+// $red: #d61f1f;
+// $blue: #81A9D9;
+// $green: #81A9D9;
+
+// .btn-primary {
+//   @include button-variant($myprimarycolor, darken($red, 10%), lighten($blue, 5%), lighten($green, 10%), darken($myprimarycolor, 30%));
+// }
+
+// .btn-outline-primary {
+//   @include button-outline-variant($myprimarycolor, #222222, lighten($myprimarycolor, 5%), $myprimarycolor);
+// }
+
+
+// Primary button
+.btn-primary {
+  background-color: var(--persian-green-600);
+  color: var(--dayshift-50);
+  border-radius: 8px;
+  border-color: var(--persian-green-600, #0D7F71);
+}
+
+.btn-primary:hover {
+  background-color: var(--persian-green-700);
+}
+
+.btn-primary:focus {
+  color: var(--dayshift-50);
+  outline: 0;
+  outline-color: var(--persian-green-300, #60CEC1);
+  background-color: var(--persian-green-600, #0D7F71);
+  transition: border 0.1s ease-in-out;
+  box-shadow: none;
+  border-color: var(--persian-green-600, #0D7F71);
+}
+
+.btn-primary:active {
+  background-color: var(--persian-green-900);
+}
+
+.btn-primary:disabled {
+  background-color: var(--persian-green-300);
+}
+
+// Outline Button
+.btn-outline-primary {
+  background-color: var(--persian-green-50);
+  color: var(--persian-green-600);
+  border: 1px solid var(--persian-green-600, #0D7F71);
+}
+
+.btn-outline-primary:hover {
+  background: var(--persian-green-100, #D8F3F0);
+  border: 1px solid var(--persian-green-500, #109C8B);
+}
+
+.btn-outline-primary:focus {
+  outline: 0;
+  outline-color: var(--persian-green-300, #60CEC1);
+  background: var(--persian-green-50, #F4FCFB);
+  transition: border 0.1s ease-in-out;
+}
+
+.btn-outline-primary:active {
+  border: 1px solid var(--persian-green-500, #109C8B);
+  background: var(--persian-green-300, #60CEC1);
+}
+
+.btn-outline-primary:disabled {
+  outline: 0;
+  outline-color: var(--persian-green-300, #60CEC1);
+  background: var(--persian-green-50, #F4FCFB);
+}

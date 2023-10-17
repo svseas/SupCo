@@ -12,17 +12,23 @@ _logger = logging.getLogger(__name__)
 
 
 class UserController(http.Controller):
-
-    @http.route('/users/<string:national_id>', type='http', auth="public", website=True)
+    @http.route("/users/<string:national_id>", type="http", auth="public", website=True)
     def user_info(self, national_id):
-        user = request.env['res.users'].sudo().search([('national_id', '=', national_id)], limit=1)
+        user = (
+            request.env["res.users"]
+            .sudo()
+            .search([("national_id", "=", national_id)], limit=1)
+        )
 
         if user:
             # Get the base URL from system parameters
-            base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            base_url = (
+                request.env["ir.config_parameter"].sudo().get_param("web.base.url")
+            )
 
             name = user.name
             dob = user.dob
+            email = user.login
             national_id = user.national_id
             department = user.department.name
             introduction_letter = user.introduction_letter
@@ -37,38 +43,52 @@ class UserController(http.Controller):
             f.seek(0)
             qr_code = f.read()
 
-            return request.render('supco.template_name',
-                                  {'name': name,
-                                   'dob': dob,
-                                   'national_id': national_id,
-                                   'department': department,
-                                   'position': position,
-                                   'qr_code': qr_code,
-                                   'image_1920': avatar})
+            return request.render(
+                "supco.template_name",
+                {
+                    "name": name,
+                    "dob": dob,
+                    "national_id": national_id,
+                    "email": email,
+                    "department": department,
+                    "position": position,
+                    "qr_code": qr_code,
+                    "image_1920": avatar,
+                },
+            )
         else:
             return "User not found or You have no right to access."
 
 
 class YourControllerNameHere(http.Controller):
-
-    @http.route(['/letters/public/<string:public_id>'], type='http', auth="public")
+    @http.route(["/letters/public/<string:public_id>"], type="http", auth="public")
     def public_report_by_public_id(self, public_id, **kw):
         _logger.info("Generating report for public_id: %s", public_id)
 
         # Find the letter by public_id
-        letter = request.env['supreme.court.letter'].sudo().search([('public_id', '=', public_id)], limit=1)
+        letter = (
+            request.env["supreme.court.letter"]
+            .sudo()
+            .search([("public_id", "=", public_id)], limit=1)
+        )
 
         if not letter:
             _logger.warning("No letter found for public_id: %s", public_id)
             return Response("Not Found", status=404)
 
-        Report = request.env['ir.actions.report'].sudo().with_context()
+        Report = request.env["ir.actions.report"].sudo().with_context()
 
         # Render the report as PDF
         try:
-            pdf_content, _ = Report._render_qweb_pdf('supco.report_supreme_court_letter_main', res_ids=[letter.id])
+            pdf_content, _ = Report._render_qweb_pdf(
+                "supco.report_supreme_court_letter_main", res_ids=[letter.id]
+            )
         except Exception as e:
-            _logger.error("Failed to generate report for public_id: %s, Error: %s", public_id, str(e))
+            _logger.error(
+                "Failed to generate report for public_id: %s, Error: %s",
+                public_id,
+                str(e),
+            )
             return Response("Internal Server Error", status=500)
 
         # Set filename to something meaningful, e.g., "letter_<public_id>.pdf"
@@ -76,8 +96,8 @@ class YourControllerNameHere(http.Controller):
 
         # Return the fetched PDF as a response.
         pdfhttpheaders = [
-            ('Content-Type', 'application/pdf'),
-            ('Content-Length', len(pdf_content)),
-            ('Content-Disposition', content_disposition(filename))
+            ("Content-Type", "application/pdf"),
+            ("Content-Length", len(pdf_content)),
+            ("Content-Disposition", content_disposition(filename)),
         ]
         return request.make_response(pdf_content, headers=pdfhttpheaders)
