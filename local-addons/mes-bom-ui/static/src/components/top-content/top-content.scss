@@ -1,11 +1,11 @@
 .top-content {
   display: flex;
+  padding-top: 10px;
   flex-direction: column;
   gap: 5px;
   width: 100%;
   height: 115px;
   border-bottom: 1px solid var(--nightshift-100);
-
 }
 
 .top-content-list {
