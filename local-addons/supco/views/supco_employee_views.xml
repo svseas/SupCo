@@ -10,15 +10,6 @@
                 <form string="Users">
 
                     <sheet>
-                        <field name="image_1920" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/>
-                        <label for="name" string="Full Name"/>
-                        <h2>
-                            <field name="name" placeholder="Nguyen Van A"/>
-                        </h2>
-                        <label for="login" string="Email Address"/>
-                        <h2>
-                            <field name="login" placeholder="e.g. email@yourcompany.com"/>
-                        </h2>
                         <group>
                             <field name="dob" widget="date"/>
                             <field name="national_id"/>

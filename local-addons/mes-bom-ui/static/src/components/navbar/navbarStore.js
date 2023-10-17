@@ -3,7 +3,7 @@
 import { useState, reactive } from "@odoo/owl";
 
 export const navStore = reactive({
-  isMainMenuExpanded: false,
+  isMainMenuExpanded: true,
   isSubMenuExpanded: false,
   subMenu: {},
   level: ["Công tác báo chí", "Giấy Giới Thiệu", "Giấy Giới Thiệu"],
