@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.navbar-tab-system" owl="1">
+    <div class="mn-tab-system">
+      <t t-foreach="data" t-as="tab" t-key="tab_index">
+        <div class="mn-tab text-center" t-att-class="{'mn-tab--disabled text-dayshift-700': tab != 'MES', 'd-none opacity-0': !navStore.isMainMenuExpanded and tab != 'MES', 'text-persian-green-50': tab==='MES' }">
+          <t t-out="tab"/>
+        </div>
+      </t>
+    </div>
+  </t>
+</templates>

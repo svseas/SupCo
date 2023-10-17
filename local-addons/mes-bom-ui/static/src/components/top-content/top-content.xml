@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.top_content_template" owl="1">
+    <div class="top-content">
+      <div class="top-content-list">
+        <MesButton color="'ghost'" status="'normal'">
+          <t t-out="navStore.level[0] or ''"/>
+        </MesButton>
+        <div class="my-auto">
+          <i class="icon icon-chevron-right"/>
+        </div>
+        <MesButton color="'ghost'" status="'normal'">
+          <t t-out="navStore.level[1] or ''"/>
+        </MesButton>
+        <div class="my-auto">
+          <i class="icon icon-chevron-right"/>
+        </div>
+        <MesButton color="'ghost'" status="'normal'">
+          <t t-out="navStore.level[2] or ''"/>
+        </MesButton>
+      </div>
+      <div class="top-content-header">
+        <h2>
+          <t t-out="navStore.level[2] or ''"/>
+        </h2>
+      </div>
+    </div>
+  </t>
+</templates>

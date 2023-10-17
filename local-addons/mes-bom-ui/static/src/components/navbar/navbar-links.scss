@@ -1,0 +1,16 @@
+.mn-links {
+  height: 100%;
+  display: flex;
+  padding-top: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1 0 0;
+  align-self: stretch;
+  overflow-y: scroll;
+}
+
+.mn-links::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}

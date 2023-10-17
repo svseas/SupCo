@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.mes_create_table_template" owl="1">
+    <div class="data-group">
+      <div class="table-container">
+
+        <!-- <t t-if="props.data">
+          <table class="styled-table" t-ref="data-table">
+            <thead>
+              <tr>
+                <th class="my-auto px-2">
+                  <input type="checkbox" id="myCheckbox" name="myCheckbox"/>
+                </th>
+                <t t-foreach="dataTable.keys" t-as="key" t-key="key_index">
+                  <th>
+                    <t t-out="dataTable.keys[key]"/>
+                  </th>
+                </t>
+                <th>
+                  <MesButton color="'ghost'" status="'normal'">
+                    <div class="input-icon">
+                      <i class="icon icon-more-vertical-"/>
+                    </div>
+                  </MesButton>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <t t-foreach="dataTable.data" t-as="record" t-key="record_index" t-att-data-value="record.id">
+                <tr>
+                  <td class="my-auto px-2">
+                    <input type="checkbox" id="myCheckbox" name="myCheckbox"/>
+                  </td>
+                  <td t-foreach="dataTable.keys" t-as="key" t-key="key_index">
+                    <t t-out="record[key]"/>
+                  </td>
+                  <td>
+                    <MesButton color="'ghost'" status="'normal'">
+                      <div class="input-icon">
+                        <i class="icon icon-more-vertical-"/>
+                      </div>
+                    </MesButton>
+                  </td>
+                </tr>
+              </t>
+            </tbody>
+          </table>
+        </t> -->
+      </div>
+    </div>
+  </t>
+</templates>

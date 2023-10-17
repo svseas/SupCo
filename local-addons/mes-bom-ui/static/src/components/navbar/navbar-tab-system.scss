@@ -1,0 +1,33 @@
+.mn-tab-system {
+  display: flex;
+  padding: 16px 8px 0px 8px;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+  border-bottom: 1px solid var(--persian-green-600, #0D7F71);
+}
+
+.mn-tab {
+  display: flex;
+  width: 72px;
+  padding: 16px 0px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px solid var(--persian-green-50, #F4FCFB);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  opacity: 1;
+  text-align: center;
+  font-family: "Inter";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+  /* 114.286% */
+  letter-spacing: -0.28px;
+}
+
+.mn-tab--disabled {
+  cursor: not-allowed;
+  border: none;
+}
