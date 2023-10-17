@@ -34,14 +34,20 @@ class UserController(http.Controller):
             introduction_letter = user.introduction_letter
             position = user.position
             avatar = user.image_1920.decode("utf-8") if user.image_1920 else None
+            qr_image_url = f"https://api.qrserver.com/v1/create-qr-code/?data=http://{base_url}/users/{national_id}&amp;size=80x80"
 
             # Use the base URL to generate QR code dynamically
             qr = qrcode.QRCode()
             qr.add_data(f"{base_url}/users/{national_id}")
+            qr.make(fit=True)
+            img = qr.make_image(fill="black", back_color="#f9f9f9")
             f = io.StringIO()
+            temp = io.BytesIO()
+            img.save(temp, format="png")
             qr.print_ascii(out=f)
             f.seek(0)
             qr_code = f.read()
+            qr_code_image = base64.b64encode(temp.getvalue()).decode("utf-8")
 
             return request.render(
                 "supco.template_name",
@@ -54,6 +60,8 @@ class UserController(http.Controller):
                     "position": position,
                     "qr_code": qr_code,
                     "image_1920": avatar,
+                    "qr_image_url": qr_image_url,
+                    "qr_code_image": qr_code_image,
                 },
             )
         else:
