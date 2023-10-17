@@ -6,6 +6,7 @@ import qrcode
 from datetime import datetime
 from odoo import api, fields, models, exceptions
 import logging
+
 _logger = logging.getLogger(__name__)
 
 
@@ -13,7 +14,8 @@ class SupremeCourtLetter(models.Model):
     _name = 'supreme.court.letter'
     _description = 'Supreme Court Letter'
 
-    number = fields.Integer(string='Number', required=True, copy=False, readonly=True, index=True, default=lambda self: self.env['ir.sequence'].next_by_code('supreme.court.letter'))
+    number = fields.Integer(string='Number', required=True, copy=False, readonly=True, index=True,
+                            default=lambda self: self.env['ir.sequence'].next_by_code('supreme.court.letter'))
     user_ids = fields.Many2many('res.users', string='Sender')
     recipient_name = fields.Char(string='Recipient Names', compute='_compute_recipient_name', store=True)
     display_number = fields.Char(string='Display Number', compute='_compute_display_number')
@@ -41,7 +43,8 @@ class SupremeCourtLetter(models.Model):
     created_by = fields.Many2one('res.users', string='Tạo bởi', default=lambda self: self.env.user)
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
     qr_code = fields.Binary("QR Code", compute='_compute_qr_code', store=True)
-    public_id = fields.Char(string="Public ID", copy=False, readonly=True, default=lambda self: ''.join(random.choices(string.ascii_letters + string.digits, k=16)))
+    public_id = fields.Char(string="Public ID", copy=False, readonly=True,
+                            default=lambda self: ''.join(random.choices(string.ascii_letters + string.digits, k=16)))
 
     @api.constrains('validity_date')
     def _check_date(self):
@@ -80,8 +83,8 @@ class SupremeCourtLetter(models.Model):
         ('rejected', 'Rejected')
     ], default='draft', string="Approval Status")
 
-    first_approval_by = fields.Many2one('res.users', string="First Approved By")
-    second_approval_by = fields.Many2one('res.users', string="Second Approved By")
+    first_approval_by = fields.Many2one('res.users', string="First Approval By", readonly=True)
+    second_approval_by = fields.Many2one('res.users', string="Second Approval By", readonly=True)
 
     def action_first_approval(self):
         self.ensure_one()  # Ensure that only one record is being processed
@@ -97,9 +100,16 @@ class SupremeCourtLetter(models.Model):
             'second_approval_by': self.env.user.id
         })
 
-    def action_reject(self):
+    def action_reject_first(self):
         self.ensure_one()
         self.write({
-            'approval_status': 'rejected',
-            'second_approval_by': False,  # Reset the second approval user, if previously approved
+            'approval_status': 'draft',
+            'second_approval_by': False,
+        })
+
+    def action_reject_second(self):
+        self.ensure_one()
+        self.write({
+            'approval_status': 'waiting_first_approval',
+            'second_approval_by': False,
         })
