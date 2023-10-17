@@ -11,8 +11,6 @@
     <template id="supreme_court_letter">
         <t t-call="web.internal_layout">
             <style>
-              
-              
                 .watermark {
                     background: url('https://user-images.githubusercontent.com/83296144/275700877-fb8928a7-d64a-43c7-ac9e-9f934a115d40.png') no-repeat center center;
                     -webkit-background-size: cover;
@@ -63,8 +61,8 @@
             <link rel="preconnect" href="https://fonts.gstatic.com"/>
             <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&#38;display=swap" rel="stylesheet" />
 
-            <div class="watermark " style="">
-                <div class="page" style="margin-left: 96px; font-family: 'Tinos';line-height: 1.6;font-weight:400;">
+            <div class="watermark" style="">
+                <div class="page" style="margin-left: 92px;margin-right:80px; font-family: 'Tinos';line-height: 1.6;font-weight:400;">
                     <div class="skeleton"></div>
                     <!-- Header box -->
                     <div class="w-100  header--box r-header d-flex" style="line-height: 1.1;">
@@ -107,6 +105,10 @@
                                     </span>
                                 </h5>
                             </div>
+                            <h5 class="mt-4" style="text-align: center; font-style: italic;">
+                                Hà Nội,
+                                <span t-field="doc.create_date" t-options='{"widget": "date", "format": "dd/MM/yyyy"}'/>
+                            </h5>
                         </div>
                     </div>
                     <!-- Clear float -->
@@ -152,17 +154,13 @@ hoàn thành nhiệm vụ</h4>
                             <p style="font-family: Tinos;font-weight: bold; font-style: italic;">Vui lòng kiểm tra tính xác thực của văn bản này bằng cách quét mã QR
                             </p>
                         </div>
-
+                        <div class="w-10"></div>
                         <!-- Right Section -->
-                        <div class="w-65" style="width: 65%;">
-                            <div style="text-align: center; font-style: italic;">
-                                Hà Nội,
-                                <span t-field="doc.create_date" t-options='{"widget": "date", "format": "dd/MM/yyyy"}'/>
-                            </div>
-                            <div style="text-align: center; font-weight: bold; margin-top:20px">
+                        <div class="w-65 " style="width: 55%; margin-top: 28px">
+                            <div style="text-align: center; font-weight: bold; margin-top:20px; font-size: 20px;">
                                 TỔNG BIÊN TẬP
                             </div>
-                            <div style="text-align: center; margin-top:100px">
+                            <div style="text-align: center; margin-top:92px">
                                 Trần Đức Vinh
                             </div>
                             <div style="text-align: center; font-style: italic; margin-top:20px">
