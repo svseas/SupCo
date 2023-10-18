@@ -1,11 +1,12 @@
 /** @odoo-module */
 
 import { useState, reactive } from "@odoo/owl";
+import { subDefault } from "./submenu-data-default";
 
 export const navStore = reactive({
   isMainMenuExpanded: true,
   isSubMenuExpanded: false,
-  subMenu: {},
+  subMenu: subDefault,
   level: [
     {
       levelName: "Công tác báo chí",
