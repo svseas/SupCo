@@ -3,25 +3,25 @@
   <t t-name="mes-bom-ui.top_content_template" owl="1">
     <div class="top-content">
       <div class="top-content-list">
-        <MesButton color="'ghost'" status="'normal'">
-          <t t-out="navStore.level[0] or ''"/>
+        <MesButton color="'ghost'" status="'normal'" t-on-click="()=>this.expandedMainmenu()">
+          <t t-out="navStore.level[0].levelName or ''"/>
         </MesButton>
         <div class="my-auto">
           <i class="icon icon-chevron-right"/>
         </div>
-        <MesButton color="'ghost'" status="'normal'">
-          <t t-out="navStore.level[1] or ''"/>
+        <MesButton color="'ghost'" status="'normal'" t-on-click="()=>this.expandedSubmenu()">
+          <t t-out="navStore.level[1].levelName or ''"/>
         </MesButton>
         <div class="my-auto">
           <i class="icon icon-chevron-right"/>
         </div>
-        <MesButton color="'ghost'" status="'normal'">
-          <t t-out="navStore.level[2] or ''"/>
+        <MesButton color="'ghost'" status="'normal'" t-on-click="()=>this.doAction(navStore.level[2])">
+          <t t-out="navStore.level[2].levelName or ''"/>
         </MesButton>
       </div>
-      <div class="top-content-header">
-        <h2>
-          <t t-out="navStore.level[2] or ''"/>
+      <div class="top-content-header cursor-pointer" t-on-click="()=>this.doAction(navStore.level[2])">
+        <h2 class="m-h2">
+          <t t-out="navStore.level[2].levelName or ''" />
         </h2>
       </div>
     </div>
