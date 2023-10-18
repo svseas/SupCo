@@ -6,7 +6,20 @@ export const navStore = reactive({
   isMainMenuExpanded: true,
   isSubMenuExpanded: false,
   subMenu: {},
-  level: ["Công tác báo chí", "Giấy Giới Thiệu", "Giấy Giới Thiệu"],
+  level: [
+    {
+      levelName: "Công tác báo chí",
+      levelAction: "",
+    },
+    {
+      levelName: "Giấy Giới Thiệu",
+      levelAction: "",
+    },
+    {
+      levelName: "Giấy Giới Thiệu",
+      levelAction: "supco.action_supreme_court_letters",
+    },
+  ],
   toggleMainMenu() {
     this.isMainMenuExpanded = !this.isMainMenuExpanded;
   },
