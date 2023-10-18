@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-inherit="web.ListView.Buttons" t-inherit-mode="extension" owl="1">
+    <xpath expr="//t[contains(@t-elif, 'activeActions.create')]" position="replace">
+      <t t-elif="activeActions.create">
+        <button type="button" class="btn btn-primary o_list_button_add" data-hotkey="c" t-on-click="onClickCreate" data-bounce-button="">
+            Tạo mới
+        </button>
+      </t>
+    </xpath>
+  </t>
+</templates>

@@ -21,17 +21,59 @@ export const navData = {
             {
               label: "Giấy Giới Thiệu",
               actionName: "supco.action_supreme_court_letters",
-              level: ["Công tác báo chí", "Giấy Giới Thiệu"],
+              args: {},
+              level: [
+                {
+                  levelName: "Công tác báo chí",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Giấy Giới Thiệu",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Giấy Giới Thiệu",
+                  levelAction: "supco.action_supreme_court_letters",
+                },
+              ],
             },
             {
               label: "Nhân sự báo chí",
               actionName: "supco.action_supreme_court_employee",
-              level: ["Công tác báo chí", "Giấy Giới Thiệu"],
+              args: {},
+              level: [
+                {
+                  levelName: "Công tác báo chí",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Giấy Giới Thiệu",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Nhân sự báo chí",
+                  levelAction: "supco.action_supreme_court_employee",
+                },
+              ],
             },
             {
               label: "Phòng ban",
               actionName: "supco.action_supreme_court_department",
-              level: ["Công tác báo chí", "Giấy Giới Thiệu"],
+              args: {},
+              level: [
+                {
+                  levelName: "Công tác báo chí",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Giấy Giới Thiệu",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Phòng ban",
+                  levelAction: "supco.action_supreme_court_department",
+                },
+              ],
             },
           ],
         },
@@ -40,16 +82,55 @@ export const navData = {
           label: "Công tác nghiệp vụ",
           nested: [
             {
-              label: " Tổ điều tra",
-              level: ["Công tác báo chí", "Công tác nghiệp vụ"],
+              label: "Tổ điều tra",
+              level: [
+                {
+                  levelName: "Công tác báo chí",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Công tác nghiệp vụ",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Tổ điều tra",
+                  levelAction: "",
+                },
+              ],
             },
             {
               label: "Tổ chuyên môn",
-              level: ["Công tác báo chí", "Công tác nghiệp vụ"],
+              level: [
+                {
+                  levelName: "Công tác báo chí",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Công tác nghiệp vụ",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Tổ chuyên môn",
+                  levelAction: "",
+                },
+              ],
             },
             {
-              label: " Tổ pháp luật ",
-              level: ["Công tác báo chí", "Công tác nghiệp vụ"],
+              label: "Tổ pháp luật",
+              level: [
+                {
+                  levelName: "Công tác báo chí",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Công tác nghiệp vụ",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Tổ pháp luật",
+                  levelAction: "",
+                },
+              ],
             },
           ],
         },
@@ -78,26 +159,14 @@ export const navData = {
     },
     {
       index: 3,
-      label: ["Quản lý sản xuất"],
-      icon: "icon-file-text",
-      nested: [],
-    },
-    {
-      index: 4,
       label: ["Công tác Đoàn"],
       icon: "icon-check-square",
       nested: [],
     },
     {
-      index: 5,
+      index: 4,
       label: ["Ngoại giao"],
       icon: "icon-zap",
-      nested: [],
-    },
-    {
-      index: 6,
-      label: ["Quản lý vận hành thiết bị"],
-      icon: "icon-sliders",
       nested: [],
     },
   ],

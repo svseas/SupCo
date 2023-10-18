@@ -1,12 +1,26 @@
 /** @odoo-module */
 
 import { useState, reactive } from "@odoo/owl";
+import { subDefault } from "./submenu-data-default";
 
 export const navStore = reactive({
   isMainMenuExpanded: true,
   isSubMenuExpanded: false,
-  subMenu: {},
-  level: ["Công tác báo chí", "Giấy Giới Thiệu", "Giấy Giới Thiệu"],
+  subMenu: subDefault,
+  level: [
+    {
+      levelName: "Công tác báo chí",
+      levelAction: "",
+    },
+    {
+      levelName: "Giấy Giới Thiệu",
+      levelAction: "",
+    },
+    {
+      levelName: "Giấy Giới Thiệu",
+      levelAction: "supco.action_supreme_court_letters",
+    },
+  ],
   toggleMainMenu() {
     this.isMainMenuExpanded = !this.isMainMenuExpanded;
   },
