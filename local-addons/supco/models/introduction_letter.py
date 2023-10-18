@@ -155,7 +155,7 @@ class SupremeCourtLetter(models.Model):
     def action_reject_second(self):
         self.ensure_one()
         self.write({
-            'approval_status': 'waiting_first_approval',
+            'approval_status': 'waiting_second_approval',
             'second_approval_by': False,
         })
 

@@ -11,6 +11,8 @@
 
                     <sheet>
                         <group>
+
+                            <field name="groups_id" widget="many2many_tags"/>
                             <field name="dob" widget="date"/>
                             <field name="national_id"/>
                             <field name="position"/>
@@ -19,8 +21,6 @@
                         </group>
                     </sheet>
                 </form>
-
-
             </field>
         </record>
 
@@ -46,6 +46,7 @@
             <field name="view_id" ref="supco_res_users_tree_inherit"/>
         </record>
         <menuitem id="menu_supco_main" name="SupCo" sequence="10"/>
-        <menuitem id="menu_supco_employee" name="Employee" parent="menu_supco_main" action="action_supreme_court_employee" sequence="20"/>
+        <menuitem id="menu_supco_employee" name="Employee" parent="menu_supco_main"
+                  action="action_supreme_court_employee" sequence="20"/>
     </data>
 </odoo>

@@ -1088,6 +1088,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="F:\PycharmProjects\odoo\odoo\addons\l10n_uy\data\account.account.template.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="F:\PycharmProjects\odoo\odoo\addons\l10n_ve\data\account.account.template.csv">
           <value>
             <Attribute>
