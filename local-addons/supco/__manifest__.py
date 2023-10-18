@@ -11,7 +11,6 @@
         'views/supco_employee_views.xml',
         'views/supco_menus.xml',
         'security/ir.model.access.csv',
-        'security/ir.rule.csv',
         'security/security.xml',
         'views/templates.xml',
         'reports/supco_letter.xml',
