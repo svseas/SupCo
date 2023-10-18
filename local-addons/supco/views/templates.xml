@@ -35,6 +35,7 @@
                 }
 
                 .card {
+                    position: relative;
                     display: -ms-flexbox;
                     display: flex;
                     -ms-flex-direction: row;
@@ -136,16 +137,10 @@
                     position: absolute;
                     right: 10px;
                     bottom: 10px;
-                }
-
-                .qr-width {
-                    font-size: 4px;
-                    margin: 0px;
-                    padding: 0px;
-                    line-height: 1.1;
                     width: 80px;
                     height: 80px;
                 }
+
 
                 @media (max-width: 768px) {
                     .card {
@@ -163,11 +158,37 @@
                     }
 
                     .card-right {
-                        padding: 10px 20px;
+                        padding: 10px 10px 0px 10px;
+                        height: 100%;
                     }
+
                     .card-name {
                         text-align: center;
                     }
+
+                    .card-info {
+                        padding-left: 30px;
+                    }
+
+                    .qr-width {
+                        width: 100%; /* or any other appropriate value for mobile devices */
+                    }
+
+                    .card-qr {
+                        position: static;
+                        display: flex;
+                        width: 320px;
+                        height: 100%;
+                        padding: 10px 0px;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .card-qr > img {
+                        width: 120px;
+                        height: 120px;
+                    }
+                
                 }
                     </style>
                 </head>
@@ -219,11 +240,9 @@
                                     </span>
                                 </p>
                             </div>
-                            <div class="card-qr">
-                                <pre class="qr-width">
-                                    <t t-esc="qr_code"/>
-                                </pre>
-                            </div>
+                        </div>
+                        <div class="card-qr">
+                            <img id='barcode' t-att-src="'data:image/png;base64,' + qr_code_image" alt="" title="qr_image_url" width="80" height="80" />
                         </div>
                     </div>
 
