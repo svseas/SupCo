@@ -4,7 +4,7 @@ import base64
 import io
 import qrcode
 from datetime import datetime
-from odoo import api, fields, models, exceptions
+from odoo import api, fields, models, exceptions, _
 import logging
 from odoo.exceptions import UserError
 
@@ -131,10 +131,26 @@ class SupremeCourtLetter(models.Model):
 
     def action_reject_first(self):
         self.ensure_one()
+
+        # Check if the status is approved
+        if self.approval_status == 'approved':
+            raise exceptions.UserError(_('You cannot reject a letter that has already been approved.'))
+
         self.write({
             'approval_status': 'draft',
             'second_approval_by': False,
+            'first_approval_by': False,
         })
+        # Notify the client about status change
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Rejection',  # Notification's title
+                'message': _('The letter has been moved to the "Draft" status.'),
+                'sticky': False  # True means the notification won't auto-close
+            }
+        }
 
     def action_reject_second(self):
         self.ensure_one()
@@ -142,3 +158,14 @@ class SupremeCourtLetter(models.Model):
             'approval_status': 'waiting_first_approval',
             'second_approval_by': False,
         })
+
+        # Notify the client about the status change
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Rejection',
+                'message': 'The letter has been rejected and moved back to waiting for first approval status.',
+                'sticky': False
+            }
+        }

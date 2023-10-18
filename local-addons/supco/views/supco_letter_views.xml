@@ -27,10 +27,10 @@
                                 class="oe_highlight"
                                 groups="supco.group_second_approval"/>
 
-                        <button name="action_reject_first" string="Reject" type="object" class="oe_red"
+                        <button name="action_reject_first" string="Reject (First Approval)" type="object" class="oe_red"
                                 groups="supco.group_first_approval"/>
 
-                        <button name="action_reject_second" string="Reject" type="object" class="oe_red"
+                        <button name="action_reject_second" string="Reject (Second Approval)" type="object" class="oe_red"
                                 groups="supco.group_second_approval"/>
                     </header>
                     <sheet>
