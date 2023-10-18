@@ -27,7 +27,9 @@
 
         <!-- Nav User -->
         <div class="mn__user text-persian-green-50">
-          <div class="m-sub-h">Demo</div>
+          <div class="m-sub-h">
+            <a href="/web/session/logout" class="text-persian-green-50 text-hover-persian-green-200">Log Out</a>
+          </div>
         </div>
       </div>
       <SubMenu />
