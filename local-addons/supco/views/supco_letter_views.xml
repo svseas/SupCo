@@ -18,6 +18,8 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
+                        <button string="Request First Approval" type="object" class="oe_highlight" name="action_request_first_approval"/>
+
                         <button name="action_first_approval" string="First Approval" type="object" class="oe_highlight"
                                 groups="supco.group_first_approval"/>
 

@@ -6,6 +6,7 @@ import qrcode
 from datetime import datetime
 from odoo import api, fields, models, exceptions
 import logging
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -96,6 +97,23 @@ class SupremeCourtLetter(models.Model):
 
     first_approval_by = fields.Many2one('res.users', string="First Approval By", readonly=True)
     second_approval_by = fields.Many2one('res.users', string="Second Approval By", readonly=True)
+
+    def action_request_first_approval(self):
+        self.ensure_one()
+
+        # Check if the record already has either first or second approver set
+        if self.first_approval_by or self.second_approval_by:
+            raise UserError(_("This letter already has approvers set. You cannot request first approval."))
+
+        # Check if the status has already been changed to waiting_first_approval
+        if self.approval_status == 'waiting_first_approval':
+            raise UserError(_("This letter is already in 'waiting for first approval' status."))
+
+        self.write({
+            'approval_status': 'waiting_first_approval',
+            'first_approval_by': False,
+            'second_approval_by': False,
+        })
 
     def action_first_approval(self):
         self.ensure_one()  # Ensure that only one record is being processed
