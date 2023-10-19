@@ -13,7 +13,7 @@ export const navStore = reactive({
       levelAction: "",
     },
     {
-      levelName: "Giấy Giới Thiệu",
+      levelName: "Giấy tờ nghiệp vụ",
       levelAction: "",
     },
     {
