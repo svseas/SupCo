@@ -189,7 +189,7 @@ class SupremeCourtLetter(models.Model):
             "res_model": "supreme.court.letter",
         }
 
-    def action_reject_first(self):
+    def action_reject(self):
         self.ensure_one()
 
         # Check if a reject reason is provided
@@ -223,29 +223,3 @@ class SupremeCourtLetter(models.Model):
             },
         }
 
-    def action_reject_second(self):
-        self.ensure_one()
-
-        # Check if a reject reason is provided
-        if not self.reject_reason:
-            raise exceptions.UserError(
-                _("Please provide a reason for rejection before proceeding.")
-            )
-
-        self.write({
-            'approval_status': 'rejected',
-            'second_approval_by': False,
-            'first_approval_by': False,
-            'reject_by': self.env.user.id,
-        })
-
-        # Notify the client about the status change
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "title": "Rejection",
-                "message": _('The letter has been rejected.'),
-                "sticky": False,
-            },
-        }
