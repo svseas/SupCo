@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="action-mes-root" model="ir.actions.client">
+    <field name="name">BOM UI</field>
+    <field name="tag">mes-bom-ui.action-root</field>
+  </record>
+
+  <record id="action-check-ui" model="ir.actions.client">
+    <field name="name">BOM CHECK UI</field>
+    <field name="tag">mes-bom-ui.action_checkui_js</field>
+  </record>
+
+  <menuitem name="BOM UI" sequence="1" id="mes-bom-ui.menu_root" action="action-mes-root"/>
+
+  <menuitem name="BOM CHECK UI" sequence="0" id="mes-bom-ui.check_ui" action="action-check-ui"/>
+</odoo>

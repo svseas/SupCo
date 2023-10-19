@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.navbar-item" owl="1">
+    <t t-set="isExpanded" t-value="navStore.isMainMenuExpanded"/>
+    <div class="mn-navbar-item persian-green-800 text-persian-green-50">
+      <t t-if="isExpanded">
+        <div class="mn__item--box" t-on-click="toggleNested">
+          <i t-attf-class="icon #{props.item.icon} mn__item--icon"></i>
+          <div class="mn__item--labels">
+            <t t-foreach="props.item.label" t-as="label" t-key="label_index">
+              <div class="mn__item--label">
+                <t t-out="label"/>
+              </div>
+            </t>
+          </div>
+          <i class="icon icon-chevron-down mn__item--expand" t-att-class="{'mn__item--expanded': isNestedExpand.value}"></i>
+        </div>
+
+        <div class="mn__nested" t-att-class="{'mn__nested--expanded': isNestedExpand.value}">
+          <div class="mn__nested--box">
+            <t t-foreach="props.item.nested" t-as="sub" t-key="sub_index">
+              <NavbarSubItem sub="sub"/>
+            </t>
+          </div>
+        </div>
+      </t>
+      <t t-else="">
+        <div class="mn__item--box" t-on-click="() => this.expandFromMini()">
+          <i t-attf-class="icon #{props.item.icon} mn__item--icon"></i>
+        </div>
+      </t>
+    </div>
+  </t>
+</templates>

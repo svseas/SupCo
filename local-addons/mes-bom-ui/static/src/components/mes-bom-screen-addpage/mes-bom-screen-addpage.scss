@@ -1,0 +1,35 @@
+.main-content-create {
+  width: 100%;
+  flex: 1;
+}
+
+.mes-flex-item {
+  flex: 0 0 47%;
+}
+
+.mes-gap {
+  margin-right: 2%;
+}
+
+.mes-label {
+  width: 176px;
+}
+
+.li-container {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  z-index: 1;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.input-container {
+  position: relative;
+}
+
+.li-container li {
+  cursor: pointer;
+}

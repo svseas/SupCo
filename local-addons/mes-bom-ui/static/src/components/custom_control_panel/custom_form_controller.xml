@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-inherit="web.FormView" t-inherit-mode="extension" owl="1">
+    <xpath expr="//t[contains(@t-set-slot, 'control-panel-create-button')]" position="replace">
+      <t t-set-slot="control-panel-create-button">
+        <t t-if="canCreate">
+          <button type="button" class="btn btn-outline-primary o_form_button_create" data-hotkey="c" t-on-click.stop="create" t-att-disabled="state.isDisabled">Tạo mới</button>
+        </t>
+      </t>
+    </xpath>
+  </t>
+</templates>

@@ -1,4 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_supreme_court_letter,access.supreme.court.letter,model_supreme_court_letter,base.group_system,1,1,1,1
-access_employee_inherited,access.employee.inherited,model_res_users,base.group_system,1,1,1,1
-access_supreme_court_department,access.supreme.court.department,model_supreme_court_department,base.group_system,1,1,1,1
+access_supreme_court_letter_system,access.supreme.court.letter.system,model_supreme_court_letter,base.group_system,1,1,1,1
+access_supreme_court_letter_user,access.supreme.court.letter.user,model_supreme_court_letter,base.group_user,1,1,1,0
+access_employee_inherited_system,access.employee.inherited.system,model_res_users,base.group_system,1,1,1,1
+access_supreme_court_department_system,access.supreme.court.department.system,model_supreme_court_department,base.group_system,1,1,1,1

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.mes_bom_add_page_template" owl="1">
+    <div class="main-content-create ms-1" t-on-click="() => this.data.isShowLi = false">
+      <div class="btn-bar d-flex flex-row justify-content-between">
+        <div class="control-btn d-flex flex-row px-2">
+          <MesButton color="'primary'" status="'normal'">
+            <div>
+              <i class="icon icon-check-circle me-2"/>
+            </div>
+            <div>Lưu</div>
+          </MesButton>
+          <div>
+            <MesButton color="'outline'" status="'normal'">
+              <div>
+                <i class="icon icon-x-circle me-2"/>
+              </div>
+              <div>Hủy</div>
+            </MesButton>
+          </div>
+        </div>
+      </div>
+      <h2 class="mb-3">Thông tin chung</h2>
+      <div class="general-info d-flex flex-row w-100">
+        <div class="general-info-left d-flex flex-column mes-flex-item mes-gap">
+
+          <div class="input-container d-flex flex-row justify-content-between mb-2" t-on-click="() => this.loadBom()">
+            <label class="mes-label">Sản phẩm</label>
+            <MesInput status="status" placeholder="'Cung cấp tên sản phẩm'" value="data.inputValue.name">
+            </MesInput>
+            <t t-if="data.isShowLi">
+              <div class="li-container">
+                <t t-if="data.data">
+                  <t t-foreach="data.data" t-as="item" t-key="item_index">
+                    <li t-on-click="() => this.getInputValue(item)">
+                      <t t-out="item.product_tmpl_id[1]"/>
+                    </li>
+                  </t>
+                </t>
+              </div>
+            </t>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Mã tham chiếu</label>
+            <MesInput status="status" placeholder="'Cung cấp mã tham chiếu'" value="data.inputValue.name">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">% NG</label>
+            <MesInput status="status" placeholder="''" value="data.inputValue.ng">
+            </MesInput>
+          </div>
+
+        </div>
+        <div class="general-info-right d-flex flex-column mes-flex-item mes-gap">
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Người tạo</label>
+            <MesInput status="status" placeholder="'Chọn người tạo'" value="data.inputValue.createdName">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Người phê duyệt</label>
+            <MesInput status="status" placeholder="''" value="data.inputValue.approvedName">
+            </MesInput>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Hình ảnh</label>
+            <MesButton color="'outline'" status="'normal'">
+              <div>
+                <i class="icon icon-upload me-4"/>
+              </div>
+              <div>
+                <div class="text-center">Nhấp để tải lên</div>
+                <div class="text-center">PNG hoặc JPG (tối đa 3MB)</div>
+              </div>
+            </MesButton>
+          </div>
+
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <label class="mes-label">Tài liệu</label>
+            <MesButton color="'outline'" status="'normal'">
+              <div>
+                <i class="icon icon-upload me-4"/>
+              </div>
+              <div>
+                <div class="text-center">Nhấp để tải lên</div>
+                <div class="text-center">PDF (tối đa 3MB)</div>
+              </div>
+            </MesButton>
+          </div>
+
+        </div>
+      </div>
+      <h2 class="mb-3">Tab</h2>
+      <MesBomDetailPage data="data.tableData"></MesBomDetailPage>
+    </div>
+  </t>
+</templates>
