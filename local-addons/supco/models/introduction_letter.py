@@ -125,7 +125,13 @@ class SupremeCourtLetter(models.Model):
     )
 
     reject_by = fields.Many2one("res.users", string="Reject By", readonly=True)
-    reject_reason = fields.Text(string="Reject Reason", readonly=True)
+    reject_reason = fields.Text(string="Reject Reason")
+    reject_reason_user = fields.Text(string="Reject Reason", readonly=True, compute='_compute_reject_reason_user')
+
+    @api.depends('reject_reason')
+    def _compute_reject_reason_user(self):
+        for letter in self:
+            letter.reject_reason_user = letter.reject_reason
 
     def action_request_first_approval(self):
         self.ensure_one()
@@ -186,6 +192,12 @@ class SupremeCourtLetter(models.Model):
     def action_reject_first(self):
         self.ensure_one()
 
+        # Check if a reject reason is provided
+        if not self.reject_reason:
+            raise exceptions.UserError(
+                _("Please provide a reason for rejection before proceeding.")
+            )
+
         # Check if the status is approved
         if self.approval_status == "approved":
             raise exceptions.UserError(
@@ -213,6 +225,13 @@ class SupremeCourtLetter(models.Model):
 
     def action_reject_second(self):
         self.ensure_one()
+
+        # Check if a reject reason is provided
+        if not self.reject_reason:
+            raise exceptions.UserError(
+                _("Please provide a reason for rejection before proceeding.")
+            )
+
         self.write({
             'approval_status': 'rejected',
             'second_approval_by': False,

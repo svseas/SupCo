@@ -47,7 +47,6 @@
             <field name="groups" eval="[(4, ref('supco.group_first_approval'))]"/>
         </record>
 
-
         <record id="rule_supreme_court_letter_second_approval" model="ir.rule">
             <field name="name">Supreme Court Letter Second Approval</field>
             <field name="model_id" ref="supco.model_supreme_court_letter"/>

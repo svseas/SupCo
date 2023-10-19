@@ -11,7 +11,7 @@ class Employee(models.Model):
     @api.depends('name', 'code')
     def _compute_combined_name(self):
         for employee in self:
-            employee.combined_name = f'{employee.code} - {employee.name})'
+            employee.combined_name = f'{employee.code} - {employee.name}'
 
     dob = fields.Date(string='DOB')
     national_id = fields.Char(string='National ID')
