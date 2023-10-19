@@ -3,12 +3,22 @@ from odoo import models, fields, api
 
 class Employee(models.Model):
     _inherit = 'res.users'
+    _rec_name = 'combined_name'
+
+    code = fields.Char(string='Employee Code', required=True)
+    combined_name = fields.Char(string='Name', compute='_compute_combined_name', store=True)
+
+    @api.depends('name', 'code')
+    def _compute_combined_name(self):
+        for employee in self:
+            employee.combined_name = f'{employee.code} - {employee.name})'
 
     dob = fields.Date(string='DOB')
     national_id = fields.Char(string='National ID')
     introduction_letter = fields.Many2many("supreme.court.letter", string="Supreme Court Letter")
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
     position = fields.Char(string='Position')
+
     @api.depends('national_id')
     def _compute_custom_url(self):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')

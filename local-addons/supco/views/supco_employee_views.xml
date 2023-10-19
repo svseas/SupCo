@@ -8,11 +8,10 @@
             <field name="arch" type="xml">
 
                 <form string="Users">
-
                     <sheet>
                         <group>
-
                             <field name="groups_id" widget="many2many_tags" domain="[('category_id', '=', 'Supreme Court Letters')]"/>
+                            <field name="code"/>
                             <field name="dob" widget="date"/>
                             <field name="national_id"/>
                             <field name="position"/>

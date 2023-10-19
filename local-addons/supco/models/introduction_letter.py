@@ -25,7 +25,13 @@ class SupremeCourtLetter(models.Model):
             "supreme.court.letter"
         ),
     )
-    user_ids = fields.Many2many("res.users", string="Sender")
+
+    @api.model
+    def _get_default_user(self):
+        return [self.env.user.id]
+
+    user_ids = fields.Many2many('res.users', string='Sender', default=_get_default_user)
+
     recipient_name = fields.Char(
         string="Recipient Names", compute="_compute_recipient_name", store=True
     )
@@ -48,17 +54,9 @@ class SupremeCourtLetter(models.Model):
                     recipient_name += user.name + ", "
             letter.recipient_name = recipient_name[:-2]
 
-    title_position = fields.Char(string="Title Position")
-
-    @api.model
-    def create(self, vals):
-        if "user_ids" in vals:
-            # Get the first user's id from the provided user_ids in vals
-            user_id = vals["user_ids"][0][2][0] if vals["user_ids"][0][2] else False
-            if user_id:
-                user = self.env["res.users"].browse(user_id)
-                vals["title_position"] = user.position
-        return super(SupremeCourtLetter, self).create(vals)
+    title_position = fields.Selection(
+        selection=[('reporter', 'Phóng Viên'), ('editor', 'Biên Tập Viên'), ('collab', 'Cộng Tác Viên')],
+        string='Title', default='reporter')
 
     organization_unit = fields.Char(string="Organization Unit", default="Báo Công Lý")
     address = fields.Char(string="Address")
@@ -125,6 +123,9 @@ class SupremeCourtLetter(models.Model):
     second_approval_by = fields.Many2one(
         "res.users", string="Second Approval By", readonly=True
     )
+
+    reject_by = fields.Many2one("res.users", string="Reject By", readonly=True)
+    reject_reason = fields.Text(string="Reject Reason", readonly=True)
 
     def action_request_first_approval(self):
         self.ensure_one()
@@ -196,6 +197,7 @@ class SupremeCourtLetter(models.Model):
                 "approval_status": "draft",
                 "second_approval_by": False,
                 "first_approval_by": False,
+                'reject_by': self.env.user.id,
             }
         )
         # Notify the client about status change
@@ -212,8 +214,10 @@ class SupremeCourtLetter(models.Model):
     def action_reject_second(self):
         self.ensure_one()
         self.write({
-            'approval_status': 'waiting_second_approval',
+            'approval_status': 'draft',
             'second_approval_by': False,
+            'first_approval_by': False,
+            'reject_by': self.env.user.id,
         })
 
         # Notify the client about the status change
@@ -222,7 +226,7 @@ class SupremeCourtLetter(models.Model):
             "tag": "display_notification",
             "params": {
                 "title": "Rejection",
-                "message": "The letter has been rejected and moved back to waiting for first approval status.",
+                "message": _('The letter has been moved to the "Draft" status.'),
                 "sticky": False,
             },
         }

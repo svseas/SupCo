@@ -45,9 +45,9 @@
                             <field name="address"/>
                             <field name="regarding"/>
                             <field name="validity_date"/>
-                            <field name="custom_url" widget="url"/>
-                            <field name="qr_code" widget='image' class="oe_avatar"/>
-                            <field name="approval_status" readonly="1"/>
+                            <field name="custom_url" widget="url" attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
+                            <field name="qr_code" widget='image' class="oe_avatar" attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
+                            <field name="approval_status" readonly="1" attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
                             <field name="first_approval_by"/>
                             <field name="second_approval_by"/>
                         </group>
