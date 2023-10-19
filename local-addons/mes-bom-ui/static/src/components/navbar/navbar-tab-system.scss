@@ -1,6 +1,9 @@
 .mn-tab-system {
   display: flex;
-  padding: 16px 8px 0px 8px;
+  // display: none;
+  height: 0px;
+  overflow: hidden;
+  padding: 15px 8px 0px 8px;
   align-items: flex-start;
   gap: 8px;
   align-self: stretch;

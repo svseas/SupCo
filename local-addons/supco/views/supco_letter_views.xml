@@ -18,20 +18,21 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button string="Request First Approval" type="object" class="oe_highlight" name="action_request_first_approval"/>
+                        <t t-set="form_status" t-value="props.record.data.approval_status"></t>
 
-                        <button name="action_first_approval" string="First Approval" type="object" class="oe_highlight"
-                                groups="supco.group_first_approval"/>
+                        <button string="Request First Approval" type="object" class="oe_highlight" name="action_request_first_approval" confirm="Xác nhận gửi đơn xin duyệt lần 1" attrs="{'invisible': [('approval_status','!=','draft')]}"/>
 
-                        <button name="action_second_approval" string="Second Approval" type="object"
-                                class="oe_highlight"
-                                groups="supco.group_second_approval"/>
+                        <button name="action_first_approval" string="First Approval" type="object" class="oe_highlight" groups="supco.group_first_approval" confirm="Xác nhận phê duyệt lần 1" attrs="{'invisible': [('approval_status', '!=', 'waiting_first_approval')]}"/>
 
-                        <button name="action_reject_first" string="Reject (First Approval)" type="object" class="oe_red"
-                                groups="supco.group_first_approval"/>
+                        <button name="action_reject_first" string="Reject (First Approval)" type="object" class="btn btn-danger" groups="supco.group_first_approval" confirm="Xác nhận không phê duyệt đơn này" attrs="{'invisible': ['|', ('approval_status','=','draft'),('approval_status','=','approved')]}"/>
 
-                        <button name="action_reject_second" string="Reject (Second Approval)" type="object" class="oe_red"
-                                groups="supco.group_second_approval"/>
+                        <button name="action_second_approval" string="Second Approval" type="object" class="oe_highlight" groups="supco.group_second_approval" confirm="Xác nhận phê duyệt lần 2" attrs="{'invisible': [( 'approval_status','!=', 'waiting_second_approval' )]}"/>
+
+                        <t t-out="status"></t>
+
+                        <t t-if="status == 'waiting_second_approval' or status == 'approved'">
+                            <button name="action_reject_second" string="Reject (Second Approval)" type="object" class="btn btn-danger" groups="supco.group_second_approval" confirm="Xác nhận không phê duyệt đơn này"/>
+                        </t>
                     </header>
                     <sheet>
                         <group>

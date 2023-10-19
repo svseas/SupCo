@@ -16,7 +16,7 @@ export const navData = {
       nested: [
         {
           index: 1,
-          label: "Giấy Giới Thiệu",
+          label: "Giấy tờ nghiệp vụ",
           nested: [
             {
               label: "Giấy Giới Thiệu",
@@ -28,50 +28,12 @@ export const navData = {
                   levelAction: "",
                 },
                 {
-                  levelName: "Giấy Giới Thiệu",
+                  levelName: "Giấy tờ nghiệp vụ",
                   levelAction: "",
                 },
                 {
                   levelName: "Giấy Giới Thiệu",
                   levelAction: "supco.action_supreme_court_letters",
-                },
-              ],
-            },
-            {
-              label: "Nhân sự báo chí",
-              actionName: "supco.action_supreme_court_employee",
-              args: {},
-              level: [
-                {
-                  levelName: "Công tác báo chí",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Giấy Giới Thiệu",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Nhân sự báo chí",
-                  levelAction: "supco.action_supreme_court_employee",
-                },
-              ],
-            },
-            {
-              label: "Phòng ban",
-              actionName: "supco.action_supreme_court_department",
-              args: {},
-              level: [
-                {
-                  levelName: "Công tác báo chí",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Giấy Giới Thiệu",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Phòng ban",
-                  levelAction: "supco.action_supreme_court_department",
                 },
               ],
             },
@@ -153,20 +115,65 @@ export const navData = {
     },
     {
       index: 2,
+      label: ["Nhân sự"],
+      icon: "icon-zap",
+      nested: [
+        {
+          index: 1,
+          label: "Tổ chức nhân sự",
+          nested: [
+            {
+              label: "Nhân sự báo chí",
+              actionName: "supco.action_supreme_court_employee",
+              args: {},
+              level: [
+                {
+                  levelName: "Nhân sự",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Tổ chức nhân sự",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Nhân sự báo chí",
+                  levelAction: "supco.action_supreme_court_employee",
+                },
+              ],
+            },
+            {
+              label: "Phòng ban",
+              actionName: "supco.action_supreme_court_department",
+              args: {},
+              level: [
+                {
+                  levelName: "Nhân sự",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Tổ chức nhân sự",
+                  levelAction: "",
+                },
+                {
+                  levelName: "Phòng ban",
+                  levelAction: "supco.action_supreme_court_department",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      index: 3,
       label: ["Nghiệp vụ truyền hình"],
       icon: "icon-layers",
       nested: [],
     },
     {
-      index: 3,
+      index: 4,
       label: ["Công tác Đoàn"],
       icon: "icon-check-square",
-      nested: [],
-    },
-    {
-      index: 4,
-      label: ["Ngoại giao"],
-      icon: "icon-zap",
       nested: [],
     },
   ],
