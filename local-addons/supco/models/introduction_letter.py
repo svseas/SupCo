@@ -194,7 +194,7 @@ class SupremeCourtLetter(models.Model):
 
         self.write(
             {
-                "approval_status": "draft",
+                "approval_status": "rejected",
                 "second_approval_by": False,
                 "first_approval_by": False,
                 'reject_by': self.env.user.id,
@@ -206,7 +206,7 @@ class SupremeCourtLetter(models.Model):
             "tag": "display_notification",
             "params": {
                 "title": "Rejection",  # Notification's title
-                "message": _('The letter has been moved to the "Draft" status.'),
+                "message": _('The letter has been rejected.'),
                 "sticky": False,  # True means the notification won't auto-close
             },
         }
@@ -214,7 +214,7 @@ class SupremeCourtLetter(models.Model):
     def action_reject_second(self):
         self.ensure_one()
         self.write({
-            'approval_status': 'draft',
+            'approval_status': 'rejected',
             'second_approval_by': False,
             'first_approval_by': False,
             'reject_by': self.env.user.id,
@@ -226,7 +226,7 @@ class SupremeCourtLetter(models.Model):
             "tag": "display_notification",
             "params": {
                 "title": "Rejection",
-                "message": _('The letter has been moved to the "Draft" status.'),
+                "message": _('The letter has been rejected.'),
                 "sticky": False,
             },
         }
