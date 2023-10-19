@@ -12,73 +12,93 @@ _logger = logging.getLogger(__name__)
 
 
 class SupremeCourtLetter(models.Model):
-    _name = 'supreme.court.letter'
-    _description = 'Supreme Court Letter'
+    _name = "supreme.court.letter"
+    _description = "Supreme Court Letter"
 
-    number = fields.Integer(string='Number', required=True, copy=False, readonly=True, index=True,
-                            default=lambda self: self.env['ir.sequence'].next_by_code('supreme.court.letter'))
-    user_ids = fields.Many2many('res.users', string='Sender')
-    recipient_name = fields.Char(string='Recipient Names', compute='_compute_recipient_name', store=True)
-    display_number = fields.Char(string='Display Number', compute='_compute_display_number')
+    number = fields.Integer(
+        string="Number",
+        required=True,
+        copy=False,
+        readonly=True,
+        index=True,
+        default=lambda self: self.env["ir.sequence"].next_by_code(
+            "supreme.court.letter"
+        ),
+    )
+    user_ids = fields.Many2many("res.users", string="Sender")
+    recipient_name = fields.Char(
+        string="Recipient Names", compute="_compute_recipient_name", store=True
+    )
+    display_number = fields.Char(
+        string="Display Number", compute="_compute_display_number"
+    )
 
-    @api.depends('number')
+    @api.depends("number")
     def _compute_display_number(self):
         for record in self:
-            record.display_number = f'{record.number:05}'
+            record.display_number = f"{record.number:05}"
 
-    @api.depends('user_ids')
+    @api.depends("user_ids")
     def _compute_recipient_name(self):
         """This method is used to compute the recipient names"""
         for letter in self:
-            recipient_name = ''
+            recipient_name = ""
             for user in letter.user_ids:
                 if user.name:
-                    recipient_name += user.name + ', '
+                    recipient_name += user.name + ", "
             letter.recipient_name = recipient_name[:-2]
 
-    title_position = fields.Char(string='Title Position')
+    title_position = fields.Char(string="Title Position")
 
     @api.model
     def create(self, vals):
-        if 'user_ids' in vals:
+        if "user_ids" in vals:
             # Get the first user's id from the provided user_ids in vals
-            user_id = vals['user_ids'][0][2][0] if vals['user_ids'][0][2] else False
+            user_id = vals["user_ids"][0][2][0] if vals["user_ids"][0][2] else False
             if user_id:
-                user = self.env['res.users'].browse(user_id)
-                vals['title_position'] = user.position
+                user = self.env["res.users"].browse(user_id)
+                vals["title_position"] = user.position
         return super(SupremeCourtLetter, self).create(vals)
 
-    organization_unit = fields.Char(string='Organization Unit', default="Báo Công Lý")
-    address = fields.Char(string='Address')
-    regarding = fields.Text(string='Regarding')
-    validity_date = fields.Date(string='Validity Date', default=datetime.today().date())
-    created_by = fields.Many2one('res.users', string='Tạo bởi', default=lambda self: self.env.user)
-    custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
-    qr_code = fields.Binary("QR Code", compute='_compute_qr_code', store=True)
-    public_id = fields.Char(string="Public ID", copy=False, readonly=True,
-                            default=lambda self: ''.join(random.choices(string.ascii_letters + string.digits, k=16)))
+    organization_unit = fields.Char(string="Organization Unit", default="Báo Công Lý")
+    address = fields.Char(string="Address")
+    regarding = fields.Text(string="Regarding")
+    validity_date = fields.Date(string="Validity Date", default=datetime.today().date())
+    created_by = fields.Many2one(
+        "res.users", string="Tạo bởi", default=lambda self: self.env.user
+    )
+    custom_url = fields.Char(string="URL", compute="_compute_custom_url", store=True)
+    qr_code = fields.Binary("QR Code", compute="_compute_qr_code", store=True)
+    public_id = fields.Char(
+        string="Public ID",
+        copy=False,
+        readonly=True,
+        default=lambda self: "".join(
+            random.choices(string.ascii_letters + string.digits, k=16)
+        ),
+    )
 
-    @api.constrains('validity_date')
+    @api.constrains("validity_date")
     def _check_date(self):
         for record in self:
             if record.validity_date and record.validity_date <= datetime.today().date():
-                raise exceptions.ValidationError('Valid Date must be after today!')
+                raise exceptions.ValidationError("Valid Date must be after today!")
 
-    @api.depends('number')
+    @api.depends("number")
     def _compute_custom_url(self):
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for letter in self:
             if letter.public_id:
-                letter.custom_url = f'{base_url}/letters/public/{letter.public_id}'
+                letter.custom_url = f"{base_url}/letters/public/{letter.public_id}"
             else:
                 letter.custom_url = False
 
-    @api.depends('number')
+    @api.depends("number")
     def _compute_qr_code(self):
         for letter in self:
-            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
             if letter.public_id:
-                qr_code_link = f'{base_url}/letters/public/{letter.public_id}'
+                qr_code_link = f"{base_url}/letters/public/{letter.public_id}"
 
                 # Generate a QR code from the link
                 img = qrcode.make(qr_code_link)
@@ -87,85 +107,124 @@ class SupremeCourtLetter(models.Model):
                 encoded_image = base64.b64encode(buffer.getvalue())
                 letter.qr_code = encoded_image
 
-    approval_status = fields.Selection([
-        ('draft', 'Draft'),
-        ('waiting_first_approval', 'Waiting for First Approval'),
-        ('waiting_second_approval', 'Waiting for Second Approval'),
-        ('approved', 'Approved'),
-        ('rejected', 'Rejected')
-    ], default='draft', string="Approval Status")
+    approval_status = fields.Selection(
+        [
+            ("draft", "Draft"),
+            ("waiting_first_approval", "Waiting for First Approval"),
+            ("waiting_second_approval", "Waiting for Second Approval"),
+            ("approved", "Approved"),
+            ("rejected", "Rejected"),
+        ],
+        default="draft",
+        string="Approval Status",
+    )
 
-    first_approval_by = fields.Many2one('res.users', string="First Approval By", readonly=True)
-    second_approval_by = fields.Many2one('res.users', string="Second Approval By", readonly=True)
+    first_approval_by = fields.Many2one(
+        "res.users", string="First Approval By", readonly=True
+    )
+    second_approval_by = fields.Many2one(
+        "res.users", string="Second Approval By", readonly=True
+    )
 
     def action_request_first_approval(self):
         self.ensure_one()
 
         # Check if the record already has either first or second approver set
         if self.first_approval_by or self.second_approval_by:
-            raise UserError(_("This letter already has approvers set. You cannot request first approval."))
+            raise UserError(
+                _(
+                    "This letter already has approvers set. You cannot request first approval."
+                )
+            )
 
         # Check if the status has already been changed to waiting_first_approval
-        if self.approval_status == 'waiting_first_approval':
-            raise UserError(_("This letter is already in 'waiting for first approval' status."))
+        if self.approval_status == "waiting_first_approval":
+            raise UserError(
+                _("This letter is already in 'waiting for first approval' status.")
+            )
 
-        self.write({
-            'approval_status': 'waiting_first_approval',
-            'first_approval_by': False,
-            'second_approval_by': False,
-        })
+        self.write(
+            {
+                "approval_status": "waiting_first_approval",
+                "first_approval_by": False,
+                "second_approval_by": False,
+            }
+        )
+
+        return {
+            "type": "ir.actions.act_window",
+            "view_mode": "tree,form",
+            "res_model": "supreme.court.letter",
+        }
 
     def action_first_approval(self):
         self.ensure_one()  # Ensure that only one record is being processed
-        self.write({
-            'approval_status': 'waiting_second_approval',
-            'first_approval_by': self.env.user.id
-        })
+        self.write(
+            {
+                "approval_status": "waiting_second_approval",
+                "first_approval_by": self.env.user.id,
+            }
+        )
+        return {
+            "type": "ir.actions.act_window",
+            "view_mode": "tree,form",
+            "res_model": "supreme.court.letter",
+        }
 
     def action_second_approval(self):
         self.ensure_one()
-        self.write({
-            'approval_status': 'approved',
-            'second_approval_by': self.env.user.id
-        })
+        self.write(
+            {"approval_status": "approved", "second_approval_by": self.env.user.id}
+        )
+        return {
+            "type": "ir.actions.act_window",
+            "view_mode": "tree,form",
+            "res_model": "supreme.court.letter",
+        }
 
     def action_reject_first(self):
         self.ensure_one()
 
         # Check if the status is approved
-        if self.approval_status == 'approved':
-            raise exceptions.UserError(_('You cannot reject a letter that has already been approved.'))
+        if self.approval_status == "approved":
+            raise exceptions.UserError(
+                _("You cannot reject a letter that has already been approved.")
+            )
 
-        self.write({
-            'approval_status': 'draft',
-            'second_approval_by': False,
-            'first_approval_by': False,
-        })
+        self.write(
+            {
+                "approval_status": "draft",
+                "second_approval_by": False,
+                "first_approval_by": False,
+            }
+        )
         # Notify the client about status change
         return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'Rejection',  # Notification's title
-                'message': _('The letter has been moved to the "Draft" status.'),
-                'sticky': False  # True means the notification won't auto-close
-            }
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": "Rejection",  # Notification's title
+                "message": _('The letter has been moved to the "Draft" status.'),
+                "sticky": False,  # True means the notification won't auto-close
+            },
         }
 
     def action_reject_second(self):
         self.ensure_one()
-        self.write({
-            'approval_status': 'waiting_first_approval',
-            'second_approval_by': False,
-        })
+        self.write(
+            {
+                "approval_status": "waiting_first_approval",
+                "second_approval_by": False,
+            }
+        )
 
         # Notify the client about the status change
         return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'Rejection',
-                'message': 'The letter has been rejected and moved back to waiting for first approval status.',
-                'sticky': False
-            }
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": "Rejection",
+                "message": "The letter has been rejected and moved back to waiting for first approval status.",
+                "sticky": False,
+            },
         }
