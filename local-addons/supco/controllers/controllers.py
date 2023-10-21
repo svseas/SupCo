@@ -87,25 +87,41 @@ class YourControllerNameHere(http.Controller):
         Report = request.env["ir.actions.report"].sudo().with_context()
 
         # Render the report as PDF
+        # try:
+        #     pdf_content, _ = Report._render_qweb_pdf(
+        #         "supco.report_supreme_court_letter_main", res_ids=[letter.id]
+        #     )
+        # except Exception as e:
+        #     _logger.error(
+        #         "Failed to generate report for public_id: %s, Error: %s",
+        #         public_id,
+        #         str(e),
+        #     )
+        #     return Response("Internal Server Error", status=500)
+        #
+        # # Set filename to something meaningful, e.g., "letter_<public_id>.pdf"
+        # filename = "letter_{}.pdf".format(public_id)
+        #
+        # # Return the fetched PDF as a response.
+        # pdfhttpheaders = [
+        #     ("Content-Type", "application/pdf"),
+        #     ("Content-Length", len(pdf_content)),
+        #     ("Content-Disposition", content_disposition(filename)),
+        # ]
+        # return request.make_response(pdf_content, headers=pdfhttpheaders)
+
+        # Render the report as HTML
         try:
-            pdf_content, _ = Report._render_qweb_pdf(
-                "supco.report_supreme_court_letter_main", res_ids=[letter.id]
-            )
+            html_content = request.env['ir.actions.report']._render_qweb_html(
+                'supco.report_supreme_court_letter_main', letter.ids
+            )[0]
         except Exception as e:
             _logger.error(
                 "Failed to generate report for public_id: %s, Error: %s",
                 public_id,
                 str(e),
             )
-            return Response("Internal Server Error", status=500)
+            return http.Response("Internal Server Error", status=500)
 
-        # Set filename to something meaningful, e.g., "letter_<public_id>.pdf"
-        filename = "letter_{}.pdf".format(public_id)
-
-        # Return the fetched PDF as a response.
-        pdfhttpheaders = [
-            ("Content-Type", "application/pdf"),
-            ("Content-Length", len(pdf_content)),
-            ("Content-Disposition", content_disposition(filename)),
-        ]
-        return request.make_response(pdf_content, headers=pdfhttpheaders)
+        # Return the fetched HTML as a response.
+        return http.Response(html_content, content_type='text/html')
