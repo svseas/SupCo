@@ -84,7 +84,7 @@
                     <field name="address"/>
                     <field name="regarding"/>
                     <field name="validity_date"/>
-                    <field name="custom_url" widget="url"/>
+                    <field name="custom_url" widget="url" attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
                     <field name="approval_status"/>
                 </tree>
             </field>

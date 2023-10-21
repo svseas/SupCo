@@ -71,9 +71,11 @@ class SupremeCourtLetter(models.Model):
         string="Public ID",
         copy=False,
         readonly=True,
-        default=lambda self: "".join(
-            random.choices(string.ascii_letters + string.digits, k=16)
-        ),
+        default=lambda self: "_".join([
+            'cl',
+            'ggt',
+            ''.join(random.choices(string.ascii_letters + string.digits, k=16))
+        ]),
     )
 
     @api.constrains("validity_date")
