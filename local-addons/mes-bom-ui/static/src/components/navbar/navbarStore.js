@@ -24,6 +24,9 @@ export const navStore = reactive({
   toggleMainMenu() {
     this.isMainMenuExpanded = !this.isMainMenuExpanded;
   },
+  toggleSubMenu() {
+    this.isSubMenuExpanded = !this.isSubMenuExpanded;
+  },
   changeSubMenu(menu) {
     this.isSubMenuExpanded = true;
     this.subMenu = menu;
