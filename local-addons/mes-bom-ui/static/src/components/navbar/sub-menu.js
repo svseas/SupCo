@@ -25,6 +25,7 @@ export class SubMenu extends Component {
       console.log("actionName nothing");
     } else {
       this.action.doAction(item.actionName, args);
+      this.navStore.toggleSubMenu();
     }
     this.navStore.changeLevel([...item.level, item.label]);
   }
