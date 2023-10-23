@@ -97,8 +97,9 @@
                     <field name="validity_date" />
                     <field name="custom_url" widget="url"
                         attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
-                    <field name="approval_status" />
-                    <button name="approval_status" type='object' string="Open" />
+                    <button name="reject_show" type='object' string="Lý do">
+                        <field name="approval_status" />
+                    </button>
                 </tree>
             </field>
         </record>
@@ -123,7 +124,12 @@
             <field name="name">letter.rejection.log.tree</field>
             <field name="model">letter.rejection.log</field>
             <field name="arch" type="xml">
-                <tree>
+                <style>
+                    .modal-footer {
+                    display: none !important;
+                    }
+                </style>
+                <tree create="false" export_xlsx="false">
                     <field name="letter_id" />
                     <field name="reject_by" />
                     <field name="rejection_reason" />

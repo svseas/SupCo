@@ -3,7 +3,7 @@
     "version": "1.0",
     "category": "Custom",
     "summary": "Supreme Court Introduction Letter",
-    "depends": ["base", "web"],
+    "depends": ["base", "web", "customize_title_header"],
     "data": [
         "views/supco_login.xml",
         "views/supco_letter_views.xml",
