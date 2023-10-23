@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
   <t t-name="mes-bom-ui.sub-menu" owl="1">
     <t t-set="isExpaned" t-value="navStore.isSubMenuExpanded"/>
@@ -9,7 +9,7 @@
           <t t-if="menu">
             <t t-out="menu.label"/>
           </t>
-          <i class="icon icon-x ms__close" t-on-click="() => this.navStore.isSubMenuExpanded=false"></i>
+          <i class="icon icon-x ms__close" t-on-click="() => this.navStore.toggleSubMenu()"></i>
         </div>
       </div>
       <div class="ms__list">
