@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <record id="action_supreme_court_letters" model="ir.actions.act_window">
-            <field name="name">Introduction Letter</field>
+            <field name="name">Giấy giới </field>
             <field name="res_model">supreme.court.letter</field>
             <field name="view_mode">tree,form</field>
         </record>
