@@ -30,13 +30,13 @@ class SupremeCourtLetter(models.Model):
     def _get_default_user(self):
         return [self.env.user.id]
 
-    user_ids = fields.Many2many('res.users', string='Sender', default=_get_default_user)
+    user_ids = fields.Many2many('res.users', string='Người gửi', default=_get_default_user)
 
     recipient_name = fields.Char(
-        string="Recipient Names", compute="_compute_recipient_name", store=True
+        string="Tên các đồng chí", compute="_compute_recipient_name", store=True
     )
     display_number = fields.Char(
-        string="Display Number", compute="_compute_display_number"
+        string="", compute="_compute_display_number"
     )
 
     @api.depends("number")
@@ -56,17 +56,17 @@ class SupremeCourtLetter(models.Model):
 
     title_position = fields.Selection(
         selection=[('reporter', 'Phóng Viên'), ('editor', 'Biên Tập Viên'), ('collab', 'Cộng Tác Viên')],
-        string='Title', default='reporter')
+        string='Vị trí', default='reporter')
 
-    organization_unit = fields.Char(string="Organization Unit", default="Báo Công Lý")
-    address = fields.Char(string="Address")
-    regarding = fields.Text(string="Regarding")
-    validity_date = fields.Date(string="Validity Date", default=datetime.today().date())
+    organization_unit = fields.Char(string="Tổ chức", default="Báo Công Lý")
+    address = fields.Char(string="Nơi đến")
+    regarding = fields.Text(string="Về việc")
+    validity_date = fields.Date(string="Hiệu lực đến ngày", default=datetime.today().date())
     created_by = fields.Many2one(
         "res.users", string="Tạo bởi", default=lambda self: self.env.user
     )
     custom_url = fields.Char(string="URL", compute="_compute_custom_url", store=True)
-    qr_code = fields.Binary("QR Code", compute="_compute_qr_code", store=True)
+    qr_code = fields.Binary("Mã QR", compute="_compute_qr_code", store=True)
     public_id = fields.Char(
         string="Public ID",
         copy=False,
@@ -82,7 +82,7 @@ class SupremeCourtLetter(models.Model):
     def _check_date(self):
         for record in self:
             if record.validity_date and record.validity_date <= datetime.today().date():
-                raise exceptions.ValidationError("Valid Date must be after today!")
+                raise exceptions.ValidationError("Ngày hiệu lực phải sau hôm nay!")
 
     @api.depends("number")
     def _compute_custom_url(self):
@@ -109,26 +109,26 @@ class SupremeCourtLetter(models.Model):
 
     approval_status = fields.Selection(
         [
-            ("draft", "Draft"),
-            ("waiting_first_approval", "Waiting for First Approval"),
-            ("waiting_second_approval", "Waiting for Second Approval"),
-            ("approved", "Approved"),
-            ("rejected", "Rejected"),
+            ("draft", "Nháp"),
+            ("waiting_first_approval", "Chờ duyệt lần 1"),
+            ("waiting_second_approval", "Chờ duyệt lần 2"),
+            ("approved", "Đã được duyệt"),
+            ("rejected", "Bị từ chối"),
         ],
         default="draft",
-        string="Approval Status",
+        string="Trạng thái duyệt",
     )
 
     first_approval_by = fields.Many2one(
-        "res.users", string="First Approval By", readonly=True
+        "res.users", string="Người duyệt lần đầu", readonly=True
     )
     second_approval_by = fields.Many2one(
-        "res.users", string="Second Approval By", readonly=True
+        "res.users", string="Người duyệt lần hai", readonly=True
     )
 
-    reject_by = fields.Many2one("res.users", string="Reject By", readonly=True)
-    reject_reason = fields.Text(string="Reject Reason")
-    reject_reason_user = fields.Text(string="Reject Reason", readonly=True, compute='_compute_reject_reason_user')
+    reject_by = fields.Many2one("res.users", string="Người từ chối", readonly=True)
+    reject_reason = fields.Text(string="Lý do từ chối")
+    reject_reason_user = fields.Text(string="Lý do từ chối", readonly=True, compute='_compute_reject_reason_user')
 
     @api.depends('reject_reason')
     def _compute_reject_reason_user(self):
@@ -142,14 +142,14 @@ class SupremeCourtLetter(models.Model):
         if self.first_approval_by or self.second_approval_by:
             raise UserError(
                 _(
-                    "This letter already has approvers set. You cannot request first approval."
+                    "Thư này đã có người duyệt. Không thể xin duyệt lần một."
                 )
             )
 
         # Check if the status has already been changed to waiting_first_approval
         if self.approval_status == "waiting_first_approval":
             raise UserError(
-                _("This letter is already in 'waiting for first approval' status.")
+                _("Thư này đang trong trạng thái 'Xin duyệt lần 1'.")
             )
 
         self.write(
@@ -197,13 +197,13 @@ class SupremeCourtLetter(models.Model):
         # Check if a reject reason is provided
         if not self.reject_reason:
             raise exceptions.UserError(
-                _("Please provide a reason for rejection before proceeding.")
+                _("Xin hãy đưa ra lý do từ chối trước khi tiếp tục.")
             )
 
         # Check if the status is approved
         if self.approval_status == "approved":
             raise exceptions.UserError(
-                _("You cannot reject a letter that has already been approved.")
+                _("Không thể từ chối giấy giới thiệu đã được duyệt.")
             )
 
         self.write(
@@ -220,7 +220,7 @@ class SupremeCourtLetter(models.Model):
             "tag": "display_notification",
             "params": {
                 "title": "Rejection",  # Notification's title
-                "message": _('The letter has been rejected.'),
+                "message": _('Giấy giới thiệu đã bị từ chối.'),
                 "sticky": False,  # True means the notification won't auto-close
             },
         }
