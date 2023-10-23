@@ -16,7 +16,7 @@ class SupremeCourtLetter(models.Model):
     _description = "Supreme Court Letter"
 
     number = fields.Integer(
-        string="Number",
+        string="Số",
         required=True,
         copy=False,
         readonly=True,
@@ -36,7 +36,7 @@ class SupremeCourtLetter(models.Model):
         string="Tên các đồng chí", compute="_compute_recipient_name", store=True
     )
     display_number = fields.Char(
-        string="", compute="_compute_display_number"
+        string="Số", compute="_compute_display_number"
     )
 
     @api.depends("number")
