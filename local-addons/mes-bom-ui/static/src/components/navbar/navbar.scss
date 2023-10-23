@@ -70,8 +70,12 @@
 }
 
 .mn__user {
-  padding: 8px 8px 8px 24px;
   border-top: 1px solid var(--persian-green-50);
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: center;
+  padding: 12px;
 }
 
 .text-hover-persian-green-200 {
@@ -83,6 +87,9 @@
   position: relative;
 }
 
+.font-size-12 {
+  font-size: 12px;
+}
 
 .text-hover-persian-green-200::before {
   content: '';
