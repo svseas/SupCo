@@ -4,19 +4,20 @@
         <record id="supco_res_users_form_inherit" model="ir.ui.view">
             <field name="name">supreme.court.employee.form.view</field>
             <field name="model">res.users</field>
-            <field name="inherit_id" ref="base.view_users_simple_form"/>
+            <field name="inherit_id" ref="base.view_users_simple_form" />
             <field name="arch" type="xml">
 
-                <form string="Users">
+                <form>
                     <sheet>
                         <group>
-                            <field name="groups_id" widget="many2many_tags" domain="[('category_id', '=', 'Supreme Court Letters')]"/>
-                            <field name="code"/>
-                            <field name="dob" widget="date"/>
-                            <field name="national_id"/>
-                            <field name="position"/>
-                            <field name="department" widget="many2many_tags"/>
-                            <field name="custom_url" widget="url"/>
+                            <field name="groups_id" widget="many2many_tags"
+                                domain="[('category_id', '=', 'Supreme Court Letters')]" />
+                            <field name="code" />
+                            <field name="dob" widget="date" />
+                            <field name="national_id" />
+                            <field name="position" />
+                            <field name="department" widget="many2many_tags" />
+                            <field name="custom_url" widget="url" />
                         </group>
                     </sheet>
                 </form>
@@ -26,14 +27,14 @@
         <record id="supco_res_users_tree_inherit" model="ir.ui.view">
             <field name="name">supreme.court.employee.tree.view</field>
             <field name="model">res.users</field>
-            <field name="inherit_id" ref="base.view_users_tree"/>
+            <field name="inherit_id" ref="base.view_users_tree" />
             <field name="arch" type="xml">
-                <tree string="Users">
-                    <field name="name"/>
-                    <field name="department" widget="many2many_tags"/>
-                    <field name="position"/>
-                    <field name="custom_url"/>
-                    <field name="dob"/>
+                <tree>
+                    <field name="name" />
+                    <field name="department" widget="many2many_tags" />
+                    <field name="position" />
+                    <field name="custom_url" />
+                    <field name="dob" />
                 </tree>
             </field>
         </record>
@@ -42,10 +43,10 @@
             <field name="name">Employee</field>
             <field name="res_model">res.users</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="supco_res_users_tree_inherit"/>
+            <field name="view_id" ref="supco_res_users_tree_inherit" />
         </record>
-        <menuitem id="menu_supco_main" name="SupCo" sequence="10"/>
+        <menuitem id="menu_supco_main" name="SupCo" sequence="10" />
         <menuitem id="menu_supco_employee" name="Nhân sự" parent="menu_supco_main"
-                  action="action_supreme_court_employee" sequence="20"/>
+            action="action_supreme_court_employee" sequence="20" />
     </data>
 </odoo>
