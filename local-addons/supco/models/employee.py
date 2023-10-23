@@ -5,19 +5,19 @@ class Employee(models.Model):
     _inherit = 'res.users'
     _rec_name = 'combined_name'
 
-    code = fields.Char(string='Employee Code', required=True)
-    combined_name = fields.Char(string='Name', compute='_compute_combined_name', store=True)
+    code = fields.Char(string='Mã', required=True)
+    combined_name = fields.Char(string='Tên', compute='_compute_combined_name', store=True)
 
     @api.depends('name', 'code')
     def _compute_combined_name(self):
         for employee in self:
             employee.combined_name = f'{employee.code} - {employee.name}'
 
-    dob = fields.Date(string='DOB')
-    national_id = fields.Char(string='National ID')
-    introduction_letter = fields.Many2many("supreme.court.letter", string="Supreme Court Letter")
+    dob = fields.Date(string='Ngày sinh')
+    national_id = fields.Char(string='Số CCCD')
+    introduction_letter = fields.Many2many("supreme.court.letter", string="Giấy giới thiệu")
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
-    position = fields.Char(string='Position')
+    position = fields.Char(string='Vị trí')
 
     @api.depends('national_id')
     def _compute_custom_url(self):
@@ -31,6 +31,6 @@ class Employee(models.Model):
     _sql_constraints = [
         ("national_id_uq",
          "UNIQUE (national_id)",
-         "National ID must be unique.")
+         "CCCD Phải là duy nhất.")
     ]
     department = fields.Many2many('supreme.court.department', string='Phòng ban')
