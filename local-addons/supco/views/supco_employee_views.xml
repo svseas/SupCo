@@ -45,7 +45,7 @@
             <field name="view_id" ref="supco_res_users_tree_inherit"/>
         </record>
         <menuitem id="menu_supco_main" name="SupCo" sequence="10"/>
-        <menuitem id="menu_supco_employee" name="Employee" parent="menu_supco_main"
+        <menuitem id="menu_supco_employee" name="Nhân sự" parent="menu_supco_main"
                   action="action_supreme_court_employee" sequence="20"/>
     </data>
 </odoo>
