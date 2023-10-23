@@ -73,9 +73,9 @@
                                 widget='many2one' class="p-2" />
                             <field name="reject_by" class="p-2" options="{'no_open': True}"
                                 widget='many2one' />
-                            <field name="reject_reason" class="p-2"
+                            <field name="reject_reason" class="border p-1"
                                 groups="supco.group_first_approval,supco.group_second_approval" />
-                            <field name="reject_reason_user" class="p-2"
+                            <field name="reject_reason_user" class=""
                                 attrs="{'invisible': [('approval_status', '!=', 'rejected')]}" />
                         </group>
                     </sheet>
@@ -98,6 +98,7 @@
                     <field name="custom_url" widget="url"
                         attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
                     <field name="approval_status" />
+                    <button name="approval_status" type='object' string="Open" />
                 </tree>
             </field>
         </record>
