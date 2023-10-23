@@ -14,6 +14,7 @@ _logger = logging.getLogger(__name__)
 class SupremeCourtLetter(models.Model):
     _name = "supreme.court.letter"
     _description = "Supreme Court Letter"
+    _rec_name = "display_number"
 
     number = fields.Integer(
         string="Số",
@@ -206,6 +207,13 @@ class SupremeCourtLetter(models.Model):
                 _("Không thể từ chối giấy giới thiệu đã được duyệt.")
             )
 
+        # Create log before changing the status
+        self.env['letter.rejection.log'].create({
+            'letter_id': self.id,
+            'reject_by': self.env.user.id,
+            'rejection_reason': self.reject_reason
+        })
+
         self.write(
             {
                 "approval_status": "rejected",
@@ -214,6 +222,7 @@ class SupremeCourtLetter(models.Model):
                 'reject_by': self.env.user.id,
             }
         )
+
         # Notify the client about status change
         return {
             "type": "ir.actions.client",
@@ -225,18 +234,12 @@ class SupremeCourtLetter(models.Model):
             },
         }
 
-        # Create log
-        self.env['letter.rejection.log'].create({
-            'letter_id': self.id,
-            'reject_by': self.env.user.id,
-            'rejection_reason': self.reject_reason
-        })
 
-
-class LetterRejectionLog(models.TransientModel):
+class LetterRejectionLog(models.Model):  # Change to models.Model
     _name = 'letter.rejection.log'
     _description = 'Log of Rejected Letters'
 
     letter_id = fields.Many2one('supreme.court.letter', string='Letter', readonly=True)
     reject_by = fields.Many2one('res.users', string='Rejected By', readonly=True)
     rejection_reason = fields.Text('Rejection Reason')
+
