@@ -9,4 +9,21 @@
       </t>
     </xpath>
   </t>
+  <t t-inherit="web.FormStatusIndicator" t-inherit-mode="extension" owl="1">
+    <xpath expr="//div[contains(@class, 'o_form_status_indicator d-md-flex ms-md-1')]" position="replace">
+      <div class="o_form_status_indicator d-md-flex ms-md-1" t-att-class="{ o_form_status_indicator_new_record: props.model.root.isVirtual }">
+        <div class="o_form_status_indicator_buttons d-flex" t-att-class="{ invisible: !(props.model.root.isVirtual or displayButtons) }">
+          <button type="button" class="o_form_button_save btn btn-outline-primary py-0" t-att-disabled="props.isDisabled" data-hotkey="s" t-on-click.stop="save" data-tooltip="Save manually" aria-label="Save manually">
+          Lưu
+          </button>
+          <button type="button" class="o_form_button_cancel btn btn-danger py-0" t-att-disabled="props.isDisabled" data-hotkey="j" t-on-click.stop="discard" data-tooltip="Discard changes" aria-label="Discard changes">
+          Hủy
+          </button>
+        </div>
+        <span t-if="!props.model.root.isVirtual and indicatorMode === 'invalid'" class="text-danger small ms-2" data-tooltip="Correct issues to save, or discard changes">
+          <i class="fa fa-warning" />
+ Không hợp lệ </span>
+      </div>
+    </xpath>
+  </t>
 </templates>

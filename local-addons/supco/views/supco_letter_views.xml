@@ -89,8 +89,7 @@
             <field name="name">supreme.court.letter.tree</field>
             <field name="model">supreme.court.letter</field>
             <field name="arch" type="xml">
-                <xpath expr="//div[@data-tooltip='Export All'" position="replace" />
-                <tree>
+                <tree export_xlsx="false">
                     <field name="display_number" />
                     <field name="recipient_name" />
                     <field name="title_position" />
