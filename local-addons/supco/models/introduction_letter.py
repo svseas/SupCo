@@ -14,6 +14,7 @@ _logger = logging.getLogger(__name__)
 class SupremeCourtLetter(models.Model):
     _name = "supreme.court.letter"
     _description = "Supreme Court Letter"
+    _rec_name = "display_number"
 
     number = fields.Integer(
         string="Số",

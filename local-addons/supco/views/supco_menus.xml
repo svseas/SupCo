@@ -7,4 +7,6 @@
     <menuitem id="menu_supco_introduction_letter" name="Giấy giới thiệu" parent="menu_supco_main" action="action_supreme_court_letters" sequence="10"/>
 
     <menuitem id="menu_supco_department" name="Phòng ban" parent="menu_supco_main" action="action_supreme_court_department" sequence="30"/>
+
+    <menuitem id="menu_supco_rejection_log" name="Reject Log" parent="menu_supco_main" action="view_letter_rejection_log_action" sequence="40"/>
 </odoo>
