@@ -255,7 +255,6 @@ class SupremeCourtLetter(models.Model):
             },
         }
 
-
     attachment_ids = fields.One2many('ir.attachment', 'res_id', domain=[('res_model', '=', 'supreme.court.letter')],
                                      string='Tệp tin đính kèm')
     date_created = fields.Date(string="Ngày tạo", default=datetime.today().date(), readonly=True)
@@ -266,7 +265,7 @@ class SupremeCourtLetter(models.Model):
     def verify_video_url(self):
         for letter in self:
             if letter.gdrive_url and not letter.gdrive_url.startswith(
-                "https://drive.google.com/"
+                    "https://drive.google.com/"
             ):
                 raise exceptions.ValidationError("Link không hợp lệ!")
 
