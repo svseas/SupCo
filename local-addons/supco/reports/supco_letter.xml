@@ -4,7 +4,7 @@
     <template id="report_supreme_court_letter_main">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
-                <t t-call="supco.supreme_court_letter"/>
+                <t t-call="supco.supreme_court_letter" />
             </t>
         </t>
     </template>
@@ -12,168 +12,185 @@
         <t t-call="web.internal_layout">
             <style>
                 .watermark {
-                    background: url('https://user-images.githubusercontent.com/83296144/275700877-fb8928a7-d64a-43c7-ac9e-9f934a115d40.png') no-repeat center center;
-                    -webkit-background-size: cover;
-                    -moz-background-size: cover;
-                    -o-background-size: cover;
-                    background-size: cover;
-                    width: 100%;
-                    min-height: 1400px;
+                background:
+                url('https://user-images.githubusercontent.com/83296144/275700877-fb8928a7-d64a-43c7-ac9e-9f934a115d40.png')
+                no-repeat center center;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                width: 100%;
+                min-height: 1400px;
                 }
 
                 .header--box {
-                    padding: 25px 0px;
+                padding: 25px 0px;
                 }
 
                 .fake-underline {
-                    border-bottom: 1px solid black;
-                    width: fit-content;
-                    padding-bottom: 2px;
+                border-bottom: 1px solid black;
+                width: fit-content;
+                padding-bottom: 2px;
                 }
 
                 .fake-dot {
-                    border-bottom: 1px dotted black;
-                    min-width: 650px;
-                    
+                border-bottom: 1px dotted black;
+                min-width: 650px;
+
                 }
 
                 .w-35 {
-                    width: 35%;
+                width: 35%;
                 }
 
                 .w-10 {
-                    width: 10%;
+                width: 10%;
                 }
                 .w-55 {
-                    width: 55%;
+                width: 55%;
                 }
                 .w-65 {
-                    width: 65%;
+                width: 65%;
                 }
 
                 table, tr, td {
-                    border: none;
+                border: none;
                 }
 
             </style>
-            <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet"/>
-            <link rel="preconnect" href="https://fonts.googleapis.com"/>
-            <link rel="preconnect" href="https://fonts.gstatic.com"/>
-            <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&#38;display=swap" rel="stylesheet" />
+            <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet" />
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link
+                href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&#38;display=swap"
+                rel="stylesheet" />
 
             <div class="watermark" style="">
-                <div class="page" style="margin-left: 92px;margin-right:80px; font-family: 'Tinos';line-height: 1.6;font-weight:400;">
-                    <div class="skeleton"></div>
-                    <!-- Header box -->
-                    <div class="w-100  header--box r-header d-flex" style="line-height: 1.1;">
-                        <!-- Right Box -->
-                        <div class="w-40">
-                            <div class="w-100">
-                                <div class="">
-                                    <h5>
-                                        <strong>TÒA ÁN NHÂN DÂN TỐI CAO</strong>
+                <t t-if="doc.is_valid != True"> Khong duoc phep in
+                </t>
+                <t t-else="">
+
+                    <div class="page"
+                        style="margin-left: 92px;margin-right:80px; font-family: 'Tinos';line-height: 1.6;font-weight:400;">
+                        <div class="skeleton"></div>
+                        <!-- Header box -->
+                        <div class="w-100  header--box r-header d-flex" style="line-height: 1.1;">
+                            <!-- Right Box -->
+                            <div class="w-40">
+                                <div class="w-100">
+                                    <div class="">
+                                        <h5>
+                                            <strong>TÒA ÁN NHÂN DÂN TỐI CAO</strong>
+                                        </h5>
+                                    </div>
+                                    <div class="fw-bold text-center">
+                                        <h5 style="line-height: 0px">
+                                            <span class="fake-underline">
+                                                <strong>BÁO CÔNG LÝ</strong>
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    <div class="text-center mt-4">
+                                        <h5> Số: <span t-field="doc.display_number">
+                                            </span>
+                                            /GGT-BCL</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-10"></div>
+                            <!-- Left Box -->
+                            <div class="w-60">
+                                <div class="text-uppercase fw-bold p-0">
+                                    <h5 class="text-end" style="line-height: 0px;">
+                                        <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong>
                                     </h5>
                                 </div>
-                                <div class="fw-bold text-center">
-                                    <h5 style="line-height: 0px">
+                                <div class="text-center fw-bold">
+                                    <h5 class="">
                                         <span class="fake-underline">
-                                            <strong>BÁO CÔNG LÝ</strong>
+                                            <strong>
+                                                &#032;&#032;&#032;&#032;Độc lập – Tự do – Hạnh phúc
+                                            </strong>
                                         </span>
                                     </h5>
                                 </div>
-                                <div class="text-center mt-4">
-                                    <h5> Số: 
-                                        <span t-field="doc.display_number">
-                                        </span>/GGT-BCL</h5>
+                                <h5 class="mt-4" style="text-align: center; font-style: italic;"> Hà
+                                    Nội, ngày <span t-field="doc.create_date"
+                                        t-options='{"widget": "date", "format": " dd"}' /> tháng <span
+                                        t-field="doc.create_date"
+                                        t-options='{"widget": "date", "format": " MM"}' /> năm <span
+                                        t-field="doc.create_date"
+                                        t-options='{"widget": "date", "format": " yyyy"}' />
+                                </h5>
+                            </div>
+                        </div>
+                        <!-- Clear float -->
+                        <div class="text-center" style="margin-top: 20px;">
+                            <h1>
+                                <strong>GIẤY GIỚI THIỆU</strong>
+                            </h1>
+                        </div>
+                        <div
+                            style="margin-top: 50px; line-height: 1.15; font-family: 'Times New Roman';font-size: 20px;">
+                            <div>
+                                <h4>Đồng chí: <span class="" t-field="doc.recipient_name" />
+                                </h4>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <h4>Chức vụ: <span t-field="doc.title_position" />
+                                </h4>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <h4>Thuộc đơn vị: <span t-field="doc.organization_unit" />
+                                </h4>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <h4>Được cử đến: <span t-field="doc.address" />
+                                </h4>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <h4>Về việc: <span t-field="doc.regarding" />
+                                </h4>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <h4>Đề nghị Quý cơ quan giúp đỡ để đồng chí <span
+                                        t-field="doc.recipient_name" /> hoàn thành nhiệm vụ</h4>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <h4>Giấy Giới thiệu có giá trị đến ngày: <span
+                                        t-field="doc.validity_date"
+                                        t-options='{"widget": "date", "format": "dd/MM/yyyy"}' />
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- QR Code Section -->
+                        <div class="w-100 d-flex " style="margin-top: 30px;">
+                            <div class="w-35 text-center">
+                                <img t-if="doc.qr_code"
+                                    t-attf-src="data:image/png;base64,{{doc.qr_code}}"
+                                    style="max-width: 50%; margin: 25px auto" />
+                                <p style="font-family: Tinos;font-weight: bold; font-style: italic;">Vui
+                                    lòng kiểm tra tính xác thực của văn bản này bằng cách quét mã QR
+                                </p>
+                            </div>
+                            <div class="w-10"></div>
+                            <!-- Right Section -->
+                            <div class="w-65 " style="width: 55%; margin-top: 28px">
+                                <div
+                                    style="text-align: center; font-weight: bold; margin-top:20px; font-size: 20px;">
+                                    TỔNG BIÊN TẬP
+                                </div>
+                                <div style="text-align: center; margin-top:92px">
+                                    <h4>Trần Đức Vinh</h4>
+                                </div>
+                                <div style="text-align: center; font-style: italic; margin-top:20px">
+                                    Điện thoại: 024.3824.7204 – 024. 3936.5550
                                 </div>
                             </div>
                         </div>
-                        <div class="w-10"></div>
-                        <!-- Left Box -->
-                        <div class="w-60">
-                            <div class="text-uppercase fw-bold p-0">
-                                <h5 class="text-end" style="line-height: 0px;">
-                                    <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong>
-                                </h5>
-                            </div>
-                            <div class="text-center fw-bold">
-                                <h5 class="">
-                                    <span class="fake-underline">
-                                        <strong>
-                                            &#032;&#032;&#032;&#032;Độc lập – Tự do – Hạnh phúc
-                                        </strong>
-                                    </span>
-                                </h5>
-                            </div>
-                            <h5 class="mt-4" style="text-align: center; font-style: italic;">
-                                Hà Nội, ngày
-                                <span t-field="doc.create_date" t-options='{"widget": "date", "format": " dd"}'/>
-                                tháng
-                                <span t-field="doc.create_date" t-options='{"widget": "date", "format": " MM"}'/>
-                                năm
-                                <span t-field="doc.create_date" t-options='{"widget": "date", "format": " yyyy"}'/>
-                            </h5>
-                        </div>
+                        <!-- Clear float -->
                     </div>
-                    <!-- Clear float -->
-                    <div class="text-center" style="margin-top: 20px;">
-                        <h1>
-                            <strong>GIẤY GIỚI THIỆU</strong>
-                        </h1>
-                    </div>
-                    <div style="margin-top: 50px; line-height: 1.15; font-family: 'Times New Roman';font-size: 20px;">
-                        <div>
-                            <h4>Đồng chí: <span class="" t-field="doc.recipient_name"/>
-                            </h4>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <h4>Chức vụ: <span t-field="doc.title_position"/>
-                            </h4>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <h4>Thuộc đơn vị: <span t-field="doc.organization_unit"/>
-                            </h4>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <h4>Được cử đến: <span t-field="doc.address"/>
-                            </h4>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <h4>Về việc: <span t-field="doc.regarding"/>
-                            </h4>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <h4>Đề nghị Quý cơ quan giúp đỡ để đồng chí <span t-field="doc.recipient_name"/>
-hoàn thành nhiệm vụ</h4>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <h4>Giấy Giới thiệu có giá trị đến ngày: <span t-field="doc.validity_date" t-options='{"widget": "date", "format": "dd/MM/yyyy"}'/>
-                            </h4>
-                        </div>
-                    </div>
-                    <!-- QR Code Section -->
-                    <div class="w-100 d-flex " style="margin-top: 30px;">
-                        <div class="w-35 text-center">
-                            <img t-if="doc.qr_code" t-attf-src="data:image/png;base64,{{doc.qr_code}}" style="max-width: 50%; margin: 25px auto"/>
-                            <p style="font-family: Tinos;font-weight: bold; font-style: italic;">Vui lòng kiểm tra tính xác thực của văn bản này bằng cách quét mã QR
-                            </p>
-                        </div>
-                        <div class="w-10"></div>
-                        <!-- Right Section -->
-                        <div class="w-65 " style="width: 55%; margin-top: 28px">
-                            <div style="text-align: center; font-weight: bold; margin-top:20px; font-size: 20px;">
-                                TỔNG BIÊN TẬP
-                            </div>
-                            <div style="text-align: center; margin-top:92px">
-                                <h4>Trần Đức Vinh</h4>
-                            </div>
-                            <div style="text-align: center; font-style: italic; margin-top:20px">
-                                Điện thoại: 024.3824.7204 – 024. 3936.5550
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Clear float -->
-                </div>
+                </t>
             </div>
         </t>
     </template>

@@ -71,6 +71,7 @@ class SupremeCourtLetter(models.Model):
     validity_date = fields.Date(
         string="Hiệu lực đến ngày", default=datetime.today().date()
     )
+    is_valid = fields.Boolean(string="Còn hiệu lực", compute="_compute_is_valid")
     created_by = fields.Many2one(
         "res.users", string="Tạo bởi", default=lambda self: self.env.user
     )
@@ -88,6 +89,14 @@ class SupremeCourtLetter(models.Model):
             ]
         ),
     )
+
+    @api.depends("validity_date")
+    def _compute_is_valid(self):
+        for record in self:
+            if record.validity_date and record.validity_date > datetime.today().date():
+                record.is_valid = True
+            else:
+                record.is_valid = False
 
     @api.constrains("validity_date")
     def _check_date(self):
@@ -217,13 +226,14 @@ class SupremeCourtLetter(models.Model):
 
         # Create log before changing the status
 
-        self.env['letter.rejection.log'].create({
-            'letter_id': self.id,
-            'reject_by': self.env.user.id,
-            'rejection_reason': self.reject_reason,
-            'rejection_time': datetime.now(),
-        })
-
+        self.env["letter.rejection.log"].create(
+            {
+                "letter_id": self.id,
+                "reject_by": self.env.user.id,
+                "rejection_reason": self.reject_reason,
+                "rejection_time": datetime.now(),
+            }
+        )
 
         self.write(
             {
@@ -245,18 +255,18 @@ class SupremeCourtLetter(models.Model):
             },
         }
 
-
     date_created = fields.Date(string="Ngày tạo", default=datetime.today().date())
     document = fields.Binary(string="Tài liệu")
     document_name = fields.Char(string="Tên tài liệu")
     gdrive_url = fields.Char(string="Tài liệu từ Google Drive")
 
-    @api.constrains('gdrive_url')
+    @api.constrains("gdrive_url")
     def verify_video_url(self):
         for letter in self:
-            if letter.gdrive_url and not letter.gdrive_url.startswith('https://drive.google.com/'):
+            if letter.gdrive_url and not letter.gdrive_url.startswith(
+                "https://drive.google.com/"
+            ):
                 raise exceptions.ValidationError("Link không hợp lệ!")
-
 
     def reject_show(self):
         return {
@@ -270,6 +280,9 @@ class SupremeCourtLetter(models.Model):
             "domain": [("letter_id", "=", self.id)],
         }
 
+    def action_print(self):
+        pass
+
 
 class LetterRejectionLog(models.Model):  # Change to models.Model
     _name = "letter.rejection.log"
@@ -280,5 +293,6 @@ class LetterRejectionLog(models.Model):  # Change to models.Model
     )
     reject_by = fields.Many2one("res.users", string="Người từ chối", readonly=True)
     rejection_reason = fields.Text("Lý do từ chối")
-    rejection_time = fields.Datetime(string='Time Rejected', default=datetime.now(), readonly=True)
-
+    rejection_time = fields.Datetime(
+        string="Time Rejected", default=datetime.now(), readonly=True
+    )
