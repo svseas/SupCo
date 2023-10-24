@@ -3,6 +3,8 @@
 import { registry } from "@web/core/registry";
 import { LogController } from "./log_controller";
 import { LogArchParser } from "./log_arch_parser";
+import { LogRenderer } from "./log_renderer";
+import { LogModel } from "./log_model";
 
 export const logView = {
   type: "log",
@@ -10,6 +12,8 @@ export const logView = {
   icon: "fa fa-picture-o",
   multiRecord: true,
   Controller: LogController,
+  Model: LogModel,
+  Renderer: LogRenderer,
   ArchParser: LogArchParser,
 
   props(genericProps, view) {
@@ -19,6 +23,8 @@ export const logView = {
 
     return {
       ...genericProps,
+      Model: view.Model,
+      Renderer: view.Renderer,
       archInfo,
     };
   },

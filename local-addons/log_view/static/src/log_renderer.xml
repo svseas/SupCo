@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="log_view.LogRenderer" owl="1">
+        <t t-if="props.letter.length === 0 ">
+            <p class="">Không có dữ liệu</p>
+        </t>
+        
+
+    <t t-foreach="entries" t-as="letter" t-key="letter.id">
+        <div class="d-flex flex-row border-bottom pb-3">
+            <div class="w-25">
+                <h4>
+                    <t t-esc="letter[0]" />
+                </h4>
+            </div>
+            <div class="w-75  border-start ps-3">
+                <t t-foreach="letter[1]" t-as="l" t-key="l.id">
+                    <p class=""> - 
+                        
+                    <strong>GGT <t t-esc="l.id"/></strong>                bị từ chối phê duyệt bởi <strong><t t-esc="l.reject_by"/></strong> với lý do <strong><t t-esc="l.rejection_reason"/></strong>
+                    </p>
+                </t>
+            </div>
+        </div>
+    </t>
+</t>
+</templates>
