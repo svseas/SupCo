@@ -26,4 +26,90 @@
       </div>
     </xpath>
   </t>
+  <t t-inherit="web.ActionMenus" t-inherit-mode="extension" owl="1">
+    <xpath expr="//div[contains(@class, 'o_cp_action_menus')]" position="replace">
+      <div class="o_cp_action_menus">
+        <Dropdown t-if="printItems.length" class="'d-inline-block'" togglerClass="'btn btn-light'" hotkey="'shift+u'">
+          <t t-set-slot="toggler">
+            <i class="me-md-1 fa fa-print"/>
+            <span class="o_dropdown_title">Print</span>
+          </t>
+          <t t-foreach="printItems" t-as="item" t-key="item.key">
+            <DropdownItem class="'o_menu_item'" onSelected="() =&gt; this.onItemSelected(item)">
+              <t t-esc="item.description"/>
+            </DropdownItem>
+          </t>
+        </Dropdown>
+
+        <Dropdown t-if="actionItems.length" class="'d-inline-block'" togglerClass="'btn btn-light'" hotkey="'u'">
+          <t t-set-slot="toggler">
+            <i class="me-md-1 fa fa-cog"/>
+            <span class="o_dropdown_title">Action</span>
+          </t>
+          <t t-foreach="actionItems" t-as="item" t-key="item.key">
+            <t t-if="item.Component" t-component="item.Component" t-props="item.props"/>
+            <DropdownItem t-else="" class="'o_menu_item'" onSelected="() =&gt; this.onItemSelected(item)">
+              <t t-esc="item.description"/>
+            </DropdownItem>
+          </t>
+        </Dropdown>
+      </div>
+    </xpath>
+  </t>
+  <t t-inherit="web.Pager" t-inherit-mode="extension" owl="1">
+    <xpath expr="//nav[contains(@class, 'o_pager')]" position="replace">
+      <nav class="o_pager align-items-center d-flex gap-2 d-none" aria-label="Pager">
+        <span class="o_pager_counter" t-on-click.stop="">
+          <t t-if="state.isEditing">
+            <input type="text" class="o_pager_value o_input d-inline-block w-auto text-end mb-n1" size="7" t-ref="autofocus" t-att-value="value" t-on-blur="onInputBlur" t-on-change="onInputChange" t-on-keydown.stop="onInputKeydown"/>
+          </t>
+          <t t-else="">
+            <span class="o_pager_value d-inline-block border-bottom border-transparent mb-n1" t-esc="value" t-on-click="onValueClick"/>
+          </t>
+          <span> / </span>
+          <t t-if="props.updateTotal">
+            <span class="o_pager_limit o_pager_limit_fetch" t-att-class="{ 'disabled': state.isDisabled }" t-on-click.stop="updateTotal">
+              <t t-esc="props.total"/>
++</span>
+          </t>
+          <t t-else="">
+            <span class="o_pager_limit" t-esc="props.total"/>
+          </t>
+        </span>
+        <span class="btn-group" aria-atomic="true">
+
+          <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous px-2 rounded-start" aria-label="Previous" data-tooltip="Previous" tabindex="-1" t-att-data-hotkey="props.withAccessKey ? 'p' : false" t-att-disabled="state.isDisabled or isSinglePage" t-on-click.stop="() =&gt; this.navigate(-1)"/>
+          <button type="button" class="fa fa-chevron-right btn btn-secondary o_pager_next px-2 rounded-end" aria-label="Next" data-tooltip="Next" tabindex="-1" t-att-data-hotkey="props.withAccessKey ? 'n' : false" t-att-disabled="state.isDisabled or isSinglePage" t-on-click.stop="() =&gt; this.navigate(1)"/>
+        </span>
+      </nav>
+    </xpath>
+  </t>
+  <t t-inherit="web.Pager" t-inherit-mode="extension" owl="1">
+    <xpath expr="//nav[contains(@class, 'o_pager')]" position="replace">
+      <nav class="o_pager align-items-center d-flex gap-2 d-none" aria-label="Pager">
+        <span class="o_pager_counter" t-on-click.stop="">
+          <t t-if="state.isEditing">
+            <input type="text" class="o_pager_value o_input d-inline-block w-auto text-end mb-n1" size="7" t-ref="autofocus" t-att-value="value" t-on-blur="onInputBlur" t-on-change="onInputChange" t-on-keydown.stop="onInputKeydown"/>
+          </t>
+          <t t-else="">
+            <span class="o_pager_value d-inline-block border-bottom border-transparent mb-n1" t-esc="value" t-on-click="onValueClick"/>
+          </t>
+          <span> / </span>
+          <t t-if="props.updateTotal">
+            <span class="o_pager_limit o_pager_limit_fetch" t-att-class="{ 'disabled': state.isDisabled }" t-on-click.stop="updateTotal">
+              <t t-esc="props.total"/>
++</span>
+          </t>
+          <t t-else="">
+            <span class="o_pager_limit" t-esc="props.total"/>
+          </t>
+        </span>
+        <span class="btn-group" aria-atomic="true">
+
+          <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous px-2 rounded-start" aria-label="Previous" data-tooltip="Previous" tabindex="-1" t-att-data-hotkey="props.withAccessKey ? 'p' : false" t-att-disabled="state.isDisabled or isSinglePage" t-on-click.stop="() =&gt; this.navigate(-1)"/>
+          <button type="button" class="fa fa-chevron-right btn btn-secondary o_pager_next px-2 rounded-end" aria-label="Next" data-tooltip="Next" tabindex="-1" t-att-data-hotkey="props.withAccessKey ? 'n' : false" t-att-disabled="state.isDisabled or isSinglePage" t-on-click.stop="() =&gt; this.navigate(1)"/>
+        </span>
+      </nav>
+    </xpath>
+  </t>
 </templates>
