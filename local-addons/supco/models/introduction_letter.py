@@ -248,7 +248,7 @@ class SupremeCourtLetter(models.Model):
         return {
             "name": "Lý do từ chối",
             "views": [
-                [self.env.ref("supco.view_letter_rejection_log_tree").id, "tree"]
+                [self.env.ref("supco.view_letter_rejection_log_logview").id, "log"]
             ],
             "type": "ir.actions.act_window",
             "res_model": "letter.rejection.log",
