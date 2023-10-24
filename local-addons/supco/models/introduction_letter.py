@@ -255,9 +255,11 @@ class SupremeCourtLetter(models.Model):
             },
         }
 
-    date_created = fields.Date(string="Ngày tạo", default=datetime.today().date())
-    document = fields.Binary(string="Tài liệu")
-    document_name = fields.Char(string="Tên tài liệu")
+
+    attachment_ids = fields.One2many('ir.attachment', 'res_id', domain=[('res_model', '=', 'supreme.court.letter')],
+                                     string='Tệp tin đính kèm')
+    date_created = fields.Date(string="Ngày tạo", default=datetime.today().date(), readonly=True)
+
     gdrive_url = fields.Char(string="Tài liệu từ Google Drive")
 
     @api.constrains("gdrive_url")

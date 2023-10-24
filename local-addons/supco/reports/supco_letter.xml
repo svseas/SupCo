@@ -25,6 +25,7 @@
 
                 .header--box {
                 padding: 25px 0px;
+
                 }
 
                 .fake-underline {
@@ -37,8 +38,11 @@
                 border-bottom: 1px dotted black;
                 min-width: 650px;
 
+                    border-bottom: 1px dotted black;
+                    min-width: 400px;   /* Adjusted for A5 */
                 }
 
+                /* Adjusted width percentages for A5 */
                 .w-35 {
                 width: 35%;
                 }
@@ -46,9 +50,11 @@
                 .w-10 {
                 width: 10%;
                 }
+
                 .w-55 {
                 width: 55%;
                 }
+
                 .w-65 {
                 width: 65%;
                 }
@@ -56,14 +62,12 @@
                 table, tr, td {
                 border: none;
                 }
-
             </style>
-            <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet" />
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
-            <link
-                href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&#38;display=swap"
-                rel="stylesheet" />
+
+            <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet"/>
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com"/>
+            <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&#38;display=swap" rel="stylesheet" />
 
             <div class="watermark" style="">
                 <t t-if="doc.is_valid != True"> Khong duoc phep in
