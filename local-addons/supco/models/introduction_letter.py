@@ -71,6 +71,7 @@ class SupremeCourtLetter(models.Model):
     validity_date = fields.Date(
         string="Hiệu lực đến ngày", default=datetime.today().date()
     )
+    is_valid = fields.Boolean(string="Còn hiệu lực", compute="_compute_is_valid")
     created_by = fields.Many2one(
         "res.users", string="Tạo bởi", default=lambda self: self.env.user
     )
@@ -88,6 +89,14 @@ class SupremeCourtLetter(models.Model):
             ]
         ),
     )
+
+    @api.depends("validity_date")
+    def _compute_is_valid(self):
+        for record in self:
+            if record.validity_date and record.validity_date > datetime.today().date():
+                record.is_valid = True
+            else:
+                record.is_valid = False
 
     @api.constrains("validity_date")
     def _check_date(self):
@@ -217,13 +226,14 @@ class SupremeCourtLetter(models.Model):
 
         # Create log before changing the status
 
-        self.env['letter.rejection.log'].create({
-            'letter_id': self.id,
-            'reject_by': self.env.user.id,
-            'rejection_reason': self.reject_reason,
-            'rejection_time': datetime.now(),
-        })
-
+        self.env["letter.rejection.log"].create(
+            {
+                "letter_id": self.id,
+                "reject_by": self.env.user.id,
+                "rejection_reason": self.reject_reason,
+                "rejection_time": datetime.now(),
+            }
+        )
 
         self.write(
             {
@@ -245,17 +255,20 @@ class SupremeCourtLetter(models.Model):
             },
         }
 
+
     attachment_ids = fields.One2many('ir.attachment', 'res_id', domain=[('res_model', '=', 'supreme.court.letter')],
                                      string='Tệp tin đính kèm')
     date_created = fields.Date(string="Ngày tạo", default=datetime.today().date(), readonly=True)
+
     gdrive_url = fields.Char(string="Tài liệu từ Google Drive")
 
-    @api.constrains('gdrive_url')
+    @api.constrains("gdrive_url")
     def verify_video_url(self):
         for letter in self:
-            if letter.gdrive_url and not letter.gdrive_url.startswith('https://drive.google.com/'):
+            if letter.gdrive_url and not letter.gdrive_url.startswith(
+                "https://drive.google.com/"
+            ):
                 raise exceptions.ValidationError("Link không hợp lệ!")
-
 
     def reject_show(self):
         return {
@@ -269,6 +282,28 @@ class SupremeCourtLetter(models.Model):
             "domain": [("letter_id", "=", self.id)],
         }
 
+    def action_print(self):
+        for letter in self:
+            doc_ids = self.env.context.get("active_ids")
+            data = {
+                "is_valid": letter.is_valid,
+                "display_number": letter.display_number,
+                "recipient_name": letter.recipient_name,
+                "title_position": letter.title_position,
+                "create_date": letter.create_date,
+                "organization_unit": letter.organization_unit,
+                "address": letter.address,
+                "regrading": letter.regarding,
+                "validity_date": letter.validity_date,
+                "created_by": letter.created_by,
+            }
+            print(data)
+            action = letter.env.ref(
+                "supco.action_report_supreme_court_letter"
+            ).report_action(self, data=data, config=False)
+            print(action)
+            return action
+
 
 class LetterRejectionLog(models.Model):  # Change to models.Model
     _name = "letter.rejection.log"
@@ -279,5 +314,6 @@ class LetterRejectionLog(models.Model):  # Change to models.Model
     )
     reject_by = fields.Many2one("res.users", string="Người từ chối", readonly=True)
     rejection_reason = fields.Text("Lý do từ chối")
-    rejection_time = fields.Datetime(string='Time Rejected', default=datetime.now(), readonly=True)
-
+    rejection_time = fields.Datetime(
+        string="Time Rejected", default=datetime.now(), readonly=True
+    )
