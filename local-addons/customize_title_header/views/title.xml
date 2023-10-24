@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="title_static" inherit_id="web.layout" name="Custom Title">
+        <xpath expr="//title"
+            position="replace">
+            <title t-esc="title or 'Công Lý'" />
+        </xpath>
+    </template>
+</odoo>

@@ -31,14 +31,14 @@ class SupremeCourtLetter(models.Model):
     def _get_default_user(self):
         return [self.env.user.id]
 
-    user_ids = fields.Many2many('res.users', string='Người gửi', default=_get_default_user)
+    user_ids = fields.Many2many(
+        "res.users", string="Người gửi", default=_get_default_user
+    )
 
     recipient_name = fields.Char(
         string="Tên các đồng chí", compute="_compute_recipient_name", store=True
     )
-    display_number = fields.Char(
-        string="Số", compute="_compute_display_number"
-    )
+    display_number = fields.Char(string="Số", compute="_compute_display_number")
 
     @api.depends("number")
     def _compute_display_number(self):
@@ -56,13 +56,21 @@ class SupremeCourtLetter(models.Model):
             letter.recipient_name = recipient_name[:-2]
 
     title_position = fields.Selection(
-        selection=[('reporter', 'Phóng Viên'), ('editor', 'Biên Tập Viên'), ('collab', 'Cộng Tác Viên')],
-        string='Vị trí', default='reporter')
+        selection=[
+            ("reporter", "Phóng Viên"),
+            ("editor", "Biên Tập Viên"),
+            ("collab", "Cộng Tác Viên"),
+        ],
+        string="Vị trí",
+        default="reporter",
+    )
 
     organization_unit = fields.Char(string="Tổ chức", default="Báo Công Lý")
     address = fields.Char(string="Nơi đến")
     regarding = fields.Text(string="Về việc")
-    validity_date = fields.Date(string="Hiệu lực đến ngày", default=datetime.today().date())
+    validity_date = fields.Date(
+        string="Hiệu lực đến ngày", default=datetime.today().date()
+    )
     created_by = fields.Many2one(
         "res.users", string="Tạo bởi", default=lambda self: self.env.user
     )
@@ -72,11 +80,13 @@ class SupremeCourtLetter(models.Model):
         string="Public ID",
         copy=False,
         readonly=True,
-        default=lambda self: "_".join([
-            'cl',
-            'ggt',
-            ''.join(random.choices(string.ascii_letters + string.digits, k=16))
-        ]),
+        default=lambda self: "_".join(
+            [
+                "cl",
+                "ggt",
+                "".join(random.choices(string.ascii_letters + string.digits, k=16)),
+            ]
+        ),
     )
 
     @api.constrains("validity_date")
@@ -129,9 +139,11 @@ class SupremeCourtLetter(models.Model):
 
     reject_by = fields.Many2one("res.users", string="Người từ chối", readonly=True)
     reject_reason = fields.Text(string="Lý do từ chối")
-    reject_reason_user = fields.Text(string="Lý do từ chối", readonly=True, compute='_compute_reject_reason_user')
+    reject_reason_user = fields.Text(
+        string="Lý do từ chối", readonly=True, compute="_compute_reject_reason_user"
+    )
 
-    @api.depends('reject_reason')
+    @api.depends("reject_reason")
     def _compute_reject_reason_user(self):
         for letter in self:
             letter.reject_reason_user = letter.reject_reason
@@ -142,16 +154,12 @@ class SupremeCourtLetter(models.Model):
         # Check if the record already has either first or second approver set
         if self.first_approval_by or self.second_approval_by:
             raise UserError(
-                _(
-                    "Thư này đã có người duyệt. Không thể xin duyệt lần một."
-                )
+                _("Thư này đã có người duyệt. Không thể xin duyệt lần một.")
             )
 
         # Check if the status has already been changed to waiting_first_approval
         if self.approval_status == "waiting_first_approval":
-            raise UserError(
-                _("Thư này đang trong trạng thái 'Xin duyệt lần 1'.")
-            )
+            raise UserError(_("Thư này đang trong trạng thái 'Xin duyệt lần 1'."))
 
         self.write(
             {
@@ -208,18 +216,20 @@ class SupremeCourtLetter(models.Model):
             )
 
         # Create log before changing the status
-        self.env['letter.rejection.log'].create({
-            'letter_id': self.id,
-            'reject_by': self.env.user.id,
-            'rejection_reason': self.reject_reason
-        })
+        self.env["letter.rejection.log"].create(
+            {
+                "letter_id": self.id,
+                "reject_by": self.env.user.id,
+                "rejection_reason": self.reject_reason,
+            }
+        )
 
         self.write(
             {
                 "approval_status": "rejected",
                 "second_approval_by": False,
                 "first_approval_by": False,
-                'reject_by': self.env.user.id,
+                "reject_by": self.env.user.id,
             }
         )
 
@@ -229,17 +239,30 @@ class SupremeCourtLetter(models.Model):
             "tag": "display_notification",
             "params": {
                 "title": "Rejection",  # Notification's title
-                "message": _('Giấy giới thiệu đã bị từ chối.'),
+                "message": _("Giấy giới thiệu đã bị từ chối."),
                 "sticky": False,  # True means the notification won't auto-close
             },
         }
 
+    def reject_show(self):
+        return {
+            "name": "Lý do từ chối",
+            "views": [
+                [self.env.ref("supco.view_letter_rejection_log_logview").id, "log"]
+            ],
+            "type": "ir.actions.act_window",
+            "res_model": "letter.rejection.log",
+            "target": "new",
+            "domain": [("letter_id", "=", self.id)],
+        }
+
 
 class LetterRejectionLog(models.Model):  # Change to models.Model
-    _name = 'letter.rejection.log'
-    _description = 'Log of Rejected Letters'
+    _name = "letter.rejection.log"
+    _description = "Log of Rejected Letters"
 
-    letter_id = fields.Many2one('supreme.court.letter', string='Letter', readonly=True)
-    reject_by = fields.Many2one('res.users', string='Rejected By', readonly=True)
-    rejection_reason = fields.Text('Rejection Reason')
-
+    letter_id = fields.Many2one(
+        "supreme.court.letter", string="Giấy giới thiệu số", readonly=True
+    )
+    reject_by = fields.Many2one("res.users", string="Người từ chối", readonly=True)
+    rejection_reason = fields.Text("Lý do từ chối")
