@@ -1,6 +1,6 @@
 /** @odoo-module */
 import { Component } from "@odoo/owl";
-
+import { useService } from "@web/core/utils/hooks";
 var groupBy = function (xs, key) {
   return xs.reduce(function (rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
@@ -10,14 +10,16 @@ var groupBy = function (xs, key) {
 
 export class LogRenderer extends Component {
   setup() {
+    this.orm = useService("orm");
     this.letters = this.props.letter.map((letter) => {
-      letter.create_date = this.formatDate(letter.create_date);
+      letter.date = this.formatDate(letter.create_date);
       letter.reject_by = this.formatUser(letter.reject_by);
       letter.id = this.formatId(letter.letter_id);
+      letter.time = letter.create_date.split(" ")[1];
 
       return letter;
     });
-    this.letterGroups = groupBy(this.letters, "create_date");
+    this.letterGroups = groupBy(this.letters, "date");
     this.entries = Object.entries(this.letterGroups);
     console.log(this.entries);
   }

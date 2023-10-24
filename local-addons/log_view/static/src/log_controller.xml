@@ -3,14 +3,14 @@
 
     <t t-name="log_view.LogView" owl="1">
 
-        <div class="container-fluid p-3 mb-5 mt-5 bg-white rounded" >
+        <div class="container-fluid p-3 bg-white rounded" >
             <t t-component="props.Renderer" letter="model.letter" letterId="model.letterId" rejectBy="model.rejectBy" rejectionReason="model.rejectionReason"/>
      
         </div>
         <div class="text-end pe-3">
 
         <i>
-            Thông tin được cập nhật lần cuối vào <t t-esc="now"/>
+            Thông tin được cập nhật lần cuối:  <t t-esc="now"/>
         </i>
         </div>
     </t>
