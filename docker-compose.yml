@@ -9,8 +9,6 @@ services:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo
       - ./local-addons:/mnt/extra-addons
-      - ./entrypoint.sh:/custom-entrypoint.sh
-    command: [ "/custom-entrypoint.sh" ]
     environment:
       - USER=odoo
       - PASSWORD=odoo
