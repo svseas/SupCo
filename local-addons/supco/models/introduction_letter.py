@@ -281,7 +281,26 @@ class SupremeCourtLetter(models.Model):
         }
 
     def action_print(self):
-        pass
+        for letter in self:
+            doc_ids = self.env.context.get("active_ids")
+            data = {
+                "is_valid": letter.is_valid,
+                "display_number": letter.display_number,
+                "recipient_name": letter.recipient_name,
+                "title_position": letter.title_position,
+                "create_date": letter.create_date,
+                "organization_unit": letter.organization_unit,
+                "address": letter.address,
+                "regrading": letter.regarding,
+                "validity_date": letter.validity_date,
+                "created_by": letter.created_by,
+            }
+            print(data)
+            action = letter.env.ref(
+                "supco.action_report_supreme_court_letter"
+            ).report_action(self, data=data, config=False)
+            print(action)
+            return action
 
 
 class LetterRejectionLog(models.Model):  # Change to models.Model
