@@ -49,6 +49,9 @@
                             .o_wrap_label {
                             padding-top:0.5rem;
                             }
+                            .o_field_empty {
+                            height:22.5px;
+                            }
                         </style>
                         <group>
                             <field name="id" invisible="1" class="border p-3" />
