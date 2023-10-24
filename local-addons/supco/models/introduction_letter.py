@@ -211,7 +211,8 @@ class SupremeCourtLetter(models.Model):
         self.env['letter.rejection.log'].create({
             'letter_id': self.id,
             'reject_by': self.env.user.id,
-            'rejection_reason': self.reject_reason
+            'rejection_reason': self.reject_reason,
+            'rejection_time': datetime.now(),
         })
 
         self.write(
@@ -234,11 +235,23 @@ class SupremeCourtLetter(models.Model):
             },
         }
 
+    date_created = fields.Date(string="Ngày tạo", default=datetime.today().date())
+    document = fields.Binary(string="Tài liệu")
+    document_name = fields.Char(string="Tên tài liệu")
+    gdrive_url = fields.Char(string="Tài liệu từ Google Drive")
 
-class LetterRejectionLog(models.Model):  # Change to models.Model
+    @api.constrains('gdrive_url')
+    def verify_video_url(self):
+        for letter in self:
+            if letter.gdrive_url and not letter.gdrive_url.startswith('https://drive.google.com/'):
+                raise exceptions.ValidationError("Link không hợp lệ!")
+
+
+class LetterRejectionLog(models.Model):
     _name = 'letter.rejection.log'
     _description = 'Log of Rejected Letters'
 
     letter_id = fields.Many2one('supreme.court.letter', string='Letter', readonly=True)
     reject_by = fields.Many2one('res.users', string='Rejected By', readonly=True)
     rejection_reason = fields.Text('Rejection Reason')
+    rejection_time = fields.Datetime(string='Time Rejected', default=datetime.now(), readonly=True)
