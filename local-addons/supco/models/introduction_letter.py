@@ -242,4 +242,3 @@ class LetterRejectionLog(models.Model):  # Change to models.Model
     letter_id = fields.Many2one('supreme.court.letter', string='Letter', readonly=True)
     reject_by = fields.Many2one('res.users', string='Rejected By', readonly=True)
     rejection_reason = fields.Text('Rejection Reason')
-
