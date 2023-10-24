@@ -127,6 +127,17 @@ class SupremeCourtLetter(models.Model):
                 encoded_image = base64.b64encode(buffer.getvalue())
                 letter.qr_code = encoded_image
 
+    def button_print_pdf(self):
+        self.ensure_one()  # Ensure this is called for one record only
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        if self.public_id:
+            pdf = f"{base_url}/letters/pdf/{self.public_id}"
+            return {
+                'type': 'ir.actions.act_url',
+                'url': pdf,
+                'target': 'new',
+            }
+
     approval_status = fields.Selection(
         [
             ("draft", "Nháp"),
