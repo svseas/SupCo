@@ -65,6 +65,11 @@
                             <field name="address" class="border p-1" />
                             <field name="regarding" class="border p-1" />
                             <field name="validity_date" class="border p-1" />
+                            <field name="date_created" class="border p-1"/>
+                            <field name="document" widget="binary" filename="document_name"
+                                class="border p-1" />
+                            <field name="document_name" invisible="1"/>
+                            <field name="gdrive_url" widget="url" class="border p-1" />
                             <field name="approval_status" readonly="1" class="p-2" />
                             <field name="custom_url" widget="url" class="p-2"
                                 attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
@@ -137,6 +142,7 @@
                     <field name="letter_id" />
                     <field name="reject_by" />
                     <field name="rejection_reason" />
+                    <field name="rejection_time" />
                 </tree>
             </field>
         </record>
