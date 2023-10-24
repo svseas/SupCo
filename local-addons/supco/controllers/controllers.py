@@ -70,7 +70,7 @@ class UserController(http.Controller):
 
 
 class HttpRenderController(http.Controller):
-    @route(["/letters/public/<string:public_id>"], type="http", auth="public", website=True)
+    @route(["/letters/public/<string:public_id>"], type="http", auth="public")
     def public_report_by_public_id(self, public_id, **kw):
         _logger.info("Generating report for public_id: %s", public_id)
 
@@ -87,33 +87,9 @@ class HttpRenderController(http.Controller):
 
         Report = request.env["ir.actions.report"].sudo().with_context()
 
-        # Render the report as PDF
-        # try:
-        #     pdf_content, _ = Report._render_qweb_pdf(
-        #         "supco.report_supreme_court_letter_main", res_ids=[letter.id]
-        #     )
-        # except Exception as e:
-        #     _logger.error(
-        #         "Failed to generate report for public_id: %s, Error: %s",
-        #         public_id,
-        #         str(e),
-        #     )
-        #     return Response("Internal Server Error", status=500)
-        #
-        # # Set filename to something meaningful, e.g., "letter_<public_id>.pdf"
-        # filename = "letter_{}.pdf".format(public_id)
-        #
-        # # Return the fetched PDF as a response.
-        # pdfhttpheaders = [
-        #     ("Content-Type", "application/pdf"),
-        #     ("Content-Length", len(pdf_content)),
-        #     ("Content-Disposition", content_disposition(filename)),
-        # ]
-        # return request.make_response(pdf_content, headers=pdfhttpheaders)
-
         # Render the report as HTML
         try:
-            html_content = request.env['ir.actions.report'].sudo()._render_qweb_html(
+            html_content = request.env['ir.actions.report']._render_qweb_html(
                 'supco.report_supreme_court_letter_main', letter.ids
             )[0]
         except Exception as e:
@@ -123,17 +99,6 @@ class HttpRenderController(http.Controller):
                 str(e),
             )
             return http.Response("Internal Server Error", status=500)
-
-        file_path = os.path.expanduser('~/publichtmls/letter_{}.html'.format(public_id))
-
-        # Step 2: Ensure directory exists
-        directory = os.path.dirname(file_path)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-
-        # Step 3: Write the content to the file
-        with open(file_path, 'w', encoding='utf-8') as file:
-            file.write(html_content.decode('utf-8'))
 
         # Return the fetched HTML as a response.
         return http.Response(html_content, content_type='text/html')
