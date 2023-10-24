@@ -17,6 +17,7 @@
             <field name="model">supreme.court.letter</field>
             <field name="arch" type="xml">
                 <form>
+                    <xpath expr="//div[@class='o_control_panel']" position="replace"></xpath>
                     <header>
                         <button string="Xin duyệt lần 1" type="object"
                             class="btn btn-primary rounded-2"
@@ -65,10 +66,10 @@
                             <field name="address" class="border p-1" />
                             <field name="regarding" class="border p-1" />
                             <field name="validity_date" class="border p-1" />
-                            <field name="date_created" class="border p-1"/>
+                            <field name="date_created" class="border p-1" />
                             <field name="document" widget="binary" filename="document_name"
                                 class="border p-1" />
-                            <field name="document_name" invisible="1"/>
+                            <field name="document_name" invisible="1" />
                             <field name="gdrive_url" widget="url" class="border p-1" />
                             <field name="approval_status" readonly="1" class="p-2" />
                             <field name="custom_url" widget="url" class="p-2"
