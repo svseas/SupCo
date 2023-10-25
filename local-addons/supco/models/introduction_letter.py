@@ -109,7 +109,7 @@ class SupremeCourtLetter(models.Model):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for letter in self:
             if letter.public_id:
-                letter.custom_url = f"{base_url}/letters/pdf/view/{letter.public_id}/"
+                letter.custom_url = f"{base_url}/letters/ggt/{letter.public_id}"
             else:
                 letter.custom_url = False
 
@@ -118,7 +118,7 @@ class SupremeCourtLetter(models.Model):
         for letter in self:
             base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
             if letter.public_id:
-                qr_code_link = f"{base_url}/letters/pdf/view/{letter.public_id}/"
+                qr_code_link = f"{base_url}/letters/ggt/{letter.public_id}"
 
                 # Generate a QR code from the link
                 img = qrcode.make(qr_code_link)
