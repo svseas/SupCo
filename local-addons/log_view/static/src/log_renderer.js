@@ -11,14 +11,17 @@ var groupBy = function (xs, key) {
 export class LogRenderer extends Component {
   setup() {
     this.orm = useService("orm");
-    this.letters = this.props.letter.map((letter) => {
-      letter.date = this.formatDate(letter.create_date);
-      letter.reject_by = this.formatUser(letter.reject_by);
-      letter.id = this.formatId(letter.letter_id);
-      letter.time = letter.create_date.split(" ")[1];
+    this.letters = this.props.letter
+      .map((letter) => {
+        letter.date = this.formatDate(letter.create_date);
+        letter.reject_by = this.formatUser(letter.reject_by);
+        letter.letter_id = this.formatId(letter.letter_id);
+        letter.time = letter.create_date.split(" ")[1];
 
-      return letter;
-    });
+        return letter;
+      })
+      .sort((a, b) => new Date(b.create_date) - new Date(a.create_date));
+
     this.letterGroups = groupBy(this.letters, "date");
     this.entries = Object.entries(this.letterGroups);
     console.log(this.entries);
