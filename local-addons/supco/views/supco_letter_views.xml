@@ -23,7 +23,7 @@
                     <xpath expr="//div[@class='o_control_panel']" position="replace"></xpath>
                     <header class="d-flex flex-row justify-content-between w-100">
                         <div class="d-flex flex-row justify-content-between w-100 my-2">
-                            <div class="">
+                            <div class="d-flex flex-row gap-2">
                                 <button string="Xin duyệt lần 1" type="object"
                                     class="btn btn-primary rounded-2"
                                     name="action_request_first_approval"
