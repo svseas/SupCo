@@ -55,8 +55,8 @@
                             </div>
                             <div class="ms-3">
                                 <button name="button_print_pdf" string="In" type="object"
-                                    class="btn btn-primary rounded-2"
-                                    attrs="{'invisible': [('approval_status', '==', 'approved')]}" />
+                                    class="btn btn-success rounded-2"
+                                    attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
                             </div>
                         </div>
                     </header>
