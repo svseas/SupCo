@@ -32,7 +32,7 @@
                                     </span>
                                 </div>
                                 <div class="comment">
-                                    <strong>GGT <t t-esc="l.id" />
+                                    <strong>GGT <t t-esc="l.letter_id" />
                                     </strong>
                                     <p>
                                         <t t-esc="l.rejection_reason" />

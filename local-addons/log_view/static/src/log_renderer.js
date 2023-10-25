@@ -14,7 +14,7 @@ export class LogRenderer extends Component {
     this.letters = this.props.letter.map((letter) => {
       letter.date = this.formatDate(letter.create_date);
       letter.reject_by = this.formatUser(letter.reject_by);
-      letter.id = this.formatId(letter.letter_id);
+      letter.letter_id = this.formatId(letter.letter_id);
       letter.time = letter.create_date.split(" ")[1];
 
       return letter;
