@@ -89,8 +89,8 @@ class HttpRenderController(http.Controller):
 
         # Render the report as HTML
         try:
-            html_content = request.env['ir.actions.report']._render_qweb_html(
-                'supco.report_supreme_court_letter_main', letter.ids
+            html_content = request.env["ir.actions.report"]._render_qweb_html(
+                "supco.report_supreme_court_letter_main", letter.ids
             )[0]
         except Exception as e:
             _logger.error(
@@ -101,11 +101,13 @@ class HttpRenderController(http.Controller):
             return http.Response("Internal Server Error", status=500)
 
         # Return the fetched HTML as a response.
-        return http.Response(html_content, content_type='text/html')
+        return http.Response(html_content, content_type="text/html")
 
 
 class PDFRenderController(http.Controller):
-    @route(["/letters/pdf/<string:public_id>"], type="http", auth="public", website=True)
+    @route(
+        ["/letters/pdf/<string:public_id>"], type="http", auth="public", website=True
+    )
     def public_report_by_public_id(self, public_id, **kw):
         _logger.info("Generating report for public_id: %s", public_id)
 
@@ -146,7 +148,12 @@ class PDFRenderController(http.Controller):
         ]
         return request.make_response(pdf_content, headers=pdfhttpheaders)
 
-    @http.route(["/letters/pdf/<string:public_id>/embed"], type="http", auth="public", website=True)
+    @http.route(
+        ["/letters/pdf/<string:public_id>/embed"],
+        type="http",
+        auth="public",
+        website=True,
+    )
     def public_report_by_public_id_embed(self, public_id, **kw):
         # The code for serving the PDF in embed mode
         letter = (
@@ -175,7 +182,12 @@ class PDFRenderController(http.Controller):
         ]
         return request.make_response(pdf_content, headers=pdfhttpheaders)
 
-    @http.route(["/letters/pdf/view/<string:public_id>/"], type="http", auth="public", website=True)
+    @http.route(
+        ["/letters/pdf/view/<string:public_id>/"],
+        type="http",
+        auth="public",
+        website=True,
+    )
     def view_report_embedded(self, public_id, **kw):
         # Serve the HTML page with the PDF embedded
         pdf_url = "/letters/pdf/{}/embed".format(public_id)
@@ -183,11 +195,13 @@ class PDFRenderController(http.Controller):
            <!DOCTYPE html>
            <html>
            <head>
-               <title>View PDF</title>
+               <title> Công Lý - Giấy giới thiệu </title>
            </head>
            <body style="margin:0;">
                <iframe src="{}" style="border: none; width: 100%; height: 100vh;"></iframe>
            </body>
            </html>
-           """.format(pdf_url)
+           """.format(
+            pdf_url
+        )
         return html_content
