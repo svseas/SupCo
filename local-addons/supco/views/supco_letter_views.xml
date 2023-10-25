@@ -128,6 +128,7 @@
                     <field name="custom_url" widget="url"
                         attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
                     <field name="approval_status" />
+                    <button name="reject_show" type='object' string="Lý do" />
                 </tree>
             </field>
         </record>
