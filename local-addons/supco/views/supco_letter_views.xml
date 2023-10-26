@@ -23,36 +23,6 @@
                     <xpath expr="//div[@class='o_control_panel']" position="replace"></xpath>
                     <header class="d-flex flex-row justify-content-between w-100">
                         <div class="d-flex flex-row justify-content-between w-100 my-2">
-                            <div class="d-flex flex-row gap-2">
-                                <button string="Xin duyệt lần 1" type="object"
-                                    class="btn btn-primary rounded-2"
-                                    name="action_request_first_approval"
-                                    confirm="Xác nhận gửi đơn xin duyệt lần 1"
-                                    attrs="{'invisible': ['&amp;',('approval_status','!=','draft'),('approval_status','!=','rejected')]}" />
-
-                                <button name="action_first_approval" string="Duyệt lần 1"
-                                    type="object"
-                                    class="btn btn-primary rounded-2"
-                                    groups="supco.group_first_approval"
-                                    confirm="Xác nhận phê duyệt lần 1"
-                                    attrs="{'invisible': [('approval_status', '!=', 'waiting_first_approval')]}" />
-
-                                <button name="action_second_approval" string="Duyệt lần 2"
-                                    type="object"
-                                    class="btn btn-primary rounded-2"
-                                    groups="supco.group_second_approval"
-                                    confirm="Xác nhận phê duyệt lần 2"
-                                    attrs="{'invisible': [( 'approval_status','!=', 'waiting_second_approval' )]}" />
-
-
-                                <button name="action_reject" string="Từ chối" type="object"
-                                    class="btn btn-danger"
-                                    groups="supco.group_first_approval, supco.group_second_approval"
-                                    confirm="Xác nhận không phê duyệt đơn này"
-                                    attrs="{'invisible': ['|', '|', ('approval_status','=','draft'), ('approval_status','=','approved'), ('approval_status','=','rejected')]}" />
-
-
-                            </div>
                             <div class="ms-3">
                                 <button name="button_print_pdf" string="In" type="object"
                                     class="btn btn-success rounded-2"
@@ -108,6 +78,35 @@
                             <field name="reject_reason_user" class="py-2"
                                 attrs="{'invisible': [('approval_status', '!=', 'rejected')]}" />
                         </group>
+                        <div class="d-flex flex-row gap-2  justify-content-end">
+                            <button string="Xin duyệt lần 1" type="object"
+                                class="btn btn-primary rounded-2"
+                                name="action_request_first_approval"
+                                confirm="Xác nhận gửi đơn xin duyệt lần 1"
+                                attrs="{'invisible': ['&amp;',('approval_status','!=','draft'),('approval_status','!=','rejected')]}" />
+
+                            <button name="action_first_approval" string="Duyệt lần 1"
+                                type="object"
+                                class="btn btn-primary rounded-2"
+                                groups="supco.group_first_approval"
+                                confirm="Xác nhận phê duyệt lần 1"
+                                attrs="{'invisible': [('approval_status', '!=', 'waiting_first_approval')]}" />
+
+                            <button name="action_second_approval" string="Duyệt lần 2"
+                                type="object"
+                                class="btn btn-primary rounded-2"
+                                groups="supco.group_second_approval"
+                                confirm="Xác nhận phê duyệt lần 2"
+                                attrs="{'invisible': [( 'approval_status','!=', 'waiting_second_approval' )]}" />
+
+
+                            <button name="action_reject" string="Từ chối" type="object"
+                                class="btn btn-danger"
+                                groups="supco.group_first_approval, supco.group_second_approval"
+                                confirm="Xác nhận không phê duyệt đơn này"
+                                attrs="{'invisible': ['|', '|', ('approval_status','=','draft'), ('approval_status','=','approved'), ('approval_status','=','rejected')]}" />
+
+                        </div>
                     </sheet>
                 </form>
             </field>
