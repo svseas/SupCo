@@ -278,13 +278,13 @@ class SupremeCourtLetter(models.Model):
 
     gdrive_url = fields.Char(string="Tài liệu từ Google Drive")
 
-    @api.constrains("gdrive_url")
-    def verify_video_url(self):
-        for letter in self:
-            if letter.gdrive_url and not letter.gdrive_url.startswith(
-                "https://drive.google.com/"
-            ):
-                raise exceptions.ValidationError("Link không hợp lệ!")
+    # @api.constrains("gdrive_url")
+    # def verify_video_url(self):
+    #     for letter in self:
+    #         if letter.gdrive_url and not letter.gdrive_url.startswith(
+    #             "https://drive.google.com/"
+    #         ):
+    #             raise exceptions.ValidationError("Link không hợp lệ!")
 
     def reject_show(self):
         return {

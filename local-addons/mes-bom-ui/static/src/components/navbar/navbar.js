@@ -10,6 +10,13 @@ export class Navbar extends Component {
   setup() {
     this.navStore = useNavbarStore();
     this.userService = useService("user");
+    this.action = useService("action");
+    this.userName = this.userService.name;
+    this.shortName = this.userName
+      .split(" ")
+      .map((name) => name[0])
+      .join();
+    console.log(this.sortName);
   }
 
   static components = {
@@ -24,9 +31,17 @@ export class Navbar extends Component {
 
   toggleHeader() {
     const userId = this.userService.userId;
+    console.log("userId", this.userService);
     if (userId === 2 || userId === 1) {
       const header = document.querySelector("header");
       header.classList.toggle("d-none");
+    } else {
+      this.action.doAction("supco.action_supreme_court_letters", {
+        additionalContext: {
+          no_breadcrumbs: true,
+        },
+        clearBreadcrumbs: true,
+      });
     }
   }
 }

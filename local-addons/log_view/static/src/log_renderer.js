@@ -16,8 +16,11 @@ export class LogRenderer extends Component {
         letter.date = this.formatDate(letter.create_date);
         letter.reject_by = this.formatUser(letter.reject_by);
         letter.letter_id = this.formatId(letter.letter_id);
-        letter.time = letter.create_date.split(" ")[1];
-
+        letter.time = new Date(
+          letter.create_date + " GMT+0000"
+        ).toLocaleString();
+        // letter.time = letter.create_date.split(" ")[1];
+        console.log(letter.create_date);
         return letter;
       })
       .sort((a, b) => new Date(b.create_date) - new Date(a.create_date));
