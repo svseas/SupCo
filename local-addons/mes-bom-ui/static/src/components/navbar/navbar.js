@@ -14,8 +14,8 @@ export class Navbar extends Component {
     this.userName = this.userService.name;
     this.shortName = this.userName
       .split(" ")
-      .map((name) => name[0])
-      .join();
+      .map((name) => name[0].toUpperCase())
+      .join("");
     console.log(this.sortName);
   }
 
