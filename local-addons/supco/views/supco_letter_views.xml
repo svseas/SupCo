@@ -59,8 +59,9 @@
                                    attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"/>
                             <field name="regarding" class="border p-1"
                                    attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"/>
-                            <field name="validity_duration" class="border p-1"
-                                   attrs="{'readonly': [('approval_status', '=', 'approved')]}"/>
+                            <field name="validity_duration"
+                                   attrs="{'readonly': [('user_can_edit', '=', False)]}"/>
+                            <field name="user_can_edit" invisible="0"/>
                             <field name="validity_to_date" class="border p-1"
                                    attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
                             <field name="is_valid"
@@ -128,22 +129,6 @@
             </field>
         </record>
 
-        <!--        MAKE VALIDITY DURATION ONLY VISIBLE FOR GROUPS-->
-        <record id="inherit_view_form_supreme_court_letter" model="ir.ui.view">
-            <field name="name">supreme.court.letter.form.inherit</field>
-            <field name="model">supreme.court.letter</field>
-            <field name="inherit_id" ref="supco.view_form_supreme_court_letter"/>
-            <field name="arch" type="xml">
-                <data>
-                    <xpath expr="//field[@name='validity_duration']" position="attributes"
-                           groups="supco.group_first_approval,supco.group_second_approval">
-                        <attribute name="readonly">0</attribute>
-                    </xpath>
-                </data>
-            </field>
-        </record>
-
-
         <record id="view_tree_supreme_court_letter" model="ir.ui.view">
             <field name="name">supreme.court.letter.tree</field>
             <field name="model">supreme.court.letter</field>
@@ -175,7 +160,6 @@
                 </tree>
             </field>
         </record>
-
 
         <!--        LOG VIEW AND ACTION-->
 

@@ -70,6 +70,18 @@ class SupremeCourtLetter(models.Model):
         ],
         default="2",
     )
+    user_can_edit = fields.Boolean(compute='_compute_user_can_edit')
+
+    @api.depends('approval_status')
+    def _compute_user_can_edit(self):
+        for record in self:
+            # Check if the user is in one of the specific groups
+            user_is_in_group = self.env.user.has_group('supco.group_first_approval') or self.env.user.has_group(
+                'supco.group_second_approval')
+
+            # Set the field value based on approval_status and group membership
+            record.user_can_edit = record.approval_status in ['draft', 'rejected'] or user_is_in_group
+
     validity_to_date = fields.Date(string="Hiệu lực đến ngày", compute="_compute_validity_to_date", readonly=True, store=True)
     is_valid = fields.Boolean(string="Còn hiệu lực", compute="_compute_is_valid")
 
