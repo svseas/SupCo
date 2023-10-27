@@ -12,10 +12,12 @@
         "views/supco_menus.xml",
         "security/ir.model.access.csv",
         "security/security.xml",
+        "security/validity_date_rule.xml",
         "views/templates.xml",
         "reports/supco_letter.xml",
         "reports/supco_letter_action.xml",
         "demo/demo.xml",
+        "data/data.xml",
     ],
     "assets": {
         "web.assets_backend": [

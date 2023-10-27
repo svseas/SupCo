@@ -17,7 +17,7 @@ class Employee(models.Model):
     national_id = fields.Char(string='Số CCCD')
     introduction_letter = fields.Many2many("supreme.court.letter", string="Giấy giới thiệu")
     custom_url = fields.Char(string="URL", compute='_compute_custom_url', store=True)
-    position = fields.Char(string='Vị trí')
+    position = fields.Many2one('supreme.court.position', string='Vị trí')
 
     @api.depends('national_id')
     def _compute_custom_url(self):
@@ -34,3 +34,12 @@ class Employee(models.Model):
          "CCCD Phải là duy nhất.")
     ]
     department = fields.Many2many('supreme.court.department', string='Phòng ban')
+
+
+class Position(models.Model):
+    _name = 'supreme.court.position'
+    _rec_name = 'name'
+
+    code = fields.Char(string='Mã')
+    name = fields.Char(string='Vị trí', required=True)
+    description = fields.Text(string='Mô tả')

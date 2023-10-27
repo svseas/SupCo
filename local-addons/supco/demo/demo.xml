@@ -20,7 +20,7 @@
         <field name="login">tbt@congly.vn</field>
         <field name="password">123123</field>
         <field name="national_id">0125477896</field>
-        <field name="position">Tổng biên tập</field>
+        <field name="position" ref="supco.position_editor_in_chief"/>
         <field name="department" eval="[(6, 0, [ref('supco.department_tong_bien_tap')])]" />
         <field name="dob">1990-01-01</field>
         <field name="image_1920">
@@ -32,7 +32,7 @@
         <field name="login">ly.pho@congly.vn</field>
         <field name="password">123123</field>
         <field name="national_id">001089562445</field>
-        <field name="position">Phó tổng biên tập</field>
+        <field name="position" ref="supco.position_deputy_editor_in_chief"/>
         <field name="dob">1990-01-01</field>
         <field name="department" eval="[(6, 0, [ref('supco.department_pho_tong_1')])]" />
         <field name="image_1920">
@@ -44,7 +44,7 @@
         <field name="login">pv@congly.vn</field>
         <field name="password">123123</field>
         <field name="national_id">001089545789</field>
-        <field name="position">Phóng viên</field>
+        <field name="position" ref="supco.position_reporter"/>
         <field name="dob">1990-01-01</field>
         <field name="department" eval="[(6, 0, [ref('supco.department_vphcm')])]" />
         <field name="image_1920">
