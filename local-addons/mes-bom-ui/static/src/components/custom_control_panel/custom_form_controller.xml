@@ -28,8 +28,9 @@
   </t>
   <t t-inherit="web.ActionMenus" t-inherit-mode="extension" owl="1">
     <xpath expr="//div[contains(@class, 'o_cp_action_menus')]" position="replace">
-      <!-- <div class="o_cp_action_menus d-none">
-        <Dropdown t-if="printItems.length" class="'d-inline-block'" togglerClass="'btn btn-light'"
+     <div class="o_cp_action_menus">
+        <!--  <Dropdown t-if="printItems.length" class="'d-inline-block'" togglerClass="'btn
+        btn-light'"
       hotkey="'shift+u'">
           <t t-set-slot="toggler">
             <i class="me-md-1 fa fa-print"/>
@@ -40,7 +41,7 @@
               <t t-esc="item.description"/>
             </DropdownItem>
           </t>
-        </Dropdown>
+        </Dropdown> -->
 
         <Dropdown t-if="actionItems.length" class="'d-inline-block'" togglerClass="'btn btn-light'"
       hotkey="'u'">
@@ -55,7 +56,7 @@
             </DropdownItem>
           </t>
         </Dropdown>
-      </div> -->
+      </div> 
     </xpath>
   </t>
  

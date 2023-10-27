@@ -109,7 +109,7 @@ class SupremeCourtLetter(models.Model):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for letter in self:
             if letter.public_id:
-                letter.custom_url = f"{base_url}/letters/public/{letter.public_id}"
+                letter.custom_url = f"{base_url}/letters/ggt/{letter.public_id}"
             else:
                 letter.custom_url = False
 
@@ -118,7 +118,7 @@ class SupremeCourtLetter(models.Model):
         for letter in self:
             base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
             if letter.public_id:
-                qr_code_link = f"{base_url}/letters/public/{letter.public_id}"
+                qr_code_link = f"{base_url}/letters/ggt/{letter.public_id}"
 
                 # Generate a QR code from the link
                 img = qrcode.make(qr_code_link)
@@ -133,9 +133,9 @@ class SupremeCourtLetter(models.Model):
         if self.public_id:
             pdf = f"{base_url}/letters/pdf/{self.public_id}"
             return {
-                'type': 'ir.actions.act_url',
-                'url': pdf,
-                'target': 'new',
+                "type": "ir.actions.act_url",
+                "url": pdf,
+                "target": "new",
             }
 
     approval_status = fields.Selection(
@@ -266,19 +266,25 @@ class SupremeCourtLetter(models.Model):
             },
         }
 
-    attachment_ids = fields.One2many('ir.attachment', 'res_id', domain=[('res_model', '=', 'supreme.court.letter')],
-                                     string='Tệp tin đính kèm')
-    date_created = fields.Date(string="Ngày tạo", default=datetime.today().date(), readonly=True)
+    attachment_ids = fields.One2many(
+        "ir.attachment",
+        "res_id",
+        domain=[("res_model", "=", "supreme.court.letter")],
+        string="Tệp tin đính kèm",
+    )
+    date_created = fields.Date(
+        string="Ngày tạo", default=datetime.today().date(), readonly=True
+    )
 
     gdrive_url = fields.Char(string="Tài liệu từ Google Drive")
 
-    @api.constrains("gdrive_url")
-    def verify_video_url(self):
-        for letter in self:
-            if letter.gdrive_url and not letter.gdrive_url.startswith(
-                    "https://drive.google.com/"
-            ):
-                raise exceptions.ValidationError("Link không hợp lệ!")
+    # @api.constrains("gdrive_url")
+    # def verify_video_url(self):
+    #     for letter in self:
+    #         if letter.gdrive_url and not letter.gdrive_url.startswith(
+    #             "https://drive.google.com/"
+    #         ):
+    #             raise exceptions.ValidationError("Link không hợp lệ!")
 
     def reject_show(self):
         return {
