@@ -6,7 +6,7 @@ import qrcode
 from datetime import datetime
 from odoo import api, fields, models, exceptions, _
 import logging
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -272,19 +272,19 @@ class SupremeCourtLetter(models.Model):
         domain=[("res_model", "=", "supreme.court.letter")],
         string="Tệp tin đính kèm",
     )
+
+    # @api.constrains('attachment_ids')
+    # def _check_attachments(self):
+    #     for rec in self:
+    #         for attachment in rec.attachment_ids:
+    #             if attachment.mimetype != 'text/plain' or attachment.file_size > 10 * 1024 * 1024:
+    #                 raise ValidationError("Only text files smaller than 10M are allowed!")
+
     date_created = fields.Date(
         string="Ngày tạo", default=datetime.today().date(), readonly=True
     )
 
     gdrive_url = fields.Char(string="Tài liệu từ Google Drive")
-
-    # @api.constrains("gdrive_url")
-    # def verify_video_url(self):
-    #     for letter in self:
-    #         if letter.gdrive_url and not letter.gdrive_url.startswith(
-    #             "https://drive.google.com/"
-    #         ):
-    #             raise exceptions.ValidationError("Link không hợp lệ!")
 
     def reject_show(self):
         return {

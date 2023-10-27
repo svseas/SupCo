@@ -63,7 +63,8 @@
                                 attrs="{'readonly': [('approval_status', '=', 'approved')]}" />
                             <field name="date_created" class="border p-1 ps-2" />
                             <field name="attachment_ids" widget="many2many_binary"
-                                attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}">
+                                attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"
+                            context="{'file_size': 10*1024*1024, 'mimetype': 'text/plain'}">
                                 <tree>
                                     <field name="name" string="Tên tệp tin" />
                                 </tree>
