@@ -16,6 +16,7 @@
         "reports/supco_letter.xml",
         "reports/supco_letter_action.xml",
         "demo/demo.xml",
+        "data/data.xml",
     ],
     "assets": {
         "web.assets_backend": [

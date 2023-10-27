@@ -55,24 +55,10 @@ class SupremeCourtLetter(models.Model):
                     recipient_name += user.name + ", "
             letter.recipient_name = recipient_name[:-2]
 
-    title_position = fields.Selection(
-        selection=[
-            ("editor_in_chief", "Tổng Biên Tập"),
-            ("deputy_editor_in_chief", "Phó Tổng Biên Tập"),
-            ("head_of_department", "Trưởng Ban"),
-            ("deputy_head_of_department", "Phó Ban"),
-            ("secretary_in_chief", "Tổng thư ký"),
-            ("deputy_secretary_in_chief", "Phó Tổng thư ký"),
-            ("reporter", "Phóng Viên"),
-            ("editor", "Biên Tập Viên"),
-            ("staff", "Nhân Viên"),
-        ],
-        string="Vị trí",
-        default="reporter",
-    )
+    title_position = fields.Many2many('supreme.court.position', string="Chức vụ")
 
     organization_unit = fields.Char(string="Tổ chức", default="Báo Công Lý")
-    address = fields.Char(string="Nơi đến")
+    address = fields.Text(string="Nơi đến")
     regarding = fields.Text(string="Về việc")
     validity_duration = fields.Selection(
         string="Thời hạn",
@@ -81,18 +67,27 @@ class SupremeCourtLetter(models.Model):
             ("2", "2 tuần"),
             ("3", "3 tuần"),
             ("4", "4 tuần"),
-        ]
+        ],
+        default="2",
     )
-    validity_to_date = fields.Date(string="Hiệu lực đến ngày", compute="_compute_validity_to_date")
+    validity_to_date = fields.Date(string="Hiệu lực đến ngày", compute="_compute_validity_to_date", readonly=True, store=True)
     is_valid = fields.Boolean(string="Còn hiệu lực", compute="_compute_is_valid")
 
     @api.depends("validity_duration", "approval_status", "approve_date")
     def _compute_validity_to_date(self):
         for letter in self:
             if letter.validity_duration and letter.approval_status == "approved":
-                letter.validity_to_date = letter.approve_date + timedelta(days=int(letter.validity_duration))
+                letter.validity_to_date = letter.approve_date + timedelta(weeks=int(letter.validity_duration))
             else:
                 letter.validity_to_date = False
+
+    @api.depends("validity_to_date")
+    def _compute_is_valid(self):
+        for letter in self:
+            if letter.validity_to_date and letter.validity_to_date >= datetime.now().date():
+                letter.is_valid = True
+            else:
+                letter.is_valid = False
 
     created_by = fields.Many2one(
         "res.users", string="Tạo bởi", default=lambda self: self.env.user
