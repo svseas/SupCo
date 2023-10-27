@@ -3,7 +3,7 @@ import string
 import base64
 import io
 import qrcode
-from datetime import datetime
+from datetime import datetime, timedelta
 from odoo import api, fields, models, exceptions, _
 import logging
 from odoo.exceptions import UserError, ValidationError
@@ -57,9 +57,15 @@ class SupremeCourtLetter(models.Model):
 
     title_position = fields.Selection(
         selection=[
+            ("editor_in_chief", "Tổng Biên Tập"),
+            ("deputy_editor_in_chief", "Phó Tổng Biên Tập"),
+            ("head_of_department", "Trưởng Ban"),
+            ("deputy_head_of_department", "Phó Ban"),
+            ("secretary_in_chief", "Tổng thư ký"),
+            ("deputy_secretary_in_chief", "Phó Tổng thư ký"),
             ("reporter", "Phóng Viên"),
             ("editor", "Biên Tập Viên"),
-            ("collab", "Cộng Tác Viên"),
+            ("staff", "Nhân Viên"),
         ],
         string="Vị trí",
         default="reporter",
@@ -68,10 +74,26 @@ class SupremeCourtLetter(models.Model):
     organization_unit = fields.Char(string="Tổ chức", default="Báo Công Lý")
     address = fields.Char(string="Nơi đến")
     regarding = fields.Text(string="Về việc")
-    validity_date = fields.Date(
-        string="Hiệu lực đến ngày", default=datetime.today().date()
+    validity_duration = fields.Selection(
+        string="Thời hạn",
+        selection=[
+            ("1", "1 tuần"),
+            ("2", "2 tuần"),
+            ("3", "3 tuần"),
+            ("4", "4 tuần"),
+        ]
     )
+    validity_to_date = fields.Date(string="Hiệu lực đến ngày", compute="_compute_validity_to_date")
     is_valid = fields.Boolean(string="Còn hiệu lực", compute="_compute_is_valid")
+
+    @api.depends("validity_duration", "approval_status", "approve_date")
+    def _compute_validity_to_date(self):
+        for letter in self:
+            if letter.validity_duration and letter.approval_status == "approved":
+                letter.validity_to_date = letter.approve_date + timedelta(days=int(letter.validity_duration))
+            else:
+                letter.validity_to_date = False
+
     created_by = fields.Many2one(
         "res.users", string="Tạo bởi", default=lambda self: self.env.user
     )
@@ -89,20 +111,6 @@ class SupremeCourtLetter(models.Model):
             ]
         ),
     )
-
-    @api.depends("validity_date")
-    def _compute_is_valid(self):
-        for record in self:
-            if record.validity_date and record.validity_date > datetime.today().date():
-                record.is_valid = True
-            else:
-                record.is_valid = False
-
-    @api.constrains("validity_date")
-    def _check_date(self):
-        for record in self:
-            if record.validity_date and record.validity_date <= datetime.today().date():
-                raise exceptions.ValidationError("Ngày hiệu lực phải sau hôm nay!")
 
     @api.depends("number")
     def _compute_custom_url(self):
@@ -162,6 +170,7 @@ class SupremeCourtLetter(models.Model):
     reject_reason_user = fields.Text(
         string="Lý do từ chối", readonly=True, compute="_compute_reject_reason_user"
     )
+    approve_date = fields.Date(string="Ngày duyệt", readonly=True, store=True)
 
     @api.depends("reject_reason")
     def _compute_reject_reason_user(self):
@@ -212,7 +221,9 @@ class SupremeCourtLetter(models.Model):
     def action_second_approval(self):
         self.ensure_one()
         self.write(
-            {"approval_status": "approved", "second_approval_by": self.env.user.id}
+            {"approval_status": "approved",
+             "second_approval_by": self.env.user.id,
+             "approve_date": datetime.now().date()}
         )
         return {
             "type": "ir.actions.act_window",
@@ -273,13 +284,6 @@ class SupremeCourtLetter(models.Model):
         string="Tệp tin đính kèm",
     )
 
-    # @api.constrains('attachment_ids')
-    # def _check_attachments(self):
-    #     for rec in self:
-    #         for attachment in rec.attachment_ids:
-    #             if attachment.mimetype != 'text/plain' or attachment.file_size > 10 * 1024 * 1024:
-    #                 raise ValidationError("Only text files smaller than 10M are allowed!")
-
     date_created = fields.Date(
         string="Ngày tạo", default=datetime.today().date(), readonly=True
     )
@@ -298,35 +302,14 @@ class SupremeCourtLetter(models.Model):
             "domain": [("letter_id", "=", self.id)],
         }
 
-    def action_print(self):
-        for letter in self:
-            doc_ids = self.env.context.get("active_ids")
-            data = {
-                "is_valid": letter.is_valid,
-                "display_number": letter.display_number,
-                "recipient_name": letter.recipient_name,
-                "title_position": letter.title_position,
-                "create_date": letter.create_date,
-                "organization_unit": letter.organization_unit,
-                "address": letter.address,
-                "regrading": letter.regarding,
-                "validity_date": letter.validity_date,
-                "created_by": letter.created_by,
-            }
-            print(data)
-            action = letter.env.ref(
-                "supco.action_report_supreme_court_letter"
-            ).report_action(self, data=data, config=False)
-            print(action)
-            return action
 
-
-class LetterRejectionLog(models.Model):  # Change to models.Model
+class LetterRejectionLog(models.Model):
     _name = "letter.rejection.log"
     _description = "Log of Rejected Letters"
 
     letter_id = fields.Many2one(
-        "supreme.court.letter", string="Giấy giới thiệu số", readonly=True
+        "supreme.court.letter", string="Giấy giới thiệu số", readonly=True,
+        ondelete="cascade"
     )
     reject_by = fields.Many2one("res.users", string="Người từ chối", readonly=True)
     rejection_reason = fields.Text("Lý do từ chối")
