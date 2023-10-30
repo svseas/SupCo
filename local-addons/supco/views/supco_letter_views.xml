@@ -60,13 +60,14 @@
                             <field name="regarding" class="border p-1"
                                    attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"/>
                             <field name="validity_duration"
-                                   attrs="{'readonly': [('user_can_edit', '=', False)]}"/>
-                            <field name="user_can_edit" invisible="0"/>
+                                   attrs="{'readonly': [('user_can_edit', '=', False)]}" class="border p-1"/>
+                            <field name="user_can_edit" invisible="1"/>
                             <field name="validity_to_date" class="border p-1"
                                    attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
                             <field name="is_valid"
                                    attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
-                            <field name="date_created" class="border p-1 ps-2"/>
+                            <field name="date_created" class="border p-1 ps-1"/>
+                            <field name="delta_date_created" class="border p-1 ps-2"/>
                             <field name="attachment_ids" widget="many2many_binary"
                                    attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"
                                    context="{'file_size': 10*1024*1024, 'mimetype': 'text/plain'}">
@@ -140,6 +141,7 @@
                     <field name="organization_unit"/>
                     <field name="address"/>
                     <field name="regarding"/>
+                    <field name="delta_date_created"/>
                     <field name="validity_duration"/>
                     <field name="validity_to_date"/>
                     <field name="custom_url" widget="url"
