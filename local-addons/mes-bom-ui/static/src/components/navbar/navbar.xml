@@ -45,8 +45,8 @@
             <a href="#" class=""><button class="btn btn-outline-primary w-100
           font-size-12"><t t-esc="navStore.isMainMenuExpanded ? userName : shortName" /></button></a>
           </div> 
-          <div class="m-sub-h w-100">
-            <a href="/web/session/logout" class=""><button class="btn btn-danger w-100 font-size-12">Log out</button></a>
+          <div class="m-sub-h">
+            <a href="/web/session/logout" class=""><button class="btn btn-danger w-100 font-size-12 btn--logout">Thoát</button></a>
           </div>
         </div>
       </div>
