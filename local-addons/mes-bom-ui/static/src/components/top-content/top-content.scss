@@ -4,15 +4,39 @@
   flex-direction: column;
   gap: 5px;
   width: 100%;
-  height: 115px;
-  border-bottom: 1px solid var(--nightshift-100);
+  height: 55px;
+  border: none;
 }
 
 .top-content-list {
-  display: flex;
-  flex-direction: row;
+  display: none;
 }
 
 .top-content-header {
   margin-left: 20px;
+
+  .m-h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .top-content {
+    height: 115px;
+    border-bottom: 1px solid var(--nightshift-100);
+  }
+
+  .top-content-list {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .top-content-header {
+
+
+    .m-h2 {
+      font-size: 2.5rem;
+    }
+  }
+
 }

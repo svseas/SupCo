@@ -101,6 +101,22 @@ class SupremeCourtLetter(models.Model):
             else:
                 letter.is_valid = False
 
+
+    delta_date_created = fields.Char("Đang chờ", compute="_compute_delta_date_created")
+    
+    @api.depends("approval_status")
+    def _compute_delta_date_created(self):
+        for letter in self:
+            if letter.approval_status == "approved":
+                letter.delta_date_created = "Đã được phê duyệt"
+            else:
+                now = datetime.now().date()
+                diff = now - letter.date_created
+                letter.delta_date_created = f"{ diff.days } ngày"          
+            
+                
+
+
     created_by = fields.Many2one(
         "res.users", string="Tạo bởi", default=lambda self: self.env.user
     )
