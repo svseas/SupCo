@@ -13,7 +13,7 @@
             <style>
                 .watermark {
                 background:
-                url('https://user-images.githubusercontent.com/83296144/275700877-fb8928a7-d64a-43c7-ac9e-9f934a115d40.png')
+                url('https://user-images.githubusercontent.com/83296144/280918911-9dbd08e2-7407-40da-b67b-cdf6506c26ab.jpg')
                 no-repeat center center;
                 -webkit-background-size: cover;
                 -moz-background-size: cover;
@@ -24,7 +24,7 @@
                 }
 
                 .header--box {
-                padding: 25px 0px;
+                padding: 60px 0px 25px 0px;
 
                 }
 
@@ -38,8 +38,8 @@
                 border-bottom: 1px dotted black;
                 min-width: 650px;
 
-                    border-bottom: 1px dotted black;
-                    min-width: 400px;   /* Adjusted for A5 */
+                border-bottom: 1px dotted black;
+                min-width: 400px; /* Adjusted for A5 */
                 }
 
                 /* Adjusted width percentages for A5 */
@@ -64,10 +64,12 @@
                 }
             </style>
 
-            <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet"/>
-            <link rel="preconnect" href="https://fonts.googleapis.com"/>
-            <link rel="preconnect" href="https://fonts.gstatic.com"/>
-            <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&#38;display=swap" rel="stylesheet" />
+            <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet" />
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link
+                href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&#38;display=swap"
+                rel="stylesheet" />
 
             <div class="watermark" style="">
                 <t t-if="doc.is_valid != True"> Khong duoc phep in
@@ -95,9 +97,7 @@
                                         </h5>
                                     </div>
                                     <div class="text-center mt-4">
-                                        <h5> Số: <span t-field="doc.display_number">
-                                            </span>
-                                            /GGT-BCL</h5>
+                                        <h5> Số: <span t-field="doc.display_number"></span>/GGT-BCL</h5>
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +162,7 @@
                             </div>
                             <div style="margin-top: 10px;">
                                 <h4>Giấy Giới thiệu có giá trị đến ngày: <span
-                                        t-field="doc.validity_date"
+                                        t-field="doc.validity_to_date"
                                         t-options='{"widget": "date", "format": "dd/MM/yyyy"}' />
                                 </h4>
                             </div>
@@ -173,9 +173,10 @@
                                 <img t-if="doc.qr_code"
                                     t-attf-src="data:image/png;base64,{{doc.qr_code}}"
                                     style="max-width: 50%; margin: 25px auto" />
-                                <p style="font-family: Tinos;font-weight: bold; font-style: italic;">Vui
-                                    lòng kiểm tra tính xác thực của văn bản này bằng cách quét mã QR
-                                </p>
+
+                                <img
+                                    src="https://user-images.githubusercontent.com/83296144/280919744-8fff21de-d5f4-414a-9403-3452dc90016d.png"
+                                    style="max-width:65%;" />
                             </div>
                             <div class="w-10"></div>
                             <!-- Right Section -->
@@ -184,8 +185,10 @@
                                     style="text-align: center; font-weight: bold; margin-top:20px; font-size: 20px;">
                                     TỔNG BIÊN TẬP
                                 </div>
-                                <div style="text-align: center; margin-top:92px">
-                                    <h4>Trần Đức Vinh</h4>
+                                <div style="text-align: center; margin-top:108px">
+                                    <h4>
+                                        <strong>Trần Đức Vinh</strong>
+                                    </h4>
                                 </div>
                                 <div style="text-align: center; font-style: italic; margin-top:20px">
                                     Điện thoại: 024.3824.7204 – 024. 3936.5550
