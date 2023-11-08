@@ -12,10 +12,7 @@ export const navStore = reactive({
       levelName: "Công tác báo chí",
       levelAction: "",
     },
-    {
-      levelName: "Giấy tờ nghiệp vụ",
-      levelAction: "",
-    },
+
     {
       levelName: "Giấy Giới Thiệu",
       levelAction: "supco.action_supreme_court_letters",

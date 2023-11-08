@@ -16,7 +16,6 @@ export class Navbar extends Component {
       .split(" ")
       .map((name) => name[0].toUpperCase())
       .join("");
-    console.log(this.sortName);
   }
 
   static components = {
