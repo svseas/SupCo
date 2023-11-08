@@ -8,6 +8,17 @@
           <i class="icon icon-chevrons-right"></i>
         </button>
 
+        <!-- Mobile expand Button -->
+        <button type="button" class="mn-btn-expand-mobile"  t-on-click="changeStateMobile">
+          <t t-if="navStore.isMobileExpanded">
+            <i class="icon icon-x"></i>
+          </t>
+          <t t-else="">
+            <i class="icon icon-align-justify"></i>
+          </t>
+        </button>
+
+
         <!-- Nav Header  -->
         <div class="mn__header">
           <div class="mn__logo-box pe-auto"

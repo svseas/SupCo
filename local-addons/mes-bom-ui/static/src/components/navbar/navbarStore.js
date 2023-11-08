@@ -6,6 +6,7 @@ import { subDefault } from "./submenu-data-default";
 export const navStore = reactive({
   isMainMenuExpanded: true,
   isSubMenuExpanded: false,
+  isMobileExpanded: false,
   subMenu: subDefault,
   level: [
     {
@@ -20,6 +21,9 @@ export const navStore = reactive({
   ],
   toggleMainMenu() {
     this.isMainMenuExpanded = !this.isMainMenuExpanded;
+  },
+  toggleMobile() {
+    this.isMobileExpanded = !this.isMobileExpanded;
   },
   toggleSubMenu() {
     this.isSubMenuExpanded = !this.isSubMenuExpanded;

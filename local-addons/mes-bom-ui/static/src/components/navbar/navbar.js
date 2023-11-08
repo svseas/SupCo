@@ -28,6 +28,10 @@ export class Navbar extends Component {
     this.navStore.toggleMainMenu();
   }
 
+  changeStateMobile() {
+    this.navStore.toggleMobile();
+  }
+
   toggleHeader() {
     const userId = this.userService.userId;
     console.log("userId", this.userService);

@@ -8,6 +8,25 @@
   flex: 1 0 0;
   align-self: stretch;
   overflow-y: scroll;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    height: 0vh;
+    position: absolute;
+    z-index: 100;
+    background: var(--persian-green-800);
+    top: 60px;
+    left: 0px;
+    transition: height 0.3s ease-in-out;
+
+  }
+}
+
+.mn-links--mobile-expanded {
+  @media (max-width: 768px) {
+    height: 100vh;
+
+  }
 }
 
 .mn-links::-webkit-scrollbar {
