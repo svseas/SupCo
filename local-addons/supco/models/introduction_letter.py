@@ -82,7 +82,8 @@ class SupremeCourtLetter(models.Model):
             # Set the field value based on approval_status and group membership
             record.user_can_edit = record.approval_status in ['draft', 'rejected'] or user_is_in_group
 
-    validity_to_date = fields.Date(string="Hiệu lực đến ngày", compute="_compute_validity_to_date", readonly=True, store=True)
+    validity_to_date = fields.Date(string="Hiệu lực đến ngày", compute="_compute_validity_to_date", readonly=True,
+                                   store=True)
     is_valid = fields.Boolean(string="Còn hiệu lực", compute="_compute_is_valid")
 
     @api.depends("validity_duration", "approval_status", "approve_date")
@@ -101,9 +102,8 @@ class SupremeCourtLetter(models.Model):
             else:
                 letter.is_valid = False
 
-
     delta_date_created = fields.Char("Đang chờ", compute="_compute_delta_date_created")
-    
+
     @api.depends("approval_status")
     def _compute_delta_date_created(self):
         for letter in self:
@@ -112,10 +112,7 @@ class SupremeCourtLetter(models.Model):
             else:
                 now = datetime.now().date()
                 diff = now - letter.date_created
-                letter.delta_date_created = f"{ diff.days } ngày"          
-            
-                
-
+                letter.delta_date_created = f"{diff.days} ngày"
 
     created_by = fields.Many2one(
         "res.users", string="Tạo bởi", default=lambda self: self.env.user
@@ -324,6 +321,25 @@ class SupremeCourtLetter(models.Model):
             "target": "new",
             "domain": [("letter_id", "=", self.id)],
         }
+
+    signed_upload_file = fields.Binary(string="Tệp tin đã ký")
+    signed_upload_file_name = fields.Char(string="Tên tệp tin đã ký")
+
+    @api.constrains('signed_upload_file', 'signed_upload_file_name')
+    def _check_signed_upload_file(self):
+        for record in self:
+            if record.signed_upload_file and record.signed_upload_file_name:
+                file_name = record.signed_upload_file_name.lower()
+
+                # Check the file name starts with 'cl_ggt' and ends with '_signed'
+                if not file_name.startswith('cl_ggt') or not file_name.endswith('_signed.pdf'):
+                    raise ValidationError(
+                        "File name must start with 'cl_ggt' and end with '_signed.pdf'.")
+
+                # Check that the uploaded file is a PDF by checking the magic number
+                file_content = base64.b64decode(record.signed_upload_file)
+                if not file_content.startswith(b'%PDF-'):
+                    raise ValidationError("The uploaded file must be a PDF.")
 
 
 class LetterRejectionLog(models.Model):
