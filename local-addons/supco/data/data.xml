@@ -46,5 +46,9 @@
             <field name="name">Nhân Viên</field>
         </record>
 
+        <record id="position_collab" model="supreme.court.position">
+            <field name="code">collab</field>
+            <field name="name">CTV</field>
+
     </data>
 </odoo>
