@@ -16,7 +16,6 @@ export class Navbar extends Component {
       .split(" ")
       .map((name) => name[0].toUpperCase())
       .join("");
-    console.log(this.sortName);
   }
 
   static components = {
@@ -27,6 +26,10 @@ export class Navbar extends Component {
 
   changeState() {
     this.navStore.toggleMainMenu();
+  }
+
+  changeStateMobile() {
+    this.navStore.toggleMobile();
   }
 
   toggleHeader() {

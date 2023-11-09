@@ -9,19 +9,13 @@
         <div class="my-auto">
           <i class="icon icon-chevron-right"/>
         </div>
-        <MesButton color="'ghost'" status="'normal'" t-on-click="()=>this.expandedSubmenu()">
+        <MesButton color="'ghost'" status="'normal'" t-on-click="()=>this.doAction(navStore.level[1])">
           <t t-out="navStore.level[1].levelName or ''"/>
         </MesButton>
-        <div class="my-auto">
-          <i class="icon icon-chevron-right"/>
-        </div>
-        <MesButton color="'ghost'" status="'normal'" t-on-click="()=>this.doAction(navStore.level[2])">
-          <t t-out="navStore.level[2].levelName or ''"/>
-        </MesButton>
       </div>
-      <div class="top-content-header cursor-pointer" t-on-click="()=>this.doAction(navStore.level[2])">
+      <div class="top-content-header cursor-pointer" t-on-click="()=>this.doAction(navStore.level[1])">
         <h2 class="m-h2">
-          <t t-out="navStore.level[2].levelName or ''" />
+          <t t-out="navStore.level[1].levelName or ''" />
         </h2>
       </div>
     </div>

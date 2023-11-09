@@ -13,7 +13,6 @@ export class SubMenu extends Component {
   }
 
   doAction(item) {
-    console.log("item", item);
     const args = {
       additionalContext: {
         no_breadcrumbs: true,

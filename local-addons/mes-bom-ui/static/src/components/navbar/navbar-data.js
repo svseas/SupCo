@@ -16,83 +16,33 @@ export const navData = {
       nested: [
         {
           index: 1,
-          label: "Giấy tờ nghiệp vụ",
-          nested: [
+          label: "Giấy Giới Thiệu",
+          actionName: "supco.action_supreme_court_letters",
+          args: {},
+          level: [
             {
-              label: "Giấy Giới Thiệu",
-              actionName: "supco.action_supreme_court_letters",
-              args: {},
-              level: [
-                {
-                  levelName: "Công tác báo chí",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Giấy tờ nghiệp vụ",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Giấy Giới Thiệu",
-                  levelAction: "supco.action_supreme_court_letters",
-                },
-              ],
+              levelName: "Công tác báo chí",
+              levelAction: "",
+            },
+            {
+              levelName: "Giấy Giới Thiệu",
+              levelAction: "supco.action_supreme_court_letters",
             },
           ],
         },
         {
           index: 2,
           label: "Công tác nghiệp vụ",
-          nested: [
+          actionName: "",
+          args: {},
+          level: [
             {
-              label: "Tổ điều tra",
-              level: [
-                {
-                  levelName: "Công tác báo chí",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Công tác nghiệp vụ",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Tổ điều tra",
-                  levelAction: "",
-                },
-              ],
+              levelName: "Công tác báo chí",
+              levelAction: "",
             },
             {
-              label: "Tổ chuyên môn",
-              level: [
-                {
-                  levelName: "Công tác báo chí",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Công tác nghiệp vụ",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Tổ chuyên môn",
-                  levelAction: "",
-                },
-              ],
-            },
-            {
-              label: "Tổ pháp luật",
-              level: [
-                {
-                  levelName: "Công tác báo chí",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Công tác nghiệp vụ",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Tổ pháp luật",
-                  levelAction: "",
-                },
-              ],
+              levelName: "Công tác nghiệp vụ",
+              levelAction: "",
             },
           ],
         },
@@ -120,45 +70,33 @@ export const navData = {
       nested: [
         {
           index: 1,
-          label: "Tổ chức nhân sự",
-          nested: [
+          label: "Nhân sự báo chí",
+          actionName: "supco.action_supreme_court_employee",
+          args: {},
+          level: [
             {
-              label: "Nhân sự báo chí",
-              actionName: "supco.action_supreme_court_employee",
-              args: {},
-              level: [
-                {
-                  levelName: "Nhân sự",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Tổ chức nhân sự",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Nhân sự báo chí",
-                  levelAction: "supco.action_supreme_court_employee",
-                },
-              ],
+              levelName: "Nhân sự",
+              levelAction: "",
             },
             {
-              label: "Phòng ban",
-              actionName: "supco.action_supreme_court_department",
-              args: {},
-              level: [
-                {
-                  levelName: "Nhân sự",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Tổ chức nhân sự",
-                  levelAction: "",
-                },
-                {
-                  levelName: "Phòng ban",
-                  levelAction: "supco.action_supreme_court_department",
-                },
-              ],
+              levelName: "Nhân sự báo chí",
+              levelAction: "supco.action_supreme_court_employee",
+            },
+          ],
+        },
+        {
+          index: 2,
+          label: "Phòng ban",
+          actionName: "supco.action_supreme_court_department",
+          args: {},
+          level: [
+            {
+              levelName: "Nhân sự",
+              levelAction: "",
+            },
+            {
+              levelName: "Phòng ban",
+              levelAction: "supco.action_supreme_court_department",
             },
           ],
         },

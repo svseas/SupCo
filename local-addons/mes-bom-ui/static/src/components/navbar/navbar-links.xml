@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
   <t t-name="mes-bom-ui.navbar-links" owl="1">
     <t t-set="isExpanded" t-value="navStore.isMainMenuExpanded"/>
-    <div class="mn-links">
+    <div class="mn-links" t-att-class="{'mn-links--mobile-expanded': navStore.isMobileExpanded}">
       <t t-foreach="items" t-as="item" t-key="item_index">
         <NavbarItem item="item" />
       </t>
