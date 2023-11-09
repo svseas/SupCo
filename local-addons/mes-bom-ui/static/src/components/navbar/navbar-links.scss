@@ -13,9 +13,9 @@
     width: 100vw;
     height: 0vh;
     position: absolute;
-    z-index: 100;
+    z-index: 9999;
     background: var(--persian-green-800);
-    top: 60px;
+    top: 50px;
     left: 0px;
     transition: height 0.3s ease-in-out;
 

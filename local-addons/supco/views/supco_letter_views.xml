@@ -19,17 +19,6 @@
             <field name="model">supreme.court.letter</field>
             <field name="arch" type="xml">
                 <form>
-
-                    <xpath expr="//div[@class='o_control_panel']" position="replace"></xpath>
-                    <header class="d-flex flex-row justify-content-between w-100">
-                        <div class="d-flex flex-row justify-content-between w-100 my-2">
-                            <div class="ms-3">
-                                <button name="button_print_pdf" string="In" type="object"
-                                        class="btn btn-success rounded-2"
-                                        attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
-                            </div>
-                        </div>
-                    </header>
                     <sheet>
                         <style>
                             .o_input {
@@ -42,94 +31,102 @@
                             min-height: 19.5px;
                             }
                         </style>
+                        <button name="button_print_pdf" string="In" type="object"
+                            class="btn btn-success rounded-2 ms-2"
+                            attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
                         <group>
-                            <field name="id" invisible="1" class="border p-3"/>
+                            <field name="id" invisible="1" class="border p-3" />
                             <field name="display_number" invisible="1"
-                                   class="border p-1 form-control"/>
+                                class="border p-1 form-control" />
                             <field name="user_ids" widget="many2many_tags"
-                                   class="border p-1 form-control"
-                                   attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"/>
+                                class="border p-1 form-control"
+                                attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}" />
                             <field name="recipient_name" class="py-2"
                             />
                             <field name="title_position" widget="many2many_tags" class="border p-1"
-                                   attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"/>
+                                attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}" />
                             <field name="organization_unit" class="border p-1"
-                                   attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"/>
+                                attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}" />
                             <field name="address" class="border p-1"
-                                   attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"/>
+                                attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}" />
                             <field name="regarding" class="border p-1"
-                                   attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"/>
+                                attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}" />
                             <field name="validity_duration"
-                                   attrs="{'readonly': [('user_can_edit', '=', False)]}" class="border p-1"/>
-                            <field name="user_can_edit" invisible="1"/>
+                                attrs="{'readonly': [('user_can_edit', '=', False)]}"
+                                class="border p-1" />
+                            <field name="user_can_edit" invisible="1" />
                             <field name="validity_to_date" class="border p-1"
-                                   attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
+                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
                             <field name="is_valid"
-                                   attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
-                            <field name="date_created" class="border p-1 ps-1"/>
-                            <field name="delta_date_created" class="border p-1 ps-2"/>
+                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
+                            <field name="date_created" class="border p-1 ps-1" />
+                            <field name="delta_date_created" class="border p-1 ps-2" />
                             <field name="attachment_ids" widget="many2many_binary"
-                                   attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"
-                                   context="{'file_size': 10*1024*1024, 'mimetype': 'text/plain'}">
+                                attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"
+                                context="{'file_size': 10*1024*1024, 'mimetype': 'text/plain'}">
                                 <tree>
-                                    <field name="name" string="Tên tệp tin"/>
+                                    <field name="name" string="Tên tệp tin" />
                                 </tree>
                             </field>
                             <field name="gdrive_url" widget="url" class="border p-1"
-                                   attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}"/>
+                                attrs="{'readonly': ['&amp;', ('approval_status', '!=', 'draft'), ('approval_status', '!=', 'rejected')]}" />
                             <field name="approve_date" class="border p-1 ps-2"
-                                   attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
-                            <field name="approval_status" readonly="1" class="py-2"/>
+                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
+                            <field name="approval_status" readonly="1" class="py-2" />
                             <field name="custom_url" widget="url" class="py-2"
-                                   attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
+                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
 
                             <field name="qr_code" widget='image' class="oe_avatar"
-                                   attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
+                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
                             <field name="first_approval_by" options="{'no_open': True}"
-                                   widget='many2one' class="py-2"/>
+                                widget='many2one' class="py-2" />
                             <field name="second_approval_by" options="{'no_open': True}"
-                                   widget='many2one' class="py-2"/>
+                                widget='many2one' class="py-2" />
                             <field name="reject_by" class="py-2" options="{'no_open': True}"
-                                   widget='many2one'/>
+                                widget='many2one' />
                             <field name="reject_reason" class="border p-1"
-                                   groups="supco.group_first_approval,supco.group_second_approval"
-                                   t-att-class=""
-                                   attrs="{'readonly': [('approval_status', '=', 'approved')]}"/>
+                                groups="supco.group_first_approval,supco.group_second_approval"
+                                t-att-class=""
+                                attrs="{'readonly': [('approval_status', '=', 'approved')]}" />
                             <field name="reject_reason_user" class="py-2"
-                                   attrs="{'invisible': [('approval_status', '!=', 'rejected')]}"/>
+                                attrs="{'invisible': [('approval_status', '!=', 'rejected')]}" />
                             <field name="signed_upload_file" groups="supco.group_second_approval"
-                                   filename="signed_upload_file_name" widget="binary"
-                                   attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
-                            <field name="signed_upload_file_name" groups="supco.group_second_approval"
-                                   invisible="1"/>
+                                filename="signed_upload_file_name" widget="binary"
+                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
+                            <field name="signed_upload_file_name"
+                                groups="supco.group_second_approval"
+                                invisible="1" />
                             <field name="public_url" widget="url" class="py-2"
-                                   attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
+                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
                         </group>
                         <div class="d-flex flex-row gap-2  justify-content-end">
                             <button string="Xin duyệt lần 1" type="object"
-                                    class="btn btn-primary rounded-2"
-                                    name="action_request_first_approval"
-                                    confirm="Xác nhận gửi đơn xin duyệt lần 1"
-                                    attrs="{'invisible': ['&amp;',('approval_status','!=','draft'),('approval_status','!=','rejected')]}"/>
+                                class="btn btn-primary rounded-2"
+                                name="action_request_first_approval"
+                                confirm="Xác nhận gửi đơn xin duyệt lần 1"
+                                attrs="{'invisible': ['&amp;',('approval_status','!=','draft'),('approval_status','!=','rejected')]}" />
 
                             <button name="action_first_approval" string="Duyệt lần 1"
-                                    type="object"
-                                    class="btn btn-primary rounded-2"
-                                    groups="supco.group_first_approval"
-                                    confirm="Xác nhận phê duyệt lần 1"
-                                    attrs="{'invisible': [('approval_status', '!=', 'waiting_first_approval')]}"/>
+                                type="object"
+                                class="btn btn-primary rounded-2"
+                                groups="supco.group_first_approval"
+                                confirm="Xác nhận phê duyệt lần 1"
+                                attrs="{'invisible': [('approval_status', '!=', 'waiting_first_approval')]}" />
 
                             <button name="action_second_approval" string="Duyệt lần 2"
-                                    type="object"
-                                    class="btn btn-primary rounded-2"
-                                    groups="supco.group_second_approval"
-                                    confirm="Xác nhận phê duyệt lần 2"
-                                    attrs="{'invisible': [( 'approval_status','!=', 'waiting_second_approval' )]}"/>
+                                type="object"
+                                class="btn btn-primary rounded-2"
+                                groups="supco.group_second_approval"
+                                confirm="Xác nhận phê duyệt lần 2"
+                                attrs="{'invisible': [( 'approval_status','!=', 'waiting_second_approval' )]}" />
                             <button name="action_reject" string="Từ chối" type="object"
-                                    class="btn btn-danger"
-                                    groups="supco.group_first_approval, supco.group_second_approval"
-                                    confirm="Xác nhận không phê duyệt đơn này"
-                                    attrs="{'invisible': ['|', '|', ('approval_status','=','draft'), ('approval_status','=','approved'), ('approval_status','=','rejected')]}"/>
+                                class="btn btn-danger"
+                                groups="supco.group_first_approval, supco.group_second_approval"
+                                confirm="Xác nhận không phê duyệt đơn này"
+                                attrs="{'invisible': ['|', '|', ('approval_status','=','draft'), ('approval_status','=','approved'), ('approval_status','=','rejected')]}" />
+                            <button name="button_print_pdf" string="In" type="object"
+                                class="btn btn-success rounded-2"
+                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
 
                         </div>
                     </sheet>
@@ -142,19 +139,19 @@
             <field name="model">supreme.court.letter</field>
             <field name="arch" type="xml">
                 <tree export_xlsx="false">
-                    <field name="display_number"/>
-                    <field name="recipient_name"/>
-                    <field name="title_position" widget="many2many_tags"/>
-                    <field name="organization_unit"/>
-                    <field name="address"/>
-                    <field name="regarding"/>
-                    <field name="delta_date_created"/>
-                    <field name="validity_duration"/>
-                    <field name="validity_to_date"/>
+                    <field name="display_number" />
+                    <field name="recipient_name" />
+                    <field name="title_position" widget="many2many_tags" />
+                    <field name="organization_unit" />
+                    <field name="address" />
+                    <field name="regarding" />
+                    <field name="delta_date_created" />
+                    <field name="validity_duration" />
+                    <field name="validity_to_date" />
                     <field name="custom_url" widget="url"
-                           attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
-                    <field name="approval_status"/>
-                    <button name="reject_show" type='object' string="Lý do"/>
+                        attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
+                    <field name="approval_status" />
+                    <button name="reject_show" type='object' string="Lý do" />
                 </tree>
             </field>
         </record>
@@ -165,7 +162,7 @@
             <field name="model">ir.attachment</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="name" string="Tên tệp tin"/>
+                    <field name="name" string="Tên tệp tin" />
                 </tree>
             </field>
         </record>
@@ -178,10 +175,10 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="letter_id"/>
-                        <field name="reject_by"/>
-                        <field name="rejection_reason"/>
-                        <field name="rejection_time"/>
+                        <field name="letter_id" />
+                        <field name="reject_by" />
+                        <field name="rejection_reason" />
+                        <field name="rejection_time" />
                     </group>
                 </form>
             </field>
@@ -192,9 +189,9 @@
             <field name="model">letter.rejection.log</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="letter_id"/>
-                    <field name="rejection_reason"/>
-                    <field name="rejection_time"/>
+                    <field name="letter_id" />
+                    <field name="rejection_reason" />
+                    <field name="rejection_time" />
                 </tree>
             </field>
         </record>
@@ -203,7 +200,7 @@
             <field name="name">letter.rejection.log.logview</field>
             <field name="model">letter.rejection.log</field>
             <field name="arch" type="xml">
-                <log letter_id="letter_id" reject_by="reject_by" rejection_reason="rejection_reason"/>
+                <log letter_id="letter_id" reject_by="reject_by" rejection_reason="rejection_reason" />
             </field>
         </record>
 
