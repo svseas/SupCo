@@ -324,6 +324,17 @@ class SupremeCourtLetter(models.Model):
 
     signed_upload_file = fields.Binary(string="Tệp tin đã ký")
     signed_upload_file_name = fields.Char(string="Tên tệp tin đã ký")
+    public_url = fields.Char(string="Public URL", compute='_compute_public_url', store=True)
+
+    @api.depends('signed_upload_file_name')
+    def _compute_public_url(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        for record in self:
+            if record.signed_upload_file_name:
+                # Assuming the public_id is unique for each record, like its ID
+                record.public_url = f"{base_url}/letters/pdf/signed/{record.id}"
+            else:
+                record.public_url = False
 
     @api.constrains('signed_upload_file', 'signed_upload_file_name')
     def _check_signed_upload_file(self):
@@ -332,9 +343,9 @@ class SupremeCourtLetter(models.Model):
                 file_name = record.signed_upload_file_name.lower()
 
                 # Check the file name starts with 'cl_ggt' and ends with '_signed'
-                if not file_name.startswith('cl_ggt') or not file_name.endswith('_signed.pdf'):
+                if not file_name.startswith('cl_ggt'):
                     raise ValidationError(
-                        "File name must start with 'cl_ggt' and end with '_signed.pdf'.")
+                        "File name must start with 'cl_ggt'.")
 
                 # Check that the uploaded file is a PDF by checking the magic number
                 file_content = base64.b64decode(record.signed_upload_file)
