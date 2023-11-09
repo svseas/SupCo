@@ -102,6 +102,8 @@
                                    attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
                             <field name="signed_upload_file_name" groups="supco.group_second_approval"
                                    invisible="1"/>
+                            <field name="public_url" widget="url" class="py-2"
+                                   attrs="{'invisible': [('approval_status', '!=', 'approved')]}"/>
                         </group>
                         <div class="d-flex flex-row gap-2  justify-content-end">
                             <button string="Xin duyệt lần 1" type="object"

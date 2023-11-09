@@ -141,19 +141,29 @@ class SupremeCourtLetter(models.Model):
             else:
                 letter.custom_url = False
 
-    @api.depends("number")
+    @api.depends('public_url')
     def _compute_qr_code(self):
         for letter in self:
-            base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
-            if letter.public_id:
-                qr_code_link = f"{base_url}/letters/ggt/{letter.public_id}"
+            if letter.public_url:
+                qr_code_link = letter.public_url
 
                 # Generate a QR code from the link
-                img = qrcode.make(qr_code_link)
+                qr = qrcode.QRCode(
+                    version=1,
+                    error_correction=qrcode.constants.ERROR_CORRECT_L,
+                    box_size=10,
+                    border=4,
+                )
+                qr.add_data(qr_code_link)
+                qr.make(fit=True)
+
+                img = qr.make_image(fill_color="black", back_color="white")
                 buffer = io.BytesIO()
                 img.save(buffer, format="PNG")
                 encoded_image = base64.b64encode(buffer.getvalue())
                 letter.qr_code = encoded_image
+            else:
+                letter.qr_code = False
 
     def button_print_pdf(self):
         self.ensure_one()  # Ensure this is called for one record only
@@ -324,7 +334,7 @@ class SupremeCourtLetter(models.Model):
 
     signed_upload_file = fields.Binary(string="Tệp tin đã ký")
     signed_upload_file_name = fields.Char(string="Tên tệp tin đã ký")
-    public_url = fields.Char(string="Public URL", compute='_compute_public_url', store=True)
+    public_url = fields.Char(string="Đường dẫn đến tệp tin đã ký", compute='_compute_public_url', store=True)
 
     @api.depends('signed_upload_file_name')
     def _compute_public_url(self):
