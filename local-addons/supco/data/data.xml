@@ -50,6 +50,5 @@
             <field name="code">collab</field>
             <field name="name">CTV</field>
         </record>
-
     </data>
 </odoo>

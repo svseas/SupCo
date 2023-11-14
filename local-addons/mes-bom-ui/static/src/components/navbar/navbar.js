@@ -38,6 +38,7 @@ export class Navbar extends Component {
     if (userId === 2 || userId === 1) {
       const header = document.querySelector("header");
       header.classList.toggle("d-none");
+      header.style.zIndex = 99999;
     } else {
       this.action.doAction("supco.action_supreme_court_letters", {
         additionalContext: {

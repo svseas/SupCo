@@ -90,4 +90,13 @@
       </nav>
     </xpath>
   </t>
+
+  <!-- 09/11/2023 web.layout and controlpanel patching -->
+  <t t-inherit="web.Layout" t-inherit-mode="extension" owl="1">
+    <xpath expr="//t[contains(@t-component, 'components.ControlPanel')]" position="replace">
+      <div class="sticky-top">
+      <t t-component="components.ControlPanel" slots="controlPanelSlots" t-if="display.controlPanel" display="display.controlPanel"/>
+      </div>
+    </xpath>
+  </t>
 </templates>
