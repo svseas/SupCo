@@ -31,9 +31,6 @@
                             min-height: 19.5px;
                             }
                         </style>
-                        <button name="button_print_pdf" string="In" type="object"
-                            class="btn btn-success rounded-2 ms-2"
-                            attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
                         <group>
                             <field name="id" invisible="1" class="border p-3" />
                             <field name="display_number" invisible="1"
