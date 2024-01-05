@@ -30,20 +30,6 @@ services:
       - odoo-supco
     restart: unless-stopped
 
-  pgadmin:
-    container_name: pgadmin-odoo-supco
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-       - pgadmin-supco:/var/lib/pgadmin
-    ports:
-      - 5434:80
-    networks:
-      - odoo-supco
-    restart: unless-stopped
 
   proxy:
     depends_on:
@@ -53,7 +39,7 @@ services:
       context: .
       dockerfile: Dockerfile-nginx
     ports:
-      - "8060:8069"
+      - "127.0.0.1:8060:8069"
     networks:
       - odoo-supco
     restart: unless-stopped
