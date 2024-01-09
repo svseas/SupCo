@@ -17,12 +17,8 @@ _logger = logging.getLogger(__name__)
 
 class UserController(http.Controller):
     @http.route("/users/<string:code>", type="http", auth="public", website=True)
-    def user_info(self, national_id):
-        user = (
-            request.env["res.users"]
-            .sudo()
-            .search([("code", "=", code)], limit=1)
-        )
+    def user_info(self, code):
+        user = request.env["res.users"].sudo().search([("code", "=", code)], limit=1)
 
         if user:
             # Get the base URL from system parameters
@@ -205,9 +201,7 @@ class PDFRenderController(http.Controller):
                <iframe src="{}" style="border: none; width: 100%; height: 100vh;"></iframe>
            </body>
            </html>
-           """.format(
-            pdf_url
-        )
+           """.format(pdf_url)
         return html_content
 
     @http.route(
@@ -236,7 +230,7 @@ class PDFRenderController(http.Controller):
             encode = base64.b64encode(pdf_content)
 
             html_content = (
-                    """
+                """
               <!DOCTYPE html>
                 <html lang="en">
                 <head>
@@ -359,10 +353,10 @@ class PDFRenderController(http.Controller):
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" integrity="sha512-q+4liFwdPC/bNdhUpZx6aXDx/h77yEQtn4I1slHydcbZK34nLaR3cAeYSJshoxIOq3mjEf7xJE8YWIUHMn+oCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
                 <script type="module">"""
-                    + f"""
+                + f"""
                 var pdfData = atob("{encode.decode("utf-8")}");
                 """
-                    + """
+                + """
                     var { pdfjsLib } = globalThis;
 
                     // The workerSrc property shall be specified.
@@ -417,18 +411,22 @@ class PDFRenderController(http.Controller):
 
 
 class SignedPdfLetterController(http.Controller):
-
-    @http.route('/letters/pdf/signed/<int:record_id>', type='http', auth="public", website=True)
+    @http.route(
+        "/letters/pdf/signed/<int:record_id>", type="http", auth="public", website=True
+    )
     def serve_pdf(self, record_id, **kw):
         # Retrieve the letter record by its ID
-        letter = request.env['supreme.court.letter'].sudo().browse(record_id)
+        letter = request.env["supreme.court.letter"].sudo().browse(record_id)
         if not letter or not letter.signed_upload_file:
             return request.not_found()
 
         # Decode the file content from base64
         pdf_content = base64.b64decode(letter.signed_upload_file)
         pdfhttpheaders = [
-            ('Content-Type', 'application/pdf'),
-            ('Content-Disposition', f'inline; filename="{letter.signed_upload_file_name}"'),
+            ("Content-Type", "application/pdf"),
+            (
+                "Content-Disposition",
+                f'inline; filename="{letter.signed_upload_file_name}"',
+            ),
         ]
         return request.make_response(pdf_content, headers=pdfhttpheaders)
