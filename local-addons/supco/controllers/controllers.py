@@ -60,6 +60,7 @@ class UserController(http.Controller):
                     "department": department,
                     "position": position,
                     "qr_code": qr_code,
+                    "code": code,
                     "image_1920": avatar,
                     "qr_image_url": qr_image_url,
                     "qr_code_image": qr_code_image,
@@ -411,11 +412,16 @@ class PDFRenderController(http.Controller):
 
 
 class SignedPdfLetterController(http.Controller):
-
-    @http.route('/giay-gioi-thieu/<string:public_id>', type='http', auth="public", website=True)
+    @http.route(
+        "/giay-gioi-thieu/<string:public_id>", type="http", auth="public", website=True
+    )
     def serve_pdf(self, public_id, **kw):
         # Retrieve the letter record by its ID
-        letter = request.env['supreme.court.letter'].sudo().search([('public_id', '=', public_id)], limit=1)
+        letter = (
+            request.env["supreme.court.letter"]
+            .sudo()
+            .search([("public_id", "=", public_id)], limit=1)
+        )
         if not letter or not letter.signed_upload_file:
             return request.not_found()
 
