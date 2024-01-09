@@ -25,7 +25,7 @@ class Employee(models.Model):
     custom_url = fields.Char(string="URL", compute="_compute_custom_url", store=True)
     position = fields.Many2one("supreme.court.position", string="Vị trí")
 
-    @api.depends("national_id")
+    @api.depends("combined_name")
     def _compute_custom_url(self):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for user in self:

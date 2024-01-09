@@ -44,9 +44,20 @@ class Auth(http.Controller):
             }
             token = jwt.encode(payload, '123456789', algorithm='HS256')
             print(f"User {user.name} authenticated successfully")
-            return {"redirect": f"https://suncat.io/{roomName}?jwt={token}"}
+            return {
+                "user": {
+                    "name": user.name,
+                    "email": user.email,
+                    "avatar": user.image_1920,
+                },
+                "jwt": token
+            }
         else:
-            return {"redirect": f"https://suncat.io/{roomName}?auth_status=unauthorized"}
+            return {
+                "error": "Unauthorized access",
+                "message": "You are not authorized to access this resource",
+                "status": 403
+            }
 
 class Redirect(http.Controller):
     @http.route('/api/redirect', type='http', auth='public', methods=['GET'])
