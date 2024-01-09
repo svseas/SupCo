@@ -244,7 +244,7 @@
                                 <p class="">
                                     <span class="text-secondary"> Mã nhân sự: </span>
                                     <span class="text-primary">
-                                        <t t-esc="nation_id" />
+                                        <t t-esc="code" />
                                     </span>
                                 </p>
                                 <p class="">
