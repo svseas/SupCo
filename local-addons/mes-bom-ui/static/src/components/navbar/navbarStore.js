@@ -22,6 +22,9 @@ export const navStore = reactive({
   toggleMainMenu() {
     this.isMainMenuExpanded = !this.isMainMenuExpanded;
   },
+  notExpandMainMenu() {
+    this.isMainMenuExpanded = false;
+  },
   toggleMobile() {
     this.isMobileExpanded = !this.isMobileExpanded;
   },

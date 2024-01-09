@@ -11,6 +11,8 @@ export class Navbar extends Component {
     this.navStore = useNavbarStore();
     this.userService = useService("user");
     this.action = useService("action");
+    this.orm = useService("orm")
+    this.user = useService("user");
     this.userName = this.userService.name;
     this.shortName = this.userName
       .split(" ")
@@ -26,6 +28,15 @@ export class Navbar extends Component {
 
   changeState() {
     this.navStore.toggleMainMenu();
+  }
+
+  async openPref() {
+
+    this.navStore.notExpandMainMenu();
+    const actionDescription = await this.orm.call("res.users", "action_get");
+    actionDescription.res_id = await this.user.userId;
+    console.log(actionDescription)
+    this.action.doAction(actionDescription);
   }
 
   changeStateMobile() {
