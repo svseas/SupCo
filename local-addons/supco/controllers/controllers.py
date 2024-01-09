@@ -16,7 +16,7 @@ _logger = logging.getLogger(__name__)
 
 
 class UserController(http.Controller):
-    @http.route("/users/<string:code>", type="http", auth="public", website=True)
+    @http.route("/nguoi-dung/<string:code>", type="http", auth="public", website=True)
     def user_info(self, code):
         user = request.env["res.users"].sudo().search([("code", "=", code)], limit=1)
 
