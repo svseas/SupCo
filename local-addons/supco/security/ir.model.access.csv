@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_supreme_court_letter_system,access.supreme.court.letter.system,model_supreme_court_letter,base.group_system,1,1,1,1
+access_supreme_court_letter_user,access.supreme.court.letter.user,model_supreme_court_letter,base.group_user,1,1,1,0
+access_employee_inherited_system,access.employee.inherited.system,model_res_users,base.group_system,1,1,1,1
+access_supreme_court_department_system,access.supreme.court.department.system,model_supreme_court_department,base.group_system,1,1,1,1
+access_letter_rejection_log_system,access.letter.rejection.log.system,model_letter_rejection_log,base.group_system,1,1,1,1
+access_letter_rejection_log_user,access.letter.rejection.log.user,model_letter_rejection_log,base.group_user,1,1,1,1
+access_supreme_court_position_user,access.supreme.court.position.user,model_supreme_court_position,base.group_user,1,1,1,1

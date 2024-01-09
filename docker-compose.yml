@@ -1,0 +1,54 @@
+version: "3.1"
+services:
+  web:
+    image: odoo:16
+    container_name: web-odoo-supco
+    depends_on:
+      - db
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./local-addons:/mnt/extra-addons
+    environment:
+      - USER=odoo
+      - PASSWORD=odoo
+    networks:
+      - odoo-supco
+    restart: unless-stopped
+
+  db:
+    image: postgres:13
+    container_name: db-odoo-supco
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data-supco:/var/lib/postgresql/data/pgdata
+    networks:
+      - odoo-supco
+    restart: unless-stopped
+
+
+  proxy:
+    depends_on:
+      - web
+    container_name: odoo_proxy_supco
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    ports:
+      - "127.0.0.1:8060:8069"
+    networks:
+      - odoo-supco
+    restart: unless-stopped
+
+networks:
+  odoo-supco:
+    driver: bridge
+
+volumes:
+  odoo-web-data:
+  odoo-db-data-supco:
+  pgadmin-supco:

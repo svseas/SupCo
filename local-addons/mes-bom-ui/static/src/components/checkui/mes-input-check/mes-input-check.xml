@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.mes_input_check_template" owl="1">
+    <div>
+      <div class="input-gallery">
+        <t t-foreach="statusArr" t-as="status" t-key="status_index">
+          <MesInput status="status" placeholder="'Placeholder text'">
+          </MesInput>
+        </t>
+      </div>
+    </div>
+  </t>
+</templates>

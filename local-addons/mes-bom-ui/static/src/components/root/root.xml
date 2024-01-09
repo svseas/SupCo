@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.root" owl="1">
+    <div class="ms__root--container">
+      <Navbar />
+      <div class="ms__main-content">
+        <!-- <BomGetData /> -->
+        <TopContent />
+        <div class="h-100 w-100 overflow-y-scroll">
+          <ActionContainer />
+        </div>
+      </div>
+    </div>
+  </t>
+</templates>

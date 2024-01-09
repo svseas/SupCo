@@ -1,0 +1,24 @@
+.mes__tab--btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  width: fit-content;
+  height: 48px;
+  padding: 0px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+// Tab button
+.mes__tab--btn.mes__tab--btn--selected--true {
+  border-bottom: 1px solid var(--persian-green-500, #109C8B);
+  color: var(--nightshift-700);
+}
+
+.mes__tab--btn.mes__tab--btn--selected--false {
+  color: var(--nightshift-200);
+}

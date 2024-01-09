@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.sub-menu" owl="1">
+    <t t-set="isExpaned" t-value="navStore.isSubMenuExpanded"/>
+    <t t-set="menu" t-value="navStore.subMenu"/>
+    <div class="ms-container" t-att-class="{'ms-container--expanded': isExpaned}">
+      <div class="ms__header-container">
+        <div class="ms__header">
+          <t t-if="menu">
+            <t t-out="menu.label"/>
+          </t>
+          <i class="icon icon-x ms__close" t-on-click="() => this.navStore.toggleSubMenu()"></i>
+        </div>
+      </div>
+      <div class="ms__list">
+        <t t-if="menu.nested !== undefined">
+          <t t-foreach="menu.nested" t-as="nested" t-key="nested_index">
+            <div class="ms__item m-small" t-on-click="() => this.doAction(nested)">
+              <div class="ms__divider-1"></div>
+              <div class="ms__item--label m-small">
+                <t t-out="nested.label"/>
+              </div>
+            </div>
+          </t>
+        </t>
+      </div>
+    </div>
+  </t>
+</templates>

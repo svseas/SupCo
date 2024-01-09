@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!--        <record id="rule_validity_date_edit_draft_rejected" model="ir.rule">-->
+<!--            <field name="name">Validity Date Edit for Draft or Rejected</field>-->
+<!--            <field name="model_id" ref="model_supco"/>-->
+<!--            <field name="groups" eval="[(4, ref('base.group_user'))]"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="domain_force">[('approval_status', 'in', ['draft', 'rejected'])]</field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Allow specific group users to write to the validity_to_date field for other statuses &ndash;&gt;-->
+<!--        <record id="rule_validity_date_edit_others" model="ir.rule">-->
+<!--            <field name="name">Validity Date Edit for Specific Group</field>-->
+<!--            <field name="model_id" ref="model_supco"/>-->
+<!--            <field name="groups" eval="[(4, ref('supco.group_first_approval')),(4, ref('supco.group_second_approval'))]"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="domain_force">[('approval_status', 'not in', ['draft', 'rejected'])]</field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

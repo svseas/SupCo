@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="mes-bom-ui.main_content_template" owl="1">
+    <div class="main-contentt">
+      <div class="action-group">
+        <div t-on-click="()=>this.newPage()">
+          <MesButton color="'primary'" status="'normal'">
+            <div>
+              <i class="icon icon-plus"/>
+            </div>
+            <div>Tạo mới</div>
+          </MesButton>
+        </div>
+        <div class="search-bar">
+          <MesInput status="status" placeholder="'Placeholder text'">
+          </MesInput>
+          <div class="my-auto px-2">
+            <i class="icon icon-search"/>
+          </div>
+        </div>
+      </div>
+      <div class="data-group">
+        <div class="table-container">
+          <!-- TODO: boder radius not work -->
+          <table class="styled-table" t-ref="data-table">
+            <thead>
+              <tr>
+                <th class="my-auto px-2">
+                  <input type="checkbox" id="myCheckbox" name="myCheckbox"/>
+                </th>
+                <th>MÃ NVL</th>
+                <th>NGUYÊN VẬT LIỆU</th>
+                <th>MÔ TẢ</th>
+                <th>HÌNH ẢNH</th>
+                <th>
+                  <MesButton color="'ghost'" status="'normal'">
+                    <div class="input-icon">
+                      <i class="icon icon-more-vertical-"/>
+                    </div>
+                  </MesButton>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <t t-foreach="dataTable.data" t-as="record" t-key="record_index" t-att-data-value="record.id">
+                <tr>
+                  <td class="my-auto px-2">
+                    <input type="checkbox" id="myCheckbox" name="myCheckbox"/>
+                  </td>
+                  <td t-foreach="dataTable.keys" t-as="key" t-key="key_index">
+                    <t t-out="record[key]"/>
+                  </td>
+                  <td>
+                    <MesButton color="'ghost'" status="'normal'">
+                      <div class="input-icon">
+                        <i class="icon icon-more-vertical-"/>
+                      </div>
+                    </MesButton>
+                  </td>
+                </tr>
+              </t>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </t>
+</templates>
