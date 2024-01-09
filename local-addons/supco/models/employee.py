@@ -7,9 +7,7 @@ class Employee(models.Model):
     _rec_name = "combined_name"
 
     code = fields.Char(string="Mã", required=True)
-    _sql_constraints = [
-        ("code_unique", "UNIQUE(code)", "Mã phải là duy nhất.")
-    ]
+    _sql_constraints = [("code_unique", "UNIQUE(code)", "Mã phải là duy nhất.")]
     combined_name = fields.Char(
         string="Tên", compute="_compute_combined_name", store=True
     )
@@ -31,8 +29,8 @@ class Employee(models.Model):
     def _compute_custom_url(self):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for user in self:
-            if user.national_id:
-                user.custom_url = f"{base_url}/users/{user.national_id}"
+            if user.code:
+                user.custom_url = f"{base_url}/users/{user.code}"
             else:
                 user.custom_url = False
 

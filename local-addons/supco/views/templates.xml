@@ -222,7 +222,7 @@
                                 </h3>
                                 <p class="text-secondary card-position">
                                     <i>
-                                        <t t-esc="position" />
+                                        <t t-esc="position.name" />
                                     </i>
                                 </p>
 
