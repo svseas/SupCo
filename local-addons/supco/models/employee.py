@@ -7,6 +7,9 @@ class Employee(models.Model):
     _rec_name = "combined_name"
 
     code = fields.Char(string="Mã", required=True)
+    _sql_constraints = [
+        ("code_unique", "UNIQUE(code)", "Mã phải là duy nhất.")
+    ]
     combined_name = fields.Char(
         string="Tên", compute="_compute_combined_name", store=True
     )
