@@ -70,8 +70,8 @@
                             <field name="approve_date" class="border p-1 ps-2"
                                 attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
                             <field name="approval_status" readonly="1" class="py-2" />
-                            <field name="custom_url" widget="url" class="py-2"
-                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />
+                            <!-- <field name="custom_url" widget="url" class="py-2"
+                                attrs="{'invisible': [('approval_status', '!=', 'approved')]}" /> -->
 
                             <field name="qr_code" widget='image' class="oe_avatar"
                                 attrs="{'invisible': [('approval_status', '!=', 'approved')]}" />

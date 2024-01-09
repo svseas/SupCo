@@ -137,14 +137,14 @@ class SupremeCourtLetter(models.Model):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for letter in self:
             if letter.public_id:
-                letter.custom_url = f"{base_url}/letters/ggt/{letter.public_id}"
+                letter.custom_url = f"{base_url}/giay-gioi-thieu/{letter.public_id}"
             else:
                 letter.custom_url = False
 
-    @api.depends('public_url')
+    @api.depends('approval_status')
     def _compute_qr_code(self):
         for letter in self:
-            if letter.public_url:
+            if letter.approval_status == "approved":
                 qr_code_link = letter.public_url
 
                 # Generate a QR code from the link
@@ -342,7 +342,7 @@ class SupremeCourtLetter(models.Model):
         for record in self:
             if record.signed_upload_file_name:
                 # Assuming the public_id is unique for each record, like its ID
-                record.public_url = f"{base_url}/letters/pdf/signed/{record.id}"
+                record.public_url = f"{base_url}/giay-gioi-thieu/{record.public_id}"
             else:
                 record.public_url = False
 

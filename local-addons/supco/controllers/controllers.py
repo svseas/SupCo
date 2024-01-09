@@ -138,7 +138,7 @@ class PDFRenderController(http.Controller):
             return Response("Internal Server Error", status=500)
 
         # Set filename to something meaningful, e.g., "letter_<public_id>.pdf"
-        filename = "letter_{}.pdf".format(public_id)
+        filename = "{}.pdf".format(public_id)
 
         # Return the fetched PDF as a response.
         pdfhttpheaders = [
@@ -411,12 +411,11 @@ class PDFRenderController(http.Controller):
 
 
 class SignedPdfLetterController(http.Controller):
-    @http.route(
-        "/letters/pdf/signed/<int:record_id>", type="http", auth="public", website=True
-    )
-    def serve_pdf(self, record_id, **kw):
+
+    @http.route('/giay-gioi-thieu/<string:public_id>', type='http', auth="public", website=True)
+    def serve_pdf(self, public_id, **kw):
         # Retrieve the letter record by its ID
-        letter = request.env["supreme.court.letter"].sudo().browse(record_id)
+        letter = request.env['supreme.court.letter'].sudo().search([('public_id', '=', public_id)], limit=1)
         if not letter or not letter.signed_upload_file:
             return request.not_found()
 
