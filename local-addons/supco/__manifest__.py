@@ -10,6 +10,7 @@
         "views/supco_department_views.xml",
         "views/supco_employee_views.xml",
         "views/supco_menus.xml",
+        "views/supco_preference.xml",
         "security/ir.model.access.csv",
         "security/security.xml",
         "security/validity_date_rule.xml",
