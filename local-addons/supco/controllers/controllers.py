@@ -16,12 +16,12 @@ _logger = logging.getLogger(__name__)
 
 
 class UserController(http.Controller):
-    @http.route("/users/<string:national_id>", type="http", auth="public", website=True)
+    @http.route("/users/<string:code>", type="http", auth="public", website=True)
     def user_info(self, national_id):
         user = (
             request.env["res.users"]
             .sudo()
-            .search([("national_id", "=", national_id)], limit=1)
+            .search([("code", "=", code)], limit=1)
         )
 
         if user:
@@ -31,6 +31,7 @@ class UserController(http.Controller):
             )
 
             name = user.name
+            code = user.code
             dob = user.dob
             email = user.login
             national_id = user.national_id
@@ -38,11 +39,11 @@ class UserController(http.Controller):
             introduction_letter = user.introduction_letter
             position = user.position
             avatar = user.image_1920.decode("utf-8") if user.image_1920 else None
-            qr_image_url = f"https://api.qrserver.com/v1/create-qr-code/?data=http://{base_url}/users/{national_id}&amp;size=80x80"
+            qr_image_url = f"https://api.qrserver.com/v1/create-qr-code/?data=http://{base_url}/users/{code}&amp;size=80x80"
 
             # Use the base URL to generate QR code dynamically
             qr = qrcode.QRCode()
-            qr.add_data(f"{base_url}/users/{national_id}")
+            qr.add_data(f"{base_url}/users/{code}")
             qr.make(fit=True)
             img = qr.make_image(fill="black", back_color="#f9f9f9")
             f = io.StringIO()
