@@ -34,7 +34,6 @@ services:
       - odoo-supco
     restart: unless-stopped
 
-
 networks:
   odoo-supco:
     driver: bridge
