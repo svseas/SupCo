@@ -14,6 +14,8 @@ services:
     environment:
       - USER=odoo
       - PASSWORD=odoo
+    ports:
+      - "127.0.0.1:8060:8069"
     networks:
       - odoo-supco
     restart: unless-stopped
@@ -32,19 +34,6 @@ services:
       - odoo-supco
     restart: unless-stopped
 
-
-  proxy:
-    depends_on:
-      - web
-    container_name: odoo_proxy_supco
-    build:
-      context: .
-      dockerfile: Dockerfile-nginx
-    ports:
-      - "127.0.0.1:8060:8069"
-    networks:
-      - odoo-supco
-    restart: unless-stopped
 
 networks:
   odoo-supco:
