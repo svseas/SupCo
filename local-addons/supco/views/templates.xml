@@ -248,11 +248,11 @@
                                     </span>
                                 </p>
                                 <p class="">
-                                    <span class="text-secondary">Năm sinh: </span>
+                                    <!-- <span class="text-secondary">Năm sinh: </span>
                                     <span class="text-primary">
                                         <t t-esc="dob"
                                             t-options='{"widget": "date", "format": "dd/MM/yyyy"}' />
-                                    </span>
+                                    </span> -->
                                 </p>
                             </div>
                         </div>
