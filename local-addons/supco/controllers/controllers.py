@@ -177,7 +177,7 @@ class PDFRenderController(http.Controller):
         except Exception as e:
             return Response("Internal Server Error", status=500)
 
-        filename = "letter_{}.pdf".format(public_id)
+        filename = "{}.pdf".format(public_id)
         pdfhttpheaders = [
             ("Content-Type", "application/pdf"),
             ("Content-Length", len(pdf_content)),
