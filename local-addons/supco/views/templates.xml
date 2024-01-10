@@ -257,12 +257,18 @@
                                     </span>
                                 </p>
                                 <p class="">
-                                    <!-- <span class="text-secondary">Năm sinh: </span>
+                                    <span class="text-secondary"> CCCD: </span>
+                                    <span class="text-primary">
+                                        <t t-esc="national_id" />
+                                    </span>
+                                </p>
+                                <!-- <p class=""> -->
+                                <!-- <span class="text-secondary">Năm sinh: </span>
                                     <span class="text-primary">
                                         <t t-esc="dob"
                                             t-options='{"widget": "date", "format": "dd/MM/yyyy"}' />
                                     </span> -->
-                                </p>
+                                <!-- </p> -->
                             </div>
                         </div>
                         <div class="card-qr">
