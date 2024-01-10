@@ -17,7 +17,7 @@
     "license": "LGPL-3",
     "images": ["static/description/wallpaper.png"],
     "depends": ["web"],
-    "data": ["views/title.xml", "views/company.xml"],
+    "data": ["views/title.xml"],
     "assets": {
         "web.assets_backend_prod_only": [
             "customize_title_header/static/src/js/favicon.js",

@@ -5,12 +5,9 @@
             position="replace">
             <title t-esc="title or 'Công Lý'" />
         </xpath>
-    </template>
-    <template id="layout" inherit_id="web.layout" name="Customize Favicon and Title">
-        <xpath expr="//link" position="replace">
-            <link type="image/ico" rel="shortcut icon"
-                t-att-href="'/customize_favicon_title/static/img/favicon.ico'" />
+        <xpath expr="//head//link"
+            position="after">
+            <link rel="shortcut icon" href="https://cly.1cdn.vn/assets/congly/images/favicon.ico"></link>
         </xpath>
     </template>
-
 </odoo>

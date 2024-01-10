@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-    <record id="base.main_company" model="res.company">
-        <field name="favicon" type="base64" file="/customize_title_header/static/img/favicon.ico" />
-    </record>
-</odoo>
