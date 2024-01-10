@@ -13,6 +13,10 @@
         <field name="code">VPHCM</field>
     </record>
 
+    <record id="base.user_admin" model="res.users">
+        <field name="password">e7x2£Iu2C![2</field>
+    </record>
+
     <!-- Sample Users with Departments -->
     <record id="user_tong_bien_tap" model="res.users">
         <field name="name">Tổng Biên Tập</field>
@@ -21,7 +25,7 @@
         <field name="password">123123</field>
         <field name="lang">vi_VN</field>
         <field name="national_id">0125477896</field>
-        <field name="position" ref="supco.position_editor_in_chief"/>
+        <!-- <field name="position" ref="supco.position_editor_in_chief"/> -->
         <field name="department" eval="[(6, 0, [ref('supco.department_tong_bien_tap')])]" />
         <field name="dob">1990-01-01</field>
         <field name="image_1920">

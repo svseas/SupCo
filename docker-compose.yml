@@ -1,6 +1,7 @@
 version: "3.1"
 services:
   web:
+    image: odoo:16
     build:
       context: .
       dockerfile: Dockerfile-odoo
@@ -19,6 +20,16 @@ services:
     networks:
       - odoo-supco
     restart: unless-stopped
+
+  longpolling:
+    build:
+      context: .
+      dockerfile: Dockerfile-odoo
+    command: odoo --workers=2 --longpolling-port=8072
+    ports:
+      - "8072:8072"
+    networks:
+      - odoo-supco
 
   db:
     image: postgres:13
