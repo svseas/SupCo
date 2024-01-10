@@ -17,8 +17,57 @@ _logger = logging.getLogger(__name__)
 
 class UserController(http.Controller):
     @http.route("/users/<string:code>", type="http", auth="public", website=True)
-    def user_info(self, code):
-        return request.redirect(f"/nhan-vien/{code}")
+    def user_code_info(self, code):
+        user = request.env["res.users"].sudo().search([("code", "=", code)], limit=1)
+
+        if user:
+            # Get the base URL from system parameters
+            base_url = (
+                request.env["ir.config_parameter"].sudo().get_param("web.base.url")
+            )
+
+            name = user.name
+            code = user.code
+            dob = user.dob
+            email = user.login
+            national_id = user.national_id
+            department = user.department.name
+            introduction_letter = user.introduction_letter
+            position = user.position
+            avatar = user.image_1920.decode("utf-8") if user.image_1920 else None
+            qr_image_url = f"https://api.qrserver.com/v1/create-qr-code/?data=http://{base_url}/users/{code}&amp;size=80x80"
+
+            # Use the base URL to generate QR code dynamically
+            qr = qrcode.QRCode()
+            qr.add_data(f"{base_url}/users/{code}")
+            qr.make(fit=True)
+            img = qr.make_image(fill="black", back_color="#f9f9f9")
+            f = io.StringIO()
+            temp = io.BytesIO()
+            img.save(temp, format="png")
+            qr.print_ascii(out=f)
+            f.seek(0)
+            qr_code = f.read()
+            qr_code_image = base64.b64encode(temp.getvalue()).decode("utf-8")
+
+            return request.render(
+                "supco.template_name",
+                {
+                    "name": name,
+                    "dob": dob,
+                    "national_id": national_id,
+                    "email": email,
+                    "department": department,
+                    "position": position,
+                    "qr_code": qr_code,
+                    "code": code,
+                    "image_1920": avatar,
+                    "qr_image_url": qr_image_url,
+                    "qr_code_image": qr_code_image,
+                },
+            )
+        else:
+            return "User not found or You have no right to access."
 
     @http.route("/nhan-vien/<string:code>", type="http", auth="public", website=True)
     def user_info(self, code):
