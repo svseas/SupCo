@@ -5,13 +5,22 @@
                 <head>
                     <meta charset="UTF-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <title>Phóng viên <t t-esc="name"></t>
+                    <title>
+                        <t t-esc="position.name" />
+                        <t t-esc="name"></t>
                     </title>
+                    <meta name="description"
+                        content="Báo Công Lý" />
                     <link rel="preconnect" href="https://fonts.googleapis.com" />
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
                     <link
                         href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"
                         rel="stylesheet" />
+                    <meta property="og:title" t-att-content="position.name + ' ' + name" />
+                    <meta property="og:description"
+                        content="Báo Công Lý" />
+                    <meta property="og:image"
+                        content="https://cly.1cdn.vn/assets/congly/images/congly_fb.png" />
                     <style>
 
                         * {
@@ -248,12 +257,18 @@
                                     </span>
                                 </p>
                                 <p class="">
-                                    <!-- <span class="text-secondary">Năm sinh: </span>
+                                    <span class="text-secondary"> CCCD: </span>
+                                    <span class="text-primary">
+                                        <t t-esc="national_id" />
+                                    </span>
+                                </p>
+                                <!-- <p class=""> -->
+                                <!-- <span class="text-secondary">Năm sinh: </span>
                                     <span class="text-primary">
                                         <t t-esc="dob"
                                             t-options='{"widget": "date", "format": "dd/MM/yyyy"}' />
                                     </span> -->
-                                </p>
+                                <!-- </p> -->
                             </div>
                         </div>
                         <div class="card-qr">

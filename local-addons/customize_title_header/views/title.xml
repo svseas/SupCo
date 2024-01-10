@@ -5,5 +5,9 @@
             position="replace">
             <title t-esc="title or 'Công Lý'" />
         </xpath>
+        <xpath expr="//head//link"
+            position="after">
+            <link rel="shortcut icon" href="https://cly.1cdn.vn/assets/congly/images/favicon.ico"></link>
+        </xpath>
     </template>
 </odoo>
