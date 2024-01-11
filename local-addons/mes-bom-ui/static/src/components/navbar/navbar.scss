@@ -175,6 +175,7 @@
   }
 }
 
+
 .m-sub-h {
   width: 100%;
 
@@ -194,6 +195,20 @@
       width: 70px !important;
     }
   }
+}
+
+.none-in-mobile {
+
+  @media (max-width: 400px) {
+    display: none;
+    width: 70px !important;
+
+    .btn--logout {
+      width: 70px !important;
+    }
+
+  }
+
 }
 
 .text-hover-persian-green-200 {

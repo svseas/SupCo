@@ -38,6 +38,10 @@ export class Navbar extends Component {
     return this.navStore.isMainMenuExpanded && !this.isMobile;
   }
 
+  get isDecreaseLogoSize() {
+    return !this.navStore.isMainMenuExpanded && !this.isMobile;
+  }
+
   async openPref() {
 
     this.navStore.notExpandMainMenu();
