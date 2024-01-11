@@ -10,7 +10,7 @@
                 <group>
                     <field name="code" readonly="True" />
                     <field name="national_id" readonly="True" />
-                    <field name="custom_url" readonly="True" />
+                    <field name="custom_url" readonly="True" widget="url" />
                     <field name="position" readonly="True" />
                 </group>
             </xpath>
