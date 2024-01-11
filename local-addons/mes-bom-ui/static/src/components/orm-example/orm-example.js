@@ -14,7 +14,6 @@ export class OrmExample extends Component {
       ["name", "tech_process_ids", "ng_percent", "created_by", "approved_by", "bom_uom"]
     );
 
-    console.log(bom);
   }
 }
 

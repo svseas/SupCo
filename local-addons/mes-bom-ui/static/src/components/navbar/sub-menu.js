@@ -21,7 +21,6 @@ export class SubMenu extends Component {
     };
 
     if (item.actionName === "" || item.actionName === undefined) {
-      console.log("actionName nothing");
     } else {
       this.action.doAction(item.actionName, args);
       this.navStore.toggleSubMenu();

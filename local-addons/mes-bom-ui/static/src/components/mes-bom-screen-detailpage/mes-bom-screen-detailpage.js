@@ -9,10 +9,7 @@ import { MesCreateTable } from "../mes-create-table/mes-create-table";
 export class MesBomDetailPage extends Component {
   setup() {
     super.setup(...arguments);
-    console.log("component2start==================: ")
     onRendered(() => {
-      console.log("component2rerender==================: ")
-      console.log("component2rerender==================: ", this.props.data)
     })
     this.currentTab = useState({
       name: 'quytrinh',

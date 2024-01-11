@@ -24,19 +24,10 @@ export class MainContent extends Component {
   };
   loadData() {
     let self = this;
-    // rpc.query({
-    //   model: 'material.material',
-    //   method: 'get_material_data',
-    // }).then(function (data) {
-    //   self.dataTable.data = data[0];
-    //   self.dataTable.keys = data[1];
-    //   console.log("Data=============: ", data)
-    // }).catch(function (error) {
-    //   console.error('Error fetching data for ', error);
-    // });
+
   }
   newPage() {
-    console.log(globalThis.contentStore);
+
     this.contentStore = globalThis.contentStore;
     this.contentStore.changeContent(MainContentCreate);
   }

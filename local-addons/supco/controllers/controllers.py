@@ -419,12 +419,10 @@ class PDFRenderController(http.Controller):
                     // Using DocumentInitParameters object to load binary data.
                     var loadingTask = pdfjsLib.getDocument({data: pdfData});
                     loadingTask.promise.then(function(pdf) {
-                        console.log('PDF loaded');
 
                         // Fetch the first page
                         var pageNumber = 1;
                         pdf.getPage(pageNumber).then(function(page) {
-                        console.log('Page loaded');
 
                         var scale =  1.5;
                         
@@ -444,7 +442,6 @@ class PDFRenderController(http.Controller):
                         };
                         var renderTask = page.render(renderContext);
                         renderTask.promise.then(function () {
-                            console.log('Page rendered');
                         });
                         });
                         var loading = document.querySelector('.loading');

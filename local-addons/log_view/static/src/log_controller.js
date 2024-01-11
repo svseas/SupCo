@@ -36,9 +36,6 @@ export class LogController extends Component {
       }
     });
 
-    onMounted(() => {
-      console.log("onmounted", this.model);
-    });
   }
 }
 
