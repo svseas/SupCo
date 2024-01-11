@@ -30,6 +30,14 @@ export class Navbar extends Component {
     this.navStore.toggleMainMenu();
   }
 
+  get isMobile() {
+    return window.innerWidth < 768;
+  }
+
+  get isShowFullName() {
+    return this.navStore.isMainMenuExpanded && !this.isMobile;
+  }
+
   async openPref() {
 
     this.navStore.notExpandMainMenu();

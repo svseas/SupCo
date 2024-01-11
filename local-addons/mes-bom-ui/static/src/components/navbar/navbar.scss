@@ -156,7 +156,9 @@
   gap: 5px;
 
   @media (max-width: 768px) {
-    align-items: end;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
     border: none;
 
   }
@@ -165,9 +167,11 @@
 .m-sub-name {
   overflow: hidden;
   white-space: nowrap;
+  width: 100%;
 
   @media (max-width: 768px) {
-    display: none;
+    width: 40px;
+
   }
 }
 
@@ -175,19 +179,19 @@
   width: 100%;
 
   @media (max-width: 400px) {
-    width: 80px !important;
+    width: 70px !important;
 
     .btn--logout {
-      width: 80px !important;
+      width: 70px !important;
     }
 
   }
 
   @media (min-width: 400px) and (max-width: 768px) {
-    width: 125px !important;
+    width: 70px !important;
 
     .btn--logout {
-      width: 125px !important;
+      width: 70px !important;
     }
   }
 }

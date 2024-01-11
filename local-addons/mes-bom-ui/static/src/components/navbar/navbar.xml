@@ -52,9 +52,9 @@
         
         <div class="mn__user text-persian-green-50 w-100">
 
-          <div class="m-sub-name w-100" t-on-click="openPref">
+          <div class="m-sub-name" t-on-click="openPref">
             <a href="#" class=""><button class="btn btn-outline-primary w-100
-          font-size-12"><t t-esc="navStore.isMainMenuExpanded ? userName : shortName" /></button></a>
+          font-size-12"><t t-esc="isShowFullName ? userName : shortName" /></button></a>
           </div> 
           <div class="m-sub-h">
             <a href="/web/session/logout" class=""><button class="btn btn-danger w-100 font-size-12 btn--logout">Thoát</button></a>
