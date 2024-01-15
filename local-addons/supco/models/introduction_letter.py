@@ -337,7 +337,8 @@ class SupremeCourtLetter(models.Model):
 
     def _compute_created_date(self):
         for letter in self:
-            letter.date_created = datetime.today().date()
+            print(letter.create_date)
+            letter.date_created = letter.create_date.date()
 
     gdrive_url = fields.Char(string="Tài liệu từ Google Drive")
 
