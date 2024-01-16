@@ -160,7 +160,7 @@ class HttpRenderController(http.Controller):
 
 class PDFRenderController(http.Controller):
     @route(
-        ["/giay-gioi-thieu/<string:public_id>"], type="http", auth="public", website=True
+        ["/letters/pdf/<string:public_id>"], type="http", auth="public", website=True
     )
     def public_report_by_public_id(self, public_id, **kw):
         _logger.info("Generating report for public_id: %s", public_id)
@@ -202,61 +202,61 @@ class PDFRenderController(http.Controller):
         ]
         return request.make_response(pdf_content, headers=pdfhttpheaders)
 
-    @http.route(
-        ["/giay-gioi-thieu/<string:public_id>/embed"],
-        type="http",
-        auth="public",
-        website=True,
-    )
-    def public_report_by_public_id_embed(self, public_id, **kw):
-        # The code for serving the PDF in embed mode
-        letter = (
-            request.env["supreme.court.letter"]
-            .sudo()
-            .search([("public_id", "=", public_id)], limit=1)
-        )
+    # @http.route(
+    #     ["/giay-gioi-thieu/<string:public_id>/embed"],
+    #     type="http",
+    #     auth="public",
+    #     website=True,
+    # )
+    # def public_report_by_public_id_embed(self, public_id, **kw):
+    #     # The code for serving the PDF in embed mode
+    #     letter = (
+    #         request.env["supreme.court.letter"]
+    #         .sudo()
+    #         .search([("public_id", "=", public_id)], limit=1)
+    #     )
 
-        if not letter:
-            return Response("Not Found", status=404)
+    #     if not letter:
+    #         return Response("Not Found", status=404)
 
-        Report = request.env["ir.actions.report"].sudo().with_context()
+    #     Report = request.env["ir.actions.report"].sudo().with_context()
 
-        try:
-            pdf_content, _ = Report._render_qweb_pdf(
-                "supco.report_supreme_court_letter_main", res_ids=[letter.id]
-            )
-        except Exception as e:
-            return Response("Internal Server Error", status=500)
+    #     try:
+    #         pdf_content, _ = Report._render_qweb_pdf(
+    #             "supco.report_supreme_court_letter_main", res_ids=[letter.id]
+    #         )
+    #     except Exception as e:
+    #         return Response("Internal Server Error", status=500)
 
-        filename = "{}.pdf".format(public_id)
-        pdfhttpheaders = [
-            ("Content-Type", "application/pdf"),
-            ("Content-Length", len(pdf_content)),
-            ("Content-Disposition", "inline; " + content_disposition(filename)),
-        ]
-        return request.make_response(pdf_content, headers=pdfhttpheaders)
+    #     filename = "{}.pdf".format(public_id)
+    #     pdfhttpheaders = [
+    #         ("Content-Type", "application/pdf"),
+    #         ("Content-Length", len(pdf_content)),
+    #         ("Content-Disposition", "inline; " + content_disposition(filename)),
+    #     ]
+    #     return request.make_response(pdf_content, headers=pdfhttpheaders)
 
-    @http.route(
-        ["/giay-gioi-thieu/<string:public_id>/"],
-        type="http",
-        auth="public",
-        website=True,
-    )
-    def view_report_embedded(self, public_id, **kw):
-        # Serve the HTML page with the PDF embedded
-        pdf_url = "/giay-gioi-thieu/{}/embed".format(public_id)
-        html_content = """
-           <!DOCTYPE html>
-           <html>
-           <head>
-               <title> Công Lý - Giấy giới thiệu </title>
-           </head>
-           <body style="margin:0;">
-               <iframe src="{}" style="border: none; width: 100%; height: 100vh;"></iframe>
-           </body>
-           </html>
-           """.format(pdf_url)
-        return html_content
+    # @http.route(
+    #     ["/giay-gioi-thieu/<string:public_id>/"],
+    #     type="http",
+    #     auth="public",
+    #     website=True,
+    # )
+    # def view_report_embedded(self, public_id, **kw):
+    #     # Serve the HTML page with the PDF embedded
+    #     pdf_url = "/giay-gioi-thieu/{}/embed".format(public_id)
+    #     html_content = """
+    #        <!DOCTYPE html>
+    #        <html>
+    #        <head>
+    #            <title> Công Lý - Giấy giới thiệu </title>
+    #        </head>
+    #        <body style="margin:0;">
+    #            <iframe src="{}" style="border: none; width: 100%; height: 100vh;"></iframe>
+    #        </body>
+    #        </html>
+    #        """.format(pdf_url)
+    #     return html_content
 
     @http.route(
         ["/giay-gioi-thieu/<string:public_id>"],
@@ -461,27 +461,27 @@ class PDFRenderController(http.Controller):
             return Response("Internal Server Error", status=500)
 
 
-class SignedPdfLetterController(http.Controller):
-    @http.route(
-        "/giay-gioi-thieu/<string:public_id>", type="http", auth="public", website=True
-    )
-    def serve_pdf(self, public_id, **kw):
-        # Retrieve the letter record by its ID
-        letter = (
-            request.env["supreme.court.letter"]
-            .sudo()
-            .search([("public_id", "=", public_id)], limit=1)
-        )
-        if not letter or not letter.signed_upload_file:
-            return request.not_found()
+# class SignedPdfLetterController(http.Controller):
+#     @http.route(
+#         "/giay-gioi-thieu/<string:public_id>", type="http", auth="public", website=True
+#     )
+#     def serve_pdf(self, public_id, **kw):
+#         # Retrieve the letter record by its ID
+#         letter = (
+#             request.env["supreme.court.letter"]
+#             .sudo()
+#             .search([("public_id", "=", public_id)], limit=1)
+#         )
+#         if not letter or not letter.signed_upload_file:
+#             return request.not_found()
 
-        # Decode the file content from base64
-        pdf_content = base64.b64decode(letter.signed_upload_file)
-        pdfhttpheaders = [
-            ("Content-Type", "application/pdf"),
-            (
-                "Content-Disposition",
-                f'inline; filename="{letter.signed_upload_file_name}"',
-            ),
-        ]
-        return request.make_response(pdf_content, headers=pdfhttpheaders)
+#         # Decode the file content from base64
+#         pdf_content = base64.b64decode(letter.signed_upload_file)
+#         pdfhttpheaders = [
+#             ("Content-Type", "application/pdf"),
+#             (
+#                 "Content-Disposition",
+#                 f'inline; filename="{letter.signed_upload_file_name}"',
+#             ),
+#         ]
+#         return request.make_response(pdf_content, headers=pdfhttpheaders)
