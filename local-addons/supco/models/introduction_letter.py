@@ -157,7 +157,7 @@ class SupremeCourtLetter(models.Model):
     def _compute_qr_code(self):
         for letter in self:
             if letter.approval_status == "approved":
-                qr_code_link = letter.public_url
+                qr_code_link = letter.custom_url
 
                 # Generate a QR code from the link
                 qr = qrcode.QRCode(
