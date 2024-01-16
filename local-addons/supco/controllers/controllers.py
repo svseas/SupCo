@@ -160,7 +160,7 @@ class HttpRenderController(http.Controller):
 
 class PDFRenderController(http.Controller):
     @route(
-        ["/letters/pdf/<string:public_id>"], type="http", auth="public", website=True
+        ["/giay-gioi-thieu/<string:public_id>"], type="http", auth="public", website=True
     )
     def public_report_by_public_id(self, public_id, **kw):
         _logger.info("Generating report for public_id: %s", public_id)
@@ -203,7 +203,7 @@ class PDFRenderController(http.Controller):
         return request.make_response(pdf_content, headers=pdfhttpheaders)
 
     @http.route(
-        ["/letters/pdf/<string:public_id>/embed"],
+        ["/giay-gioi-thieu/<string:public_id>/embed"],
         type="http",
         auth="public",
         website=True,
@@ -237,14 +237,14 @@ class PDFRenderController(http.Controller):
         return request.make_response(pdf_content, headers=pdfhttpheaders)
 
     @http.route(
-        ["/letters/pdf/view/<string:public_id>/"],
+        ["/giay-gioi-thieu/<string:public_id>/"],
         type="http",
         auth="public",
         website=True,
     )
     def view_report_embedded(self, public_id, **kw):
         # Serve the HTML page with the PDF embedded
-        pdf_url = "/letters/pdf/{}/embed".format(public_id)
+        pdf_url = "/giay-gioi-thieu/{}/embed".format(public_id)
         html_content = """
            <!DOCTYPE html>
            <html>
@@ -259,7 +259,7 @@ class PDFRenderController(http.Controller):
         return html_content
 
     @http.route(
-        ["/letters/ggt/<string:public_id>"],
+        ["/giay-gioi-thieu/<string:public_id>"],
         type="http",
         auth="public",
         website=True,
