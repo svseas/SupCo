@@ -275,15 +275,19 @@ class PDFRenderController(http.Controller):
         if not letter:
             return Response("Not Found", status=404)
 
-        Report = request.env["ir.actions.report"].sudo().with_context()
+        # Report = request.env["ir.actions.report"].sudo().with_context()
 
-        try:
-            pdf_content, _ = Report._render_qweb_pdf(
-                "supco.report_supreme_court_letter_main", res_ids=[letter.id]
-            )
-            encode = base64.b64encode(pdf_content)
+        # try:
+        #     pdf_content, _ = Report._render_qweb_pdf(
+        #         "supco.report_supreme_court_letter_main", res_ids=[letter.id]
+        #     )
+        #     encode = base64.b64encode(pdf_content)
 
-            html_content = (
+        pdf_content = letter.signed_upload_file
+        pdf_content_str = pdf_content.decode('utf-8')
+        _logger.info("pdf_content: %s", pdf_content[0:100])
+
+        html_content = (
                 """
               <!DOCTYPE html>
                 <html lang="en">
@@ -408,7 +412,8 @@ class PDFRenderController(http.Controller):
 
                 <script type="module">"""
                 + f"""
-                var pdfData = atob("{encode.decode("utf-8")}");
+                var pdfData = atob("{pdf_content_str}");
+                console.log("pdfData: ", pdfData)
                 """
                 + """
                     var { pdfjsLib } = globalThis;
@@ -456,9 +461,9 @@ class PDFRenderController(http.Controller):
             """
             )
 
-            return html_content
-        except Exception as e:
-            return Response("Internal Server Error", status=500)
+        return html_content
+    # except Exception as e:
+    #             return Response("Internal Server Error", status=500)
 
 
 # class SignedPdfLetterController(http.Controller):
