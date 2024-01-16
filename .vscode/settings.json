@@ -14,5 +14,6 @@
     "supco",
     "Thiệu",
     "truyền"
-  ]
+  ],
+  "python.languageServer": "None"
 }
