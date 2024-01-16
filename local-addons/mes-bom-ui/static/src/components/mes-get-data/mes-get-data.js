@@ -38,7 +38,6 @@ export class MesGetData extends Component {
         .then(function (data) {
           self.dataTable.data = data[0];
           self.dataTable.keys = data[1];
-          console.log("Data================: ", data);
         })
         .catch(function (error) {
           console.error("Error fetching data for ", error);
@@ -49,7 +48,7 @@ export class MesGetData extends Component {
 }
 MesGetData.template = "mes-bom-ui.mes_get_data_template";
 
-export class BomGetData extends Component {}
+export class BomGetData extends Component { }
 
 BomGetData.components = { MesGetData, ...MesGetData.components };
 BomGetData.template = xml`<MesGetData model="'mrp.bom'" method="'get_bom_data'"></MesGetData>`;

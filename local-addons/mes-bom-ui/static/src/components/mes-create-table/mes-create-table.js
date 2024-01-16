@@ -10,7 +10,6 @@ export class MesCreateTable extends Component {
     super.setup(...arguments);
     this.dataTable = this.props.data;
     onRendered(() => {
-      console.log("Cpn3=========================: ", this.props.data)
     })
   }
 

@@ -12,7 +12,7 @@ import { MesBomAddPage } from "../mes-bom-screen-addpage/mes-bom-screen-addpage"
 export class MesBomMainPage extends Component {
   setup() {
     super.setup(...arguments);
-    onMounted(() => {});
+    onMounted(() => { });
   }
   static components = {
     MesInput,
@@ -21,7 +21,6 @@ export class MesBomMainPage extends Component {
   };
 
   newPage() {
-    console.log(globalThis.contentStore);
     this.contentStore = globalThis.contentStore;
     this.contentStore.changeContent(MesBomAddPage);
   }

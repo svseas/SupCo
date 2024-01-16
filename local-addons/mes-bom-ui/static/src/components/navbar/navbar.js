@@ -30,12 +30,23 @@ export class Navbar extends Component {
     this.navStore.toggleMainMenu();
   }
 
+  get isMobile() {
+    return window.innerWidth < 768;
+  }
+
+  get isShowFullName() {
+    return this.navStore.isMainMenuExpanded && !this.isMobile;
+  }
+
+  get isDecreaseLogoSize() {
+    return !this.navStore.isMainMenuExpanded && !this.isMobile;
+  }
+
   async openPref() {
 
     this.navStore.notExpandMainMenu();
     const actionDescription = await this.orm.call("res.users", "action_get");
     actionDescription.res_id = await this.user.userId;
-    console.log(actionDescription)
     this.action.doAction(actionDescription);
   }
 
@@ -45,7 +56,6 @@ export class Navbar extends Component {
 
   toggleHeader() {
     const userId = this.userService.userId;
-    console.log("userId", this.userService);
     if (userId === 2 || userId === 1) {
       const header = document.querySelector("header");
       header.classList.toggle("d-none");

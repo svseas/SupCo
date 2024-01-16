@@ -238,12 +238,14 @@
                             </div>
                             <div class="divider"></div>
                             <div class="card-info">
-                                <p>
-                                    <span class="text-secondary">Phòng ban:</span>
-                                    <span class="text-primary">
-                                        <t t-esc="department" />
-                                    </span>
-                                </p>
+                                <t t-if="department">
+                                    <p>
+                                        <span class="text-secondary">Phòng ban:</span>
+                                        <span class="text-primary">
+                                            <t t-esc="department" />
+                                        </span>
+                                    </p>
+                                </t>
                                 <p class="">
                                     <span class="text-secondary">Email: </span>
                                     <span class="text-primary">

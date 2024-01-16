@@ -29,8 +29,6 @@ export class Root extends Component {
     });
 
     onRendered(() => {
-      console.log("this.env=================: ", this.env);
-      console.log("this.record=================: ", this.record);
     });
   }
 

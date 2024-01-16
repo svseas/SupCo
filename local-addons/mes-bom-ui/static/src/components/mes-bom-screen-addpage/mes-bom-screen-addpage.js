@@ -60,7 +60,7 @@ export class MesBomAddPage extends Component {
     }
     this.data.tableData.data = tableData;
     this.data.tableData.keys = keys;
-    console.log("Data1======= ", this.data.tableData)
+
   };
   async getInputValue(item) {
     const res = await this.loadTable();

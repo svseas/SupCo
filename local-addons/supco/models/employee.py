@@ -30,7 +30,7 @@ class Employee(models.Model):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for user in self:
             if user.code:
-                user.custom_url = f"{base_url}/nguoi-dung/{user.code}"
+                user.custom_url = f"{base_url}/nhan-vien/{user.code}"
             else:
                 user.custom_url = False
 

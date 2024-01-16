@@ -22,7 +22,7 @@
         <!-- Nav Header  -->
         <div class="mn__header">
           <div class="mn__logo-box pe-auto"
-          t-att-class = "{'mn__logo-box--small': !navStore.isMainMenuExpanded}" t-on-click="() => this.toggleHeader()" style="cursor: pointer">
+          t-att-class = "{'mn__logo-box--small': isDecreaseLogoSize}" t-on-click="() => this.toggleHeader()" style="cursor: pointer">
 
             <svg width="725" height="205" viewBox="0 0 725 205" fill="none"
               xmlns="http://www.w3.org/2000/svg">
@@ -52,11 +52,11 @@
         
         <div class="mn__user text-persian-green-50 w-100">
 
-          <div class="m-sub-name w-100" t-on-click="openPref">
+          <div class="m-sub-name" t-on-click="openPref">
             <a href="#" class=""><button class="btn btn-outline-primary w-100
-          font-size-12"><t t-esc="navStore.isMainMenuExpanded ? userName : shortName" /></button></a>
+          font-size-12"><t t-esc="isShowFullName ? userName : shortName" /></button></a>
           </div> 
-          <div class="m-sub-h">
+          <div class="m-sub-h none-in-mobile">
             <a href="/web/session/logout" class=""><button class="btn btn-danger w-100 font-size-12 btn--logout">Thoát</button></a>
           </div>
         </div>
