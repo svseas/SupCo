@@ -156,9 +156,8 @@ class SupremeCourtLetter(models.Model):
     @api.depends("approval_status")
     def _compute_qr_code(self):
         for letter in self:
-            base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
-            if letter.public_id:
-                qr_code_link = f"{base_url}/letters/ggt/{letter.public_id}"
+            if letter.approval_status == "approved":
+                qr_code_link = letter.custom_url
 
                 # Generate a QR code from the link
                 qr = qrcode.QRCode(
