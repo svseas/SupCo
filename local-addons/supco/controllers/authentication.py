@@ -7,49 +7,41 @@ import time
 
 _logger = logging.getLogger(__name__)
 
-roomName = 'Test'
-
 class Auth(http.Controller):
     @http.route('/api/auth', type='json', auth='public', methods=['POST'])
     def authenticate(self, **kwargs):
-        params = request.params
-        login = params.get('login')
-        password = params.get('password')
-        
 
-        # _logger.info(list(request.env.registry.models.keys()))
+        login = kwargs.get('login')
+        password = kwargs.get('password')
+
         _logger.info(f"Login: {login}")
         _logger.info(f"Password: {password}")
 
         uid = request.session.authenticate('odoo', login, password)
 
-        _logger.info(f"User {login} with {uid} authenticated successfully")
         if uid is not False:
             user = request.env['res.users'].sudo().search([('id', '=', uid)])
+            current_time = int(time.time())
             payload = {
-                'user_id': user.id,
-                'nbf': int(time.time()),
-                'exp': int(time.time()) + 3600,  
                 'context': {
                     "user": {
+                        "id": user.login,  
                         "name": user.name,
                         "email": user.email,
-                        "avatar": user.image_1920,  
                     }
                 },
-                "aud":"jitsi",
-                "iss":"jitsi",
-                "sub":"*",
-                "room": roomName,
+                "aud": "jitsi",
+                "iss": "jitsi",
+                "nbf": current_time,
+                "exp": current_time + 3600,
+                "iat": current_time
             }
-            token = jwt.encode(payload, '123456789', algorithm='HS256')
-            print(f"User {user.name} authenticated successfully")
+            jwt_secret = 'CongLy@123!@#'
+            _logger.info(f"JWT Secret: {jwt_secret}")
+            _logger.info(f"Payload: {payload}")
+            token = jwt.encode(payload, jwt_secret, algorithm='HS256')
+            _logger.info(f"User {user.name} authenticated successfully")
             return {
-                "user": {
-                    "name": user.name,
-                    "email": user.email,
-                    "avatar": user.image_1920,
-                },
                 "jwt": token
             }
         else:
@@ -58,9 +50,3 @@ class Auth(http.Controller):
                 "message": "You are not authorized to access this resource",
                 "status": 403
             }
-
-class Redirect(http.Controller):
-    @http.route('/api/redirect', type='http', auth='public', methods=['GET'])
-    def redirect(self, **kwargs):
-        roomName = kwargs.get('roomName')
-        return redirect(f"https://auth.suncat.io/{roomName}")
