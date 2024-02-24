@@ -9,8 +9,14 @@
         </xpath>
         <xpath expr="//div[@t-if='not disable_footer']"
             position="replace">
+            <div style="display:flex;">
+                <img
+                    src="https://skymeet.vn/images/Logo-Digital.svg"
+                    alt="Logo" style="max-height:120px; max-width: 80%; width:auto; margin:auto;" />
+            </div>
             <div class="text-center small mt-4 pt-3 border-top" t-if="not disable_footer">
-                <a href="#" class=""> Phát triển bởi <span>CLI</span>
+                <a href="https://skymediagroup.vn" target="_blank" class=""> Powered by <span>Sky
+                    Media Group</span>
                 </a>
             </div>
         </xpath>
@@ -27,6 +33,6 @@
                 <t t-esc="'Sai email hoặc mật khẩu'" />
             </p>
         </xpath>
-    </template>
 
+    </template>
 </odoo>

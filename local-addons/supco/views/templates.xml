@@ -5,13 +5,22 @@
                 <head>
                     <meta charset="UTF-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <title>Phóng viên <t t-esc="name"></t>
+                    <title>
+                        <t t-esc="position.name" />
+                        <t t-esc="name"></t>
                     </title>
+                    <meta name="description"
+                        content="Báo Công Lý" />
                     <link rel="preconnect" href="https://fonts.googleapis.com" />
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
                     <link
                         href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"
                         rel="stylesheet" />
+                    <meta property="og:title" t-att-content="position.name + ' ' + name" />
+                    <meta property="og:description"
+                        content="Báo Công Lý" />
+                    <meta property="og:image"
+                        content="https://cly.1cdn.vn/assets/congly/images/congly_fb.png" />
                     <style>
 
                         * {
@@ -74,6 +83,7 @@
                         -ms-flex-pack: justify;
                         justify-content: space-between;
                         padding: 15px 0;
+                        gap: 5px;
                         }
 
                         .logo-congly {
@@ -81,9 +91,9 @@
                         }
 
                         .avatar-size {
-                        border-radius: 50%;
-                        width: 160px;
-                        height: 160px;
+                        border-radius: 5px;
+                        height: 150x;
+                        aspect-ratio: 3/4;
                         object-fit: cover;
                         overflow: hidden;
                         z-index: 15;
@@ -160,6 +170,7 @@
                         .card-left {
                         -ms-flex-direction: column-reverse;
                         flex-direction: column-reverse;
+                        gap: 5px;
                         }
 
                         .card-right {
@@ -220,19 +231,21 @@
                                 </h3>
                                 <p class="text-secondary card-position">
                                     <i>
-                                        <t t-esc="position" />
+                                        <t t-esc="position.name" />
                                     </i>
                                 </p>
 
                             </div>
                             <div class="divider"></div>
                             <div class="card-info">
-                                <p>
-                                    <span class="text-secondary">Phòng ban:</span>
-                                    <span class="text-primary">
-                                        <t t-esc="department" />
-                                    </span>
-                                </p>
+                                <t t-if="department">
+                                    <p>
+                                        <span class="text-secondary">Phòng ban:</span>
+                                        <span class="text-primary">
+                                            <t t-esc="department" />
+                                        </span>
+                                    </p>
+                                </t>
                                 <p class="">
                                     <span class="text-secondary">Email: </span>
                                     <span class="text-primary">
@@ -242,16 +255,22 @@
                                 <p class="">
                                     <span class="text-secondary"> Mã nhân sự: </span>
                                     <span class="text-primary">
-                                        <t t-esc="nation_id" />
+                                        <t t-esc="code" />
                                     </span>
                                 </p>
                                 <p class="">
-                                    <span class="text-secondary">Năm sinh: </span>
+                                    <span class="text-secondary"> CCCD: </span>
+                                    <span class="text-primary">
+                                        <t t-esc="national_id" />
+                                    </span>
+                                </p>
+                                <!-- <p class=""> -->
+                                <!-- <span class="text-secondary">Năm sinh: </span>
                                     <span class="text-primary">
                                         <t t-esc="dob"
                                             t-options='{"widget": "date", "format": "dd/MM/yyyy"}' />
-                                    </span>
-                                </p>
+                                    </span> -->
+                                <!-- </p> -->
                             </div>
                         </div>
                         <div class="card-qr">

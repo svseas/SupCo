@@ -20,7 +20,6 @@ export class MesButton extends Component {
     super.setup(...arguments);
   }
   cal(status) {
-    console.log(status)
     if (status === 'deactive') {
       return this.colors.deactive
     }

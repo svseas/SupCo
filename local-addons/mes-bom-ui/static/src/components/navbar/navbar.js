@@ -11,12 +11,13 @@ export class Navbar extends Component {
     this.navStore = useNavbarStore();
     this.userService = useService("user");
     this.action = useService("action");
+    this.orm = useService("orm")
+    this.user = useService("user");
     this.userName = this.userService.name;
     this.shortName = this.userName
       .split(" ")
       .map((name) => name[0].toUpperCase())
       .join("");
-    console.log(this.sortName);
   }
 
   static components = {
@@ -29,12 +30,36 @@ export class Navbar extends Component {
     this.navStore.toggleMainMenu();
   }
 
+  get isMobile() {
+    return window.innerWidth < 768;
+  }
+
+  get isShowFullName() {
+    return this.navStore.isMainMenuExpanded && !this.isMobile;
+  }
+
+  get isDecreaseLogoSize() {
+    return !this.navStore.isMainMenuExpanded && !this.isMobile;
+  }
+
+  async openPref() {
+
+    this.navStore.notExpandMainMenu();
+    const actionDescription = await this.orm.call("res.users", "action_get");
+    actionDescription.res_id = await this.user.userId;
+    this.action.doAction(actionDescription);
+  }
+
+  changeStateMobile() {
+    this.navStore.toggleMobile();
+  }
+
   toggleHeader() {
     const userId = this.userService.userId;
-    console.log("userId", this.userService);
     if (userId === 2 || userId === 1) {
       const header = document.querySelector("header");
       header.classList.toggle("d-none");
+      header.style.zIndex = 99999;
     } else {
       this.action.doAction("supco.action_supreme_court_letters", {
         additionalContext: {

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
   <t t-name="mes-bom-ui.navbar-sub-item" owl="1">
     <t t-set="sub" t-value="props.sub"/>
     <div class="mn__sub--item">
       <div class="mn__divider primary-bg-700"></div>
-      <div class="mn__sub-label" t-att-class="{'ms--disabled': sub.nested === undefined || sub.nested.length === 0}" t-on-click="() => this.openSubMenu(sub)">
+      <div class="mn__sub-label" t-att-class="{'ms--disabled': sub.actionName === undefined || sub.actionName.length === 0}" t-on-click="() => this.doAction(sub)">
 
         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
           <circle cx="4" cy="4" r="3.5" fill="#0B6B60" stroke="#0B6B60"/>

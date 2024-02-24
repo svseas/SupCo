@@ -1,6 +1,9 @@
 import base64
 import string
 import requests
+import werkzeug
+import re
+
 from odoo import http
 from odoo.http import request, route, content_disposition, Response
 import io
@@ -13,13 +16,9 @@ _logger = logging.getLogger(__name__)
 
 
 class UserController(http.Controller):
-    @http.route("/users/<string:national_id>", type="http", auth="public", website=True)
-    def user_info(self, national_id):
-        user = (
-            request.env["res.users"]
-            .sudo()
-            .search([("national_id", "=", national_id)], limit=1)
-        )
+    @http.route("/users/<string:code>", type="http", auth="public", website=True)
+    def user_code_info(self, code):
+        user = request.env["res.users"].sudo().search([("code", "=", code)], limit=1)
 
         if user:
             # Get the base URL from system parameters
@@ -28,6 +27,7 @@ class UserController(http.Controller):
             )
 
             name = user.name
+            code = user.code
             dob = user.dob
             email = user.login
             national_id = user.national_id
@@ -35,11 +35,11 @@ class UserController(http.Controller):
             introduction_letter = user.introduction_letter
             position = user.position
             avatar = user.image_1920.decode("utf-8") if user.image_1920 else None
-            qr_image_url = f"https://api.qrserver.com/v1/create-qr-code/?data=http://{base_url}/users/{national_id}&amp;size=80x80"
+            qr_image_url = f"https://api.qrserver.com/v1/create-qr-code/?data=http://{base_url}/users/{code}&amp;size=80x80"
 
             # Use the base URL to generate QR code dynamically
             qr = qrcode.QRCode()
-            qr.add_data(f"{base_url}/users/{national_id}")
+            qr.add_data(f"{base_url}/users/{code}")
             qr.make(fit=True)
             img = qr.make_image(fill="black", back_color="#f9f9f9")
             f = io.StringIO()
@@ -60,6 +60,60 @@ class UserController(http.Controller):
                     "department": department,
                     "position": position,
                     "qr_code": qr_code,
+                    "code": code,
+                    "image_1920": avatar,
+                    "qr_image_url": qr_image_url,
+                    "qr_code_image": qr_code_image,
+                },
+            )
+        else:
+            return "User not found or You have no right to access."
+
+    @http.route("/nhan-vien/<string:code>", type="http", auth="public", website=True)
+    def user_info(self, code):
+        user = request.env["res.users"].sudo().search([("code", "=", code)], limit=1)
+
+        if user:
+            # Get the base URL from system parameters
+            base_url = (
+                request.env["ir.config_parameter"].sudo().get_param("web.base.url")
+            )
+
+            name = user.name
+            code = user.code
+            dob = user.dob
+            email = user.login
+            national_id = user.national_id
+            department = user.department.name
+            introduction_letter = user.introduction_letter
+            position = user.position
+            avatar = user.image_1920.decode("utf-8") if user.image_1920 else None
+            qr_image_url = f"https://api.qrserver.com/v1/create-qr-code/?data=http://{base_url}/users/{code}&amp;size=80x80"
+
+            # Use the base URL to generate QR code dynamically
+            qr = qrcode.QRCode()
+            qr.add_data(f"{base_url}/users/{code}")
+            qr.make(fit=True)
+            img = qr.make_image(fill="black", back_color="#f9f9f9")
+            f = io.StringIO()
+            temp = io.BytesIO()
+            img.save(temp, format="png")
+            qr.print_ascii(out=f)
+            f.seek(0)
+            qr_code = f.read()
+            qr_code_image = base64.b64encode(temp.getvalue()).decode("utf-8")
+
+            return request.render(
+                "supco.template_name",
+                {
+                    "name": name,
+                    "dob": dob,
+                    "national_id": national_id,
+                    "email": email,
+                    "department": department,
+                    "position": position,
+                    "qr_code": qr_code,
+                    "code": code,
                     "image_1920": avatar,
                     "qr_image_url": qr_image_url,
                     "qr_code_image": qr_code_image,
@@ -138,7 +192,7 @@ class PDFRenderController(http.Controller):
             return Response("Internal Server Error", status=500)
 
         # Set filename to something meaningful, e.g., "letter_<public_id>.pdf"
-        filename = "letter_{}.pdf".format(public_id)
+        filename = "{}.pdf".format(public_id)
 
         # Return the fetched PDF as a response.
         pdfhttpheaders = [
@@ -174,7 +228,7 @@ class PDFRenderController(http.Controller):
         except Exception as e:
             return Response("Internal Server Error", status=500)
 
-        filename = "letter_{}.pdf".format(public_id)
+        filename = "{}.pdf".format(public_id)
         pdfhttpheaders = [
             ("Content-Type", "application/pdf"),
             ("Content-Length", len(pdf_content)),
@@ -201,9 +255,7 @@ class PDFRenderController(http.Controller):
                <iframe src="{}" style="border: none; width: 100%; height: 100vh;"></iframe>
            </body>
            </html>
-           """.format(
-            pdf_url
-        )
+           """.format(pdf_url)
         return html_content
 
     @http.route(
@@ -367,12 +419,10 @@ class PDFRenderController(http.Controller):
                     // Using DocumentInitParameters object to load binary data.
                     var loadingTask = pdfjsLib.getDocument({data: pdfData});
                     loadingTask.promise.then(function(pdf) {
-                        console.log('PDF loaded');
 
                         // Fetch the first page
                         var pageNumber = 1;
                         pdf.getPage(pageNumber).then(function(page) {
-                        console.log('Page loaded');
 
                         var scale =  1.5;
                         
@@ -392,7 +442,6 @@ class PDFRenderController(http.Controller):
                         };
                         var renderTask = page.render(renderContext);
                         renderTask.promise.then(function () {
-                            console.log('Page rendered');
                         });
                         });
                         var loading = document.querySelector('.loading');
@@ -410,3 +459,29 @@ class PDFRenderController(http.Controller):
             return html_content
         except Exception as e:
             return Response("Internal Server Error", status=500)
+
+
+class SignedPdfLetterController(http.Controller):
+    @http.route(
+        "/giay-gioi-thieu/<string:public_id>", type="http", auth="public", website=True
+    )
+    def serve_pdf(self, public_id, **kw):
+        # Retrieve the letter record by its ID
+        letter = (
+            request.env["supreme.court.letter"]
+            .sudo()
+            .search([("public_id", "=", public_id)], limit=1)
+        )
+        if not letter or not letter.signed_upload_file:
+            return request.not_found()
+
+        # Decode the file content from base64
+        pdf_content = base64.b64decode(letter.signed_upload_file)
+        pdfhttpheaders = [
+            ("Content-Type", "application/pdf"),
+            (
+                "Content-Disposition",
+                f'inline; filename="{letter.signed_upload_file_name}"',
+            ),
+        ]
+        return request.make_response(pdf_content, headers=pdfhttpheaders)

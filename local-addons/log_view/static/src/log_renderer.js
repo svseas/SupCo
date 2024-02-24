@@ -20,14 +20,12 @@ export class LogRenderer extends Component {
           letter.create_date + " GMT+0000"
         ).toLocaleString();
         // letter.time = letter.create_date.split(" ")[1];
-        console.log(letter.create_date);
         return letter;
       })
       .sort((a, b) => new Date(b.create_date) - new Date(a.create_date));
 
     this.letterGroups = groupBy(this.letters, "date");
     this.entries = Object.entries(this.letterGroups);
-    console.log(this.entries);
   }
   formatId(id) {
     if (Array.isArray(id)) {

@@ -2,6 +2,9 @@ version: "3.1"
 services:
   web:
     image: odoo:16
+    build:
+      context: .
+      dockerfile: Dockerfile-odoo
     container_name: web-odoo-supco
     depends_on:
       - db
@@ -12,9 +15,21 @@ services:
     environment:
       - USER=odoo
       - PASSWORD=odoo
+    ports:
+      - "127.0.0.1:8060:8069"
     networks:
       - odoo-supco
     restart: unless-stopped
+
+  longpolling:
+    build:
+      context: .
+      dockerfile: Dockerfile-odoo
+    command: odoo --workers=2 --longpolling-port=8072
+    ports:
+      - "8072:8072"
+    networks:
+      - odoo-supco
 
   db:
     image: postgres:13
@@ -26,34 +41,6 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - odoo-db-data-supco:/var/lib/postgresql/data/pgdata
-    networks:
-      - odoo-supco
-    restart: unless-stopped
-
-  pgadmin:
-    container_name: pgadmin-odoo-supco
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-       - pgadmin-supco:/var/lib/pgadmin
-    ports:
-      - 5434:80
-    networks:
-      - odoo-supco
-    restart: unless-stopped
-
-  proxy:
-    depends_on:
-      - web
-    container_name: odoo_proxy_supco
-    build:
-      context: .
-      dockerfile: Dockerfile-nginx
-    ports:
-      - "8060:8069"
     networks:
       - odoo-supco
     restart: unless-stopped

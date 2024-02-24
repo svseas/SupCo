@@ -55,7 +55,7 @@ class SupremeCourtLetter(models.Model):
                     recipient_name += user.name + ", "
             letter.recipient_name = recipient_name[:-2]
 
-    title_position = fields.Many2many('supreme.court.position', string="Chức vụ")
+    title_position = fields.Many2many("supreme.court.position", string="Chức vụ")
 
     organization_unit = fields.Char(string="Tổ chức", default="Báo Công Lý")
     address = fields.Text(string="Nơi đến")
@@ -70,34 +70,46 @@ class SupremeCourtLetter(models.Model):
         ],
         default="2",
     )
-    user_can_edit = fields.Boolean(compute='_compute_user_can_edit')
+    user_can_edit = fields.Boolean(compute="_compute_user_can_edit")
 
-    @api.depends('approval_status')
+    @api.depends("approval_status")
     def _compute_user_can_edit(self):
         for record in self:
             # Check if the user is in one of the specific groups
-            user_is_in_group = self.env.user.has_group('supco.group_first_approval') or self.env.user.has_group(
-                'supco.group_second_approval')
+            user_is_in_group = self.env.user.has_group(
+                "supco.group_first_approval"
+            ) or self.env.user.has_group("supco.group_second_approval")
 
             # Set the field value based on approval_status and group membership
-            record.user_can_edit = record.approval_status in ['draft', 'rejected'] or user_is_in_group
+            record.user_can_edit = (
+                record.approval_status in ["draft", "rejected"] or user_is_in_group
+            )
 
-    validity_to_date = fields.Date(string="Hiệu lực đến ngày", compute="_compute_validity_to_date", readonly=True,
-                                   store=True)
+    validity_to_date = fields.Date(
+        string="Hiệu lực đến ngày",
+        compute="_compute_validity_to_date",
+        readonly=True,
+        store=True,
+    )
     is_valid = fields.Boolean(string="Còn hiệu lực", compute="_compute_is_valid")
 
     @api.depends("validity_duration", "approval_status", "approve_date")
     def _compute_validity_to_date(self):
         for letter in self:
             if letter.validity_duration and letter.approval_status == "approved":
-                letter.validity_to_date = letter.approve_date + timedelta(weeks=int(letter.validity_duration))
+                letter.validity_to_date = letter.approve_date + timedelta(
+                    weeks=int(letter.validity_duration)
+                )
             else:
                 letter.validity_to_date = False
 
     @api.depends("validity_to_date")
     def _compute_is_valid(self):
         for letter in self:
-            if letter.validity_to_date and letter.validity_to_date >= datetime.now().date():
+            if (
+                letter.validity_to_date
+                and letter.validity_to_date >= datetime.now().date()
+            ):
                 letter.is_valid = True
             else:
                 letter.is_valid = False
@@ -137,23 +149,34 @@ class SupremeCourtLetter(models.Model):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         for letter in self:
             if letter.public_id:
-                letter.custom_url = f"{base_url}/letters/ggt/{letter.public_id}"
+                letter.custom_url = f"{base_url}/giay-gioi-thieu/{letter.public_id}"
             else:
                 letter.custom_url = False
 
-    @api.depends("number")
+    @api.depends("approval_status")
     def _compute_qr_code(self):
         for letter in self:
             base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
             if letter.public_id:
-                qr_code_link = f"{base_url}/giay-gioi-thieu/{letter.public_id}"
+                qr_code_link = f"{base_url}/letters/ggt/{letter.public_id}"
 
                 # Generate a QR code from the link
-                img = qrcode.make(qr_code_link)
+                qr = qrcode.QRCode(
+                    version=1,
+                    error_correction=qrcode.constants.ERROR_CORRECT_L,
+                    box_size=10,
+                    border=4,
+                )
+                qr.add_data(qr_code_link)
+                qr.make(fit=True)
+
+                img = qr.make_image(fill_color="black", back_color="white")
                 buffer = io.BytesIO()
                 img.save(buffer, format="PNG")
                 encoded_image = base64.b64encode(buffer.getvalue())
                 letter.qr_code = encoded_image
+            else:
+                letter.qr_code = False
 
     def button_print_pdf(self):
         self.ensure_one()  # Ensure this is called for one record only
@@ -241,9 +264,11 @@ class SupremeCourtLetter(models.Model):
     def action_second_approval(self):
         self.ensure_one()
         self.write(
-            {"approval_status": "approved",
-             "second_approval_by": self.env.user.id,
-             "approve_date": datetime.now().date()}
+            {
+                "approval_status": "approved",
+                "second_approval_by": self.env.user.id,
+                "approve_date": datetime.now().date(),
+            }
         )
         return {
             "type": "ir.actions.act_window",
@@ -305,8 +330,16 @@ class SupremeCourtLetter(models.Model):
     )
 
     date_created = fields.Date(
-        string="Ngày tạo", default=datetime.today().date(), readonly=True
+        string="Ngày tạo",
+        default=datetime.today().date(),
+        compute="_compute_created_date",
+        readonly=True,
     )
+
+    def _compute_created_date(self):
+        for letter in self:
+            print(letter.create_date)
+            letter.date_created = letter.create_date.date()
 
     gdrive_url = fields.Char(string="Tài liệu từ Google Drive")
 
@@ -324,21 +357,33 @@ class SupremeCourtLetter(models.Model):
 
     signed_upload_file = fields.Binary(string="Tệp tin đã ký")
     signed_upload_file_name = fields.Char(string="Tên tệp tin đã ký")
+    public_url = fields.Char(
+        string="Đường dẫn đến tệp tin đã ký", compute="_compute_public_url", store=True
+    )
 
-    @api.constrains('signed_upload_file', 'signed_upload_file_name')
+    @api.depends("signed_upload_file_name")
+    def _compute_public_url(self):
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        for record in self:
+            if record.signed_upload_file_name:
+                # Assuming the public_id is unique for each record, like its ID
+                record.public_url = f"{base_url}/giay-gioi-thieu/{record.public_id}"
+            else:
+                record.public_url = False
+
+    @api.constrains("signed_upload_file", "signed_upload_file_name")
     def _check_signed_upload_file(self):
         for record in self:
             if record.signed_upload_file and record.signed_upload_file_name:
                 file_name = record.signed_upload_file_name.lower()
 
                 # Check the file name starts with 'cl_ggt' and ends with '_signed'
-                if not file_name.startswith('cl_ggt') or not file_name.endswith('_signed.pdf'):
-                    raise ValidationError(
-                        "File name must start with 'cl_ggt' and end with '_signed.pdf'.")
+                if not file_name.startswith("cl_ggt"):
+                    raise ValidationError("File name must start with 'cl_ggt'.")
 
                 # Check that the uploaded file is a PDF by checking the magic number
                 file_content = base64.b64decode(record.signed_upload_file)
-                if not file_content.startswith(b'%PDF-'):
+                if not file_content.startswith(b"%PDF-"):
                     raise ValidationError("The uploaded file must be a PDF.")
 
 
@@ -347,8 +392,10 @@ class LetterRejectionLog(models.Model):
     _description = "Log of Rejected Letters"
 
     letter_id = fields.Many2one(
-        "supreme.court.letter", string="Giấy giới thiệu số", readonly=True,
-        ondelete="cascade"
+        "supreme.court.letter",
+        string="Giấy giới thiệu số",
+        readonly=True,
+        ondelete="cascade",
     )
     reject_by = fields.Many2one("res.users", string="Người từ chối", readonly=True)
     rejection_reason = fields.Text("Lý do từ chối")
