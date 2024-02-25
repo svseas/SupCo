@@ -1,6 +1,6 @@
 from odoo import http
 from odoo.http import request
-import jwt
+from jose import jwt
 from werkzeug.utils import redirect
 import logging
 import time
@@ -10,9 +10,9 @@ _logger = logging.getLogger(__name__)
 class Auth(http.Controller):
     @http.route('/api/auth', type='json', auth='public', methods=['POST'])
     def authenticate(self, **kwargs):
-
-        login = kwargs.get('login')
-        password = kwargs.get('password')
+        params = request.params
+        login = params.get('login')
+        password = params.get('password')
 
         _logger.info(f"Login: {login}")
         _logger.info(f"Password: {password}")
@@ -39,7 +39,8 @@ class Auth(http.Controller):
             jwt_secret = 'CongLy@123!@#'
             _logger.info(f"JWT Secret: {jwt_secret}")
             _logger.info(f"Payload: {payload}")
-            token = jwt.encode(payload, jwt_secret, algorithm='HS256')
+            token = jwt.encode(claims=payload, key=jwt_secret, algorithm='HS256')
+            _logger.info(f"Token: {token}")
             _logger.info(f"User {user.name} authenticated successfully")
             return {
                 "jwt": token

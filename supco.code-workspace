@@ -1,13 +1,15 @@
 {
     "folders": [
         {
+            "name": "supco",
             "path": "."
-        },
-        {
-            "path": "../odoo"
         }
     ],
     "settings": {
-        "python.languageServer": "None"
+        "python.languageServer": "None",
+        "python.analysis.extraPaths": [
+            "/Users/joetang/Projects/odoo16/odoo/"
+        ]
     }
 }
+
