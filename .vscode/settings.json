@@ -1,24 +1,4 @@
 {
-<<<<<<< HEAD
-    "python.languageServer": "None"
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic"
 }
-=======
-  "cSpell.enabled": true,
-  "cSpell.words": [
-    "Công",
-    "Đoàn",
-    "Giấy",
-    "Giới",
-    "hình",
-    "nghiệp",
-    "Nhân",
-    "odoo",
-    "pdfjs",
-    "Phòng",
-    "supco",
-    "Thiệu",
-    "truyền"
-  ],
-  "python.languageServer": "None"
-}
->>>>>>> 89717075faddc1fe6e7d1895e0a5edbd6e61d8e0

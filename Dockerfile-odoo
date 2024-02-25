@@ -4,8 +4,7 @@ USER root
 
 CMD ["odoo", "-i", "base"]
 
-RUN pip install PyJWT
-RUN pip install jwt
+RUN pip install python-jose
 
 USER odoo
 
