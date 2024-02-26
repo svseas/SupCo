@@ -54,7 +54,7 @@ _logger = logging.getLogger(__name__)
 #             }
 
 class Auth(http.Controller):
-    @http.route('/api/auth', type='json', auth='public', methods=['POST', 'OPTIONS'], csrf=False)
+    @http.route('/api/auth', type='json', auth='public', methods=['POST', 'OPTIONS'])
     def authenticate(self, **kwargs):
         headers = [
             ('Access-Control-Allow-Origin', '*'),
@@ -93,16 +93,15 @@ class Auth(http.Controller):
             jwt_secret = 'YourSecretKeyHere'
             token = jwt.encode(claims=payload, key=jwt_secret, algorithm='HS256')
             _logger.info(f"User {user.name} authenticated successfully")
+            _logger.info(f"Token: {token}")
             
-            response = request.make_response(json.dumps({"jwt": token}))
-            response.headers.extend(headers)
-            return response
+            return {
+                "jwt": token
+            }
         else:
-            _logger.info("Authentication failed")
-            response = request.make_response(json.dumps({
+            return {
                 "error": "Unauthorized access",
                 "message": "Invalid login or password",
                 "status": 403
-            }), status=403)
-            response.headers.extend(headers)
-            return response
+            }
+
