@@ -20,6 +20,20 @@ services:
     networks:
       - odoo-supco
     restart: unless-stopped
+  
+  nginx:
+    build: 
+      context: .
+      dockerfile: Dockerfile-nginx
+    container_name: nginx-odoo-supco
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+      - pgadmin
+    networks:
+      - odoo-supco
 
   longpolling:
     build:
